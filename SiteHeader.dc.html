@@ -16,7 +16,7 @@
 
 <sc-if value="{{ isSolid }}" hint-placeholder-val="{{ true }}">
   <nav style="position:sticky;top:0;z-index:40;background:#fff;color:#201e1d;display:flex;align-items:center;flex-wrap:wrap;row-gap:8px;gap:clamp(10px,2vw,32px);padding:12px clamp(16px,4vw,120px);box-shadow:0 2px 12px rgba(0,0,0,0.08);">
-    <a href="Chaitanya Landing.dc.html" aria-label="Chaitanya home" style="display:flex;align-items:center;text-decoration:none;flex:none;" style-hover="opacity:0.9;">
+    <a href="index.html" aria-label="Chaitanya home" style="display:flex;align-items:center;text-decoration:none;flex:none;" style-hover="opacity:0.9;">
       <img src="assets/chaitanya-logo.svg" alt="Chaitanya Health &amp; Wellness" style="height:54px;width:auto;display:block;transition:transform .3s ease;">
     </a>
     <div style="flex:1;min-width:180px;display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,32px);flex-wrap:wrap;row-gap:6px;">
@@ -33,7 +33,7 @@
 
 <sc-if value="{{ isOverlay }}" hint-placeholder-val="{{ false }}">
   <nav style="position:relative;z-index:2;background:transparent;color:#fff;display:flex;align-items:center;flex-wrap:wrap;row-gap:8px;gap:clamp(10px,2vw,32px);padding:12px clamp(16px,4vw,120px);margin-top:20px;">
-    <a href="Chaitanya Landing.dc.html" aria-label="Chaitanya home" style="display:flex;align-items:center;text-decoration:none;flex:none;" style-hover="opacity:0.9;">
+    <a href="index.html" aria-label="Chaitanya home" style="display:flex;align-items:center;text-decoration:none;flex:none;" style-hover="opacity:0.9;">
       <img src="assets/chaitanya-logo.svg" alt="Chaitanya Health &amp; Wellness" style="height:54px;width:auto;display:block;transition:transform .3s ease;filter:invert(1) brightness(2);">
     </a>
     <div style="flex:1;min-width:180px;display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,32px);flex-wrap:wrap;row-gap:6px;">
@@ -54,7 +54,7 @@ class Component extends DCLogic {
     const active = this.props.currentPage || this.props.active || '';
     const overlay = this.props.variant === 'overlay';
     const items = [
-      ['home', 'Home', 'Chaitanya Landing.dc.html'],
+      ['home', 'Home', 'index.html'],
       ['about', 'About Us', 'AboutUs.dc.html'],
       ['services', 'Services', 'Services.dc.html'],
       ['membership', 'Membership', 'Membership.dc.html'],

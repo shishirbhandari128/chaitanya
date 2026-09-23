@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preload" as="image" href="assets/photos/md/spa-juice.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/styles.css">
+  <script src="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <script src="./demo-photos.js"></script>
+  <script src="./motion.js"></script>
+  <style>
+    #review-award::part(frame) { background: transparent; }
+    #review-award::part(image) { filter: drop-shadow(0 14px 22px rgba(7,46,52,0.18)); }
+    @keyframes awardFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Lato:wght@400;500;600;700&display=swap');
+    :root {
+      --color-bg: #f7f1de; --color-text: #072E34; --color-accent: #007D67; --color-accent-700: #045A4A;
+      --font-heading: 'El Messiri', sans-serif; --font-body: 'Lato', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; } body { margin: 0; background: #fff; }
+    a { color: var(--color-accent); } a:hover { color: var(--color-accent-700); }
+    @keyframes reviewsSlide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes reviewsSlideReverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+    @keyframes ringFill { from { stroke-dashoffset: 276; } }
+    @keyframes heroExpandDown { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+  </style>
+</helmet>
+
+<dc-import name="SiteHeader" current-page="reviews" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
+
+<section style="position:relative;padding: calc(2.4*var(--space-8)) clamp(20px,6vw,120px); text-align: left; height: 450px; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; overflow: hidden; animation: heroExpandDown 0.9s cubic-bezier(0.22,1,0.36,1) both">
+  <image-slot src="assets/photos/md/spa-juice.jpg" id="reviews-hero-photo" shape="rect" placeholder="Guest relaxing at spa" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"></image-slot>
+  <div style="position:absolute;inset:0;background:rgba(7,46,52,0.45);pointer-events:none;z-index:1;"></div>
+  <div ref="{{ heroContentRef }}" style="position:relative;z-index:2;will-change:transform;">
+  <span style="display:block;font-family:var(--font-body);font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.4);margin-bottom:var(--space-4);">Your Experience, Our Inspiration</span>
+  <h1 style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(30px,4vw,48px); color: #FFFFFF; text-shadow:0 2px 10px rgba(0,0,0,0.4); margin: 0 0 var(--space-3)">What Our Guests Are Saying</h1>
+  <div style="display:flex;align-items:center;justify-content:flex-start;gap:16px;flex-wrap:wrap;">
+    <span style="font-family:var(--font-heading);font-weight:700;font-size:40px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.4);">4.8</span>
+    <div style="text-align:left;">
+      <div style="display:flex;gap:3px;margin-bottom:6px;">
+        <sc-for list="{{ headlineStars }}" as="fill" hint-placeholder-count="5">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" stroke="none" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
+        </sc-for>
+      </div>
+      <span style="font-family:var(--font-body);font-size:13px;font-weight:600;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.4);">Based on 787 reviews</span>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section style="background:#fff;padding:calc(3.4*var(--space-8)) clamp(20px,6vw,120px);">
+  <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:calc(1.8*var(--space-8));">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+      <div style="position:relative;width:220px;height:220px;display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-4);">
+        <div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle, #E3F5F0 0%, rgba(227,245,240,0.55) 45%, rgba(227,245,240,0) 72%);"></div>
+        <div style="position:absolute;inset:18px;border-radius:50%;border:1px dashed rgba(0,125,103,0.28);"></div>
+        <image-slot id="review-award" fit="contain" shape="rect" placeholder="Tripadvisor Travelers' Choice badge" style="position:relative;width:170px;height:170px;background:transparent;animation:awardFloat 5s ease-in-out infinite;"></image-slot>
+      </div>
+      <span style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#007D67;margin-bottom:6px;">Award Winner</span>
+      <p style="font-family:var(--font-heading);font-weight:700;font-size:22px;color:#201e1d;margin:0 0 4px;">Tripadvisor Travelers&rsquo; Choice 2022</p>
+      <p style="font-family:var(--font-body);font-size:14px;color:#6b6a63;margin:0;">Ranked among the top 10% of wellness experiences worldwide</p>
+    </div>
+    <div style="display:flex;gap:clamp(16px,4vw,40px);flex-wrap:wrap;justify-content:center;">
+      <sc-for list="{{ ratingRings }}" as="rb" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+          <div style="position:relative;width:104px;height:104px;">
+            <svg width="104" height="104" viewBox="0 0 104 104" style="transform:rotate(-90deg);">
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#eceae0" stroke-width="9"></circle>
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#007D67" stroke-width="9" stroke-linecap="round" style="{{ rb.ringStyle }}"></circle>
+            </svg>
+            <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:700;font-size:17px;color:#201e1d;">{{ rb.pct }}%</span>
+          </div>
+          <span style="font-family:var(--font-body);font-size:12.5px;color:#6b6a63;">{{ rb.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="background:#f5f6f4;padding:calc(2.4*var(--space-8)) 0;overflow:hidden;min-height:100vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;">
+  <h2 style="font-family:var(--font-heading);font-weight:700;font-size:28px;color:#201e1d;text-align:center;margin:0 0 calc(1.6*var(--space-8));">Recent Reviews</h2>
+  <div style="width:100%;overflow:hidden;margin-bottom:20px;" style-hover="--rowplay:paused;">
+    <div style="display:flex;gap:20px;width:max-content;animation:reviewsSlide 70s linear infinite;animation-play-state:var(--rowplay,running);" style-hover="animation-play-state:paused;">
+      <sc-for list="{{ rowOneLoop }}" as="t" hint-placeholder-count="6">
+        <div style="flex:0 0 340px;background:#fff;padding:var(--space-6);text-align:left;border-radius:12px;min-height:340px;display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.3s ease,box-shadow 0.3s ease;" style-hover="transform:scale(1.04);box-shadow:0 20px 40px -12px rgba(7,46,52,0.25);">
+          <div>
+          <div style="display:flex;gap:4px;margin-bottom:var(--space-4);">
+            <sc-for list="{{ t.starFills }}" as="fill" hint-placeholder-count="5">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ fill }}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
+            </sc-for>
+          </div>
+          <p style="font-family:var(--font-body);font-size:15px;line-height:1.7;color:#3a3833;margin:0;">{{ t.quote }}</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:var(--space-4);">
+            <image-slot id="{{ t.slotId }}" shape="circle" placeholder="Guest photo" style="width:42px;height:42px;flex:none;"></image-slot>
+            <div>
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:14px;color:#201e1d;margin:0;">{{ t.name }}</p>
+              <p style="font-family:var(--font-body);font-size:12px;color:#8a8a80;margin:2px 0 0;">{{ t.source }}</p>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="width:100%;overflow:hidden;">
+    <div style="display:flex;gap:20px;width:max-content;animation:reviewsSlideReverse 75s linear infinite;" style-hover="animation-play-state:paused;">
+      <sc-for list="{{ rowTwoLoop }}" as="t" hint-placeholder-count="6">
+        <div style="flex:0 0 340px;background:#fff;padding:var(--space-6);text-align:left;border-radius:12px;min-height:340px;display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.3s ease,box-shadow 0.3s ease;" style-hover="transform:scale(1.04);box-shadow:0 20px 40px -12px rgba(7,46,52,0.25);">
+          <div>
+          <div style="display:flex;gap:4px;margin-bottom:var(--space-4);">
+            <sc-for list="{{ t.starFills }}" as="fill" hint-placeholder-count="5">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ fill }}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
+            </sc-for>
+          </div>
+          <p style="font-family:var(--font-body);font-size:15px;line-height:1.7;color:#3a3833;margin:0;">{{ t.quote }}</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:var(--space-4);">
+            <image-slot id="{{ t.slotId }}" shape="circle" placeholder="Guest photo" style="width:42px;height:42px;flex:none;"></image-slot>
+            <div>
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:14px;color:#201e1d;margin:0;">{{ t.name }}</p>
+              <p style="font-family:var(--font-body);font-size:12px;color:#8a8a80;margin:2px 0 0;">{{ t.source }}</p>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="review-us" style="padding: calc(2.4*var(--space-8)) clamp(20px,6vw,120px); background-color: #fff;">
+  <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,64px);align-items:stretch;">
+    <div style="position:relative;overflow:hidden;min-height:600px;">
+      <image-slot src="assets/photos/md/spa-tea-robes.jpg" id="review-photo" shape="rect" placeholder="Guest relaxing at spa" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"></image-slot>
+      <div style="position:absolute;left:20px;right:20px;bottom:20px;display:flex;gap:12px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:180px;padding:14px 18px;display:flex;align-items:center;gap:12px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none;filter:drop-shadow(0 1px 4px rgba(0,0,0,0.5));"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <div>
+            <span style="display:block;font-family:var(--font-body);font-size:12px;color:rgba(255,255,255,0.85);text-shadow:0 1px 4px rgba(0,0,0,0.5);">Call Us</span>
+            <span style="display:block;font-family:var(--font-heading);font-weight:700;font-size:15px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);">+977-9851123301</span>
+          </div>
+        </div>
+        <div style="flex:1;min-width:180px;padding:14px 18px;display:flex;align-items:center;gap:12px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none;filter:drop-shadow(0 1px 4px rgba(0,0,0,0.5));"><path d="M4 4h16v16H4z" opacity="0"></path><path d="M22 6l-10 7L2 6"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+          <div>
+            <span style="display:block;font-family:var(--font-body);font-size:12px;color:rgba(255,255,255,0.85);text-shadow:0 1px 4px rgba(0,0,0,0.5);">Email Us</span>
+            <span style="display:block;font-family:var(--font-heading);font-weight:700;font-size:15px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);">info@chaitanyahealth.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center;">
+      <span style="display:block;font-family:var(--font-body);font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">Review Us</span>
+      <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: 32px; line-height: 1.15; color: #201e1d; margin: 0 0 var(--space-3);">Share Your Experience</h2>
+      <p style="font-family:var(--font-body);font-size:14.5px;line-height:1.6;color:#6b6a63;margin:0 0 var(--space-6);">Tell us about your visit, and get an instant discount on your next treatment.</p>
+      <sc-if value="{{ formSubmitted }}" hint-placeholder-val="{{ false }}">
+        <p style="font-family:var(--font-body);font-weight:600;font-size:15px;color:#201e1d;margin:0;">Thank you for sharing your experience!</p>
+      </sc-if>
+      <sc-if value="{{ formNotSubmitted }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ handleSubmit }}" style="display:flex;flex-direction:column;gap:var(--space-4);">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--space-4);">
+            <input class="input" name="rname" type="text" placeholder="Your name" required="{{ true }}" style="width:100%;background:#fff;border:1px solid #e4e2dc;color:#201e1d;border-radius:10px;height:48px;padding:0 16px;box-sizing:border-box;">
+            <input class="input" name="remail" type="email" placeholder="Email" style="width:100%;background:#fff;border:1px solid #e4e2dc;color:#201e1d;border-radius:10px;height:48px;padding:0 16px;box-sizing:border-box;">
+          </div>
+          <div>
+            <span style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;margin-bottom:8px;">Your Rating</span>
+            <div style="display:flex;gap:6px;">
+              <sc-for list="{{ ratingStars }}" as="star" hint-placeholder-count="5">
+                <button type="button" onClick="{{ star.onClick }}" aria-label="Rate" style="background:transparent;border:none;cursor:pointer;padding:0;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="{{ star.fill }}" stroke="#007D67" stroke-width="1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+          <textarea class="input" name="rreview" rows="3" placeholder="Tell us about your visit" style="width:100%;background:#fff;border:1px solid #e4e2dc;color:#201e1d;border-radius:10px;padding:14px 16px;box-sizing:border-box;font-family:var(--font-body);font-size:14px;resize:vertical;"></textarea>
+          <div style="display:flex;gap:6px;">
+            <button type="submit" style="flex:1;display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:15px;border:none;padding:16px 28px;cursor:pointer;border-radius:99px;">Submit Review</button>
+            <button type="submit" aria-label="Submit Review" style="display:flex;align-items:center;justify-content:center;background:#072E34;color:#fff;border:none;cursor:pointer;width:52px;height:52px;flex:none;border-radius:99px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+            </button>
+          </div>
+        </form>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<dc-import name="SiteFooter" hint-size="100%,600px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1500}}">
+class Component extends DCLogic {
+  state = { rating: 5, submitted: false };
+  heroContentRef = React.createRef();
+
+  handleSubmit = (e) => { e.preventDefault(); this.setState({ submitted: true }); };
+
+  componentDidMount() {
+    this._onScroll = () => {
+      if (this.heroContentRef.current) {
+        this.heroContentRef.current.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+      }
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+  }
+
+  renderVals() {
+    const stars5 = () => ['#201e1d', '#201e1d', '#201e1d', '#201e1d', '#201e1d'];
+    const reviews = [
+      { slotId: 'rv-1', name: 'S. Maharjan', source: 'Google Review', quote: 'The Panchakarma retreat reset something in me I didn\u2019t know was off balance. Three months on, I still sleep like I did as a child.', stars: 5 },
+      { slotId: 'rv-2', name: 'R. Karki', source: 'Tripadvisor', quote: 'My physician actually talked to my therapist between sessions. I\u2019ve never felt so looked-after at a clinic.', stars: 5 },
+      { slotId: 'rv-3', name: 'A. Sharma', source: 'Google Review', quote: 'The atmosphere was calm, peaceful and welcoming from the moment I walked in. Highly recommend the Shirodhara.', stars: 4 },
+      { slotId: 'rv-4', name: 'P. Basnet', source: 'Facebook', quote: 'Shirodhara on a Friday evening is now non-negotiable. Calmest I feel all week.', stars: 5 },
+      { slotId: 'rv-5', name: 'A. Thapa', source: 'Google Review', quote: 'Every visit feels personal \u2014 they remember my constitution, my history, my preferences.', stars: 4 },
+      { slotId: 'rv-6', name: 'J. Alison', source: 'Tripadvisor', quote: 'Was initially hesitant about the treatment, but the team quickly put my mind at ease. Results exceeded expectations.', stars: 4 },
+    ].map((r) => ({ ...r, starFills: Array.from({ length: 5 }, (_, i) => (i < r.stars ? '#201e1d' : '#d7d6cf')) }));
+
+    return {
+      heroContentRef: this.heroContentRef,
+      headlineStars: ['#007D67', '#007D67', '#007D67', '#007D67', '#c9d3b8'],
+      ratingRings: [
+        { label: '5 star', pct: 78 },
+        { label: '4 star', pct: 14 },
+        { label: '3 star', pct: 5 },
+        { label: '2 star', pct: 2 },
+        { label: '1 star', pct: 1 },
+      ].map((r, i) => ({ ...r, ringStyle: `stroke-dasharray:276;stroke-dashoffset:${276 - (r.pct / 100) * 276};animation:ringFill 1.4s ${i * 0.15}s ease-out backwards;` })),
+      reviewCardsLoop: [...reviews, ...reviews],
+      rowOneLoop: [...reviews.slice(0, 3), ...reviews.slice(0, 3)],
+      rowTwoLoop: [...reviews.slice(3, 6), ...reviews.slice(3, 6)],
+      formSubmitted: this.state.submitted,
+      formNotSubmitted: !this.state.submitted,
+      handleSubmit: this.handleSubmit,
+      ratingStars: [0, 1, 2, 3, 4].map((i) => ({ onClick: () => this.setState({ rating: i + 1 }), fill: i < this.state.rating ? '#007D67' : 'none' })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

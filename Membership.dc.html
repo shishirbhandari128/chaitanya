@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preload" as="image" href="assets/photos/md/spa-couple-facial.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/styles.css">
+  <script src="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <script src="./demo-photos.js"></script>
+  <script src="./motion.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Lato:wght@400;500;600;700&display=swap');
+    :root {
+      --color-bg: #f7f1de; --color-text: #072E34; --color-accent: #007D67; --color-accent-700: #045A4A;
+      --font-heading: 'El Messiri', sans-serif; --font-body: 'Lato', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; } body { margin: 0; background: #fff; }
+    a { color: var(--color-accent); } a:hover { color: var(--color-accent-700); }
+    @keyframes goldShine { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes heroExpandDown { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+    @keyframes iconFloat { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.06); } }
+  </style>
+</helmet>
+
+<dc-import name="SiteHeader" current-page="membership" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
+
+<section style="position:relative;padding:calc(2.4*var(--space-8)) clamp(20px,6vw,120px);display:flex;align-items:center;height:450px;box-sizing:border-box;overflow:hidden;animation:heroExpandDown 0.9s cubic-bezier(0.22,1,0.36,1) both;">
+  <image-slot src="assets/photos/md/spa-couple-facial.jpg" id="membership-hero" shape="rect" placeholder="Members enjoying a relaxation lounge" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"></image-slot>
+  <div style="position: absolute; inset: 0; background: rgba(7,46,52,0.55); z-index: 1; pointer-events: none"></div>
+  <div ref="{{ heroContentRef }}" style="position:relative;z-index:2;max-width:640px;will-change:transform;">
+    <span style="display:block;font-family:var(--font-body);font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.4);margin-bottom:var(--space-3);">Membership</span>
+    <h1 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(30px,4vw,48px);line-height:1.15;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,0.4);margin:0 0 var(--space-3);">Join Our Wellness Circle</h1>
+    <p style="font-family:var(--font-body);font-size:16px;line-height:1.65;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.35);max-width:52ch;margin:0;">Enjoy members-only treatments, special pricing, and priority booking all year round — for you, your family, and your friends.</p>
+  </div>
+</section>
+
+<section style="background:#F7F4EE;padding:calc(2.4*var(--space-8)) clamp(20px,6vw,120px);" data-om-label="why members love">
+  <h2 style="font-family:var(--font-heading);font-weight:700;font-size:32px;color:#201e1d;text-align:center;margin:0 0 8px;">Why Members Love Chaitanya</h2>
+  <p style="font-family:var(--font-body);font-size:15px;line-height:1.65;color:#6b6a63;text-align:center;max-width:60ch;margin:0 auto calc(1.6*var(--space-8));">More than a membership a wellness ritual of expert care, relaxation, &amp; renewal.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:56px 32px;max-width:1180px;margin:0 auto;">
+    <sc-for list="{{ benefits }}" as="b" hint-placeholder-count="6">
+      <div style="text-align:center;">
+        <div style="color:#201e1d;display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4);animation:iconFloat 3.2s ease-in-out infinite;animation-delay:{{ $index }}00ms;" dc-props="{{ b.iconProps }}">{{ b.icon }}</div>
+        <h4 style="font-family:var(--font-heading);font-weight:600;font-size:19px;margin:0 0 var(--space-2);color:#201e1d;">{{ b.title }}</h4>
+        <p style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:#6b6a63;margin:0;max-width:30ch;margin-left:auto;margin-right:auto;">{{ b.desc }}</p>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="tiers" style="padding: calc(2.4*var(--space-8)) clamp(20px,6vw,120px); background-color: #FFFFFF" data-om-label="Membership">
+  <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: 32px; color: #201e1d; text-align: center; margin: 0 0 var(--space-4); width: 1046px; height: 30px">Choose Your Membership</h2>
+  <p style="font-family: var(--font-body); font-size: 15px; color: #6b6a63; text-align: center; max-width: 56ch; margin: 0 auto calc(1.6*var(--space-8)); width: 483px; height: 28px">Billed annually. Cancel or upgrade anytime by visiting the front desk.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1100px;margin:0 auto;align-items:center;">
+    <sc-for list="{{ tiers }}" as="tier" hint-placeholder-count="3">
+      <div style="{{ tier.cardStyle }}border-radius:8px;padding:calc(1.8*var(--space-8)) var(--space-6);display:flex;flex-direction:column;">
+        <sc-if value="{{ tier.featured }}" hint-placeholder-val="{{ false }}">
+          <span style="display:inline-block;background:rgba(255,255,255,0.2);color:#fff;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:var(--space-4);align-self:flex-start;">Most Popular</span>
+        </sc-if>
+        <h3 style="font-family:var(--font-heading);font-weight:700;font-size:20px;letter-spacing:0.02em;text-transform:uppercase;margin:0 0 var(--space-2);color:{{ tier.textColor }};">{{ tier.name }}</h3>
+        <p style="font-family:var(--font-body);font-size:14px;color:{{ tier.subColor }};margin:0 0 var(--space-6);">{{ tier.tagline }}</p>
+        <p style="font-family:var(--font-heading);font-weight:800;font-size:44px;line-height:1;margin:0 0 var(--space-6);color:{{ tier.textColor }};">NPR {{ tier.price }}<span style="font-family:var(--font-body);font-weight:400;font-size:14px;">/year</span></p>
+        <div style="height:1px;background:{{ tier.dividerColor }};margin-bottom:var(--space-6);"></div>
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:var(--space-8);flex:1;">
+          <sc-for list="{{ tier.perks }}" as="perk" hint-placeholder-count="5">
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{ tier.checkColor }}" stroke-width="2" style="flex:none;margin-top:1px;"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 12.5l2.3 2.3 4.7-5.3"></path></svg>
+              <span style="font-family:var(--font-body);font-size:14px;color:{{ tier.perkColor }};line-height:1.5;">{{ perk }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <a href="Booking.dc.html" style="{{ tier.ctaStyle }}display:block;text-align:center;font-family:var(--font-body);font-weight:700;font-size:13px;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;padding:15px;border-radius:999px;">Choose Plan</a>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section style="background:#F7F4EE;padding:calc(2.4*var(--space-8)) clamp(20px,6vw,120px);">
+  <h2 style="font-family:var(--font-heading);font-weight:700;font-size:28px;color:#201e1d;text-align:center;margin:0 0 calc(1.4*var(--space-8));">Membership FAQs</h2>
+  <div style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faqs }}" as="faq" hint-placeholder-count="5">
+      <div style="border-bottom:1px solid #e6e6de;">
+        <button type="button" onClick="{{ faq.onClick }}" style="width:100%;text-align:left;background:transparent;border:none;padding:18px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;">
+          <span style="font-family:var(--font-heading);font-weight:600;font-size:15.5px;color:#201e1d;">{{ faq.q }}</span>
+          <span style="{{ faq.iconStyle }}flex:none;font-family:var(--font-body);font-size:20px;color:#007D67;">+</span>
+        </button>
+        <sc-if value="{{ faq.open }}" hint-placeholder-val="{{ false }}">
+          <p style="font-family:var(--font-body);font-size:14px;line-height:1.65;color:#6b6a63;margin:0 4px var(--space-4);">{{ faq.a }}</p>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section style="background: #fff; padding: 0;" data-om-label="Pre footer section">
+  <div style="position: relative; border-radius: 0; overflow: hidden; background: url(&quot;./screenshot-2026-09-21-at-10-33-45-am-1-mub1hcw9-8zaj.png&quot;) center / cover no-repeat; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 480px; padding: calc(2*var(--space-8)) clamp(20px,6vw,80px)">
+    <div style="position:relative;z-index:1;">
+      <h3 style="font-family: var(--font-heading); font-weight: 700; font-size: 32px; line-height: 1.1; letter-spacing: 0.006em; margin: 0 auto var(--space-2); max-width: none; white-space: nowrap; color: #fff;">Ready to Become a Member?</h3>
+      <p style="font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.8); max-width: 60ch; margin: 0 auto; width: 620px; height: 56px">Join our wellness circle and enjoy members-only treatments, special pricing,<br>and priority booking all year round.</p>
+      <div style="display: flex; justify-content: center; gap: 6px; margin-top: var(--space-8)">
+        <a href="Booking.dc.html" style="display:flex;align-items:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:14px;text-decoration:none;padding:13px 28px;height:44px;border-radius:99px;">Book a Consultation</a>
+        <a href="Booking.dc.html" aria-label="Book a Consultation" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;text-decoration:none;width:44px;height:44px;border-radius:99px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<dc-import name="SiteFooter" hint-size="100%,600px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1400}}">
+class Component extends DCLogic {
+  state = { openFaq: 0 };
+  heroContentRef = React.createRef();
+
+  componentDidMount() {
+    this._onScroll = () => {
+      if (this.heroContentRef.current) {
+        this.heroContentRef.current.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+      }
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+  }
+
+  renderVals() {
+    const ic = (paths) => React.createElement('svg', { width: 40, height: 40, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.4, strokeLinecap: 'round', strokeLinejoin: 'round' },
+      paths.map((d, i) => React.createElement('path', { key: i, d })));
+    const icCircle = (cx, cy, r) => React.createElement('svg', { width: 40, height: 40, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.4 }, React.createElement('circle', { cx, cy, r }));
+    const benefits = [
+      { icon: ic(['M12 22c2-3 3-6 3-9a3 3 0 0 0-6 0c0 3 1 6 3 9z', 'M12 13a5 5 0 0 1 5-5c0 2.8-2.2 5-5 5z', 'M12 13a5 5 0 0 1-5-5c0 2.8 2.2 5 5 5z', 'M12 9a4 4 0 0 1 4-4c0 2.2-1.8 4-4 4z', 'M12 9a4 4 0 0 1-4-4c0 2.2 1.8 4 4 4z']), title: 'Mindfulness', desc: 'Learn to reconnect with the present moment through calming breath.' },
+      { icon: ic(['M12 3.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z', 'M12 6v4', 'M12 10l-5 3', 'M12 10l5 3', 'M12 10v4l-3 7', 'M12 14l3 7']), title: 'Wellness Coaching', desc: 'One-on-one sessions tailored to your unique needs, helping you build.' },
+      { icon: ic(['M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6', 'M12 20s3-1.7 5.2-4.7', 'M19 8c1.5 1 1.5 4-1 5.5']), title: 'Emotional Healing', desc: 'Safe, compassionate space to explore emotions, release old.' },
+      { icon: ic(['M12 9c0-3-2.5-5-5-5-1.5 0-2.5 1-2.5 2.5C4.5 9 8 9.5 12 9z', 'M12 9c0-3 2.5-5 5-5 1.5 0 2.5 1 2.5 2.5C19.5 9 16 9.5 12 9z', 'M12 9v11', 'M12 12c-1.5-1-4-1-4 1.5S10 15 12 14', 'M12 12c1.5-1 4-1 4 1.5S14 15 12 14']), title: 'Growth', desc: 'Support through life transitions, identity shifts, or burnout recovery.' },
+      { icon: ic(['M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 'M2 21v-2a4 4 0 0 1 4-4h1', 'M15 21v-2a4 4 0 0 0-4-3.2', 'M15 5.5a3 3 0 1 1 3 5.2', 'M15 21v-2a4 4 0 0 1 4-4h1']), title: 'Community', desc: 'Group circles, workshops, and guided practices to remind you.' },
+      { icon: ic(['M6.5 9.5c-2 0-3.5 1.5-3.5 3s1.5 3 3.5 3 3.5-2 5.5-5c2 3 3.5 5 5.5 5s3.5-1.5 3.5-3-1.5-3-3.5-3-3.5 2-5.5 5c-2-3-3.5-5-5.5-5z']), title: 'Balance & Longevity', desc: 'Wellness routines and rituals that promote long-term harmony between.' },
+    ];
+    const tiers = [
+      { name: 'Silver', price: '8,000', tagline: 'For those starting their wellness journey.', featured: false, perks: ['10% off all treatments', '1 complimentary massage / quarter', 'Priority scheduling'],
+        cardStyle: 'background:linear-gradient(135deg,#f7f8f9 0%,#e2e5e8 50%,#f0f2f4 100%);border:none;', textColor: '#3a3f44', subColor: '#6b7075', dividerColor: '#d5d9dc', checkColor: '#7c848a', perkColor: '#4a4f54', ctaStyle: 'background:#fff;color:#3a3f44;border:1px solid #c4c9ce;' },
+      { name: 'Gold', price: '15,000', tagline: 'Ideal for guests with regular wellness goals.', featured: true, perks: ['18% off all treatments', '2 complimentary massages / quarter', 'Priority scheduling', 'Free birthday facial', '1 guest pass / month'],
+        cardStyle: 'background:linear-gradient(135deg,#3a2a0f 0%,#8a6a1f 32%,#e8c869 50%,#8a6a1f 68%,#3a2a0f 100%);background-size:220% 220%;animation:goldShine 6s ease-in-out infinite;border:1px solid rgba(232,200,105,0.5);box-shadow:0 24px 48px -12px rgba(58,42,15,0.45);', textColor: '#fff', subColor: 'rgba(255,255,255,0.85)', dividerColor: 'rgba(255,255,255,0.3)', checkColor: '#f4e2a4', perkColor: 'rgba(255,255,255,0.92)', ctaStyle: 'background:#f4e2a4;color:#3a2a0f;border:none;' },
+      { name: 'Platinum', price: '28,000', tagline: 'Full access for complete wellness immersion.', featured: false, perks: ['25% off all treatments', 'Unlimited quarterly massages', 'Dedicated therapist', 'Free annual detox package', '3 guest passes / month'],
+        cardStyle: 'background:#fff;border:1px solid #e6e6de;', textColor: '#201e1d', subColor: '#6b6a63', dividerColor: '#e6e6de', checkColor: '#007D67', perkColor: '#4a473f', ctaStyle: 'background:#007D67;color:#fff;border:none;' },
+    ];
+    const faqData = [
+      { q: 'Can I share my membership with family?', a: 'Silver and Gold tiers include guest passes for family or friends at member rates; Platinum members can bring guests more frequently.' },
+      { q: 'Is there a minimum commitment period?', a: 'Memberships are billed annually with no lock-in beyond the year \u2014 you can choose not to renew at any time.' },
+      { q: 'Do unused treatments roll over?', a: 'Complimentary quarterly treatments expire at the end of each quarter and do not roll over, so we recommend booking early.' },
+      { q: 'Can I upgrade my tier later?', a: 'Yes, visit the front desk any time and we\u2019ll prorate the difference onto your next renewal.' },
+      { q: 'Do members need to book in advance?', a: 'We recommend booking 1 day ahead as usual, though members get access to same-day priority slots when available.' },
+    ];
+    return {
+      heroContentRef: this.heroContentRef,
+      benefits,
+      tiers,
+      faqs: faqData.map((f, i) => ({
+        ...f,
+        open: this.state.openFaq === i,
+        onClick: () => this.setState({ openFaq: this.state.openFaq === i ? -1 : i }),
+        iconStyle: { transform: this.state.openFaq === i ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.25s ease', display: 'inline-block' },
+      })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/styles.css">
+  <script src="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <script src="./demo-photos.js"></script>
+  <script src="./motion.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Lato:wght@400;500;600;700&display=swap');
+    :root {
+      --color-bg: #f7f1de; --color-text: #072E34; --color-accent: #007D67; --color-accent-700: #045A4A;
+      --font-heading: 'El Messiri', sans-serif; --font-body: 'Lato', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; } body { margin: 0; background: #fff; }
+    a { color: var(--color-accent); } a:hover { color: var(--color-accent-700); }
+    .chy-detail-scroll { scrollbar-width: thin; scrollbar-color: #d8d9d1 transparent; }
+    .chy-detail-scroll::-webkit-scrollbar { width: 6px; } .chy-detail-scroll::-webkit-scrollbar-thumb { background: #d8d9d1; border-radius: 3px; }
+    @media (max-width: 900px) { .chy-detail-scroll { position: static !important; max-height: none !important; overflow: visible !important; } }
+  </style>
+</helmet>
+
+<dc-import name="SiteHeader" current-page="services" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
+
+<section style="background:#fff;padding:24px clamp(20px,6vw,120px) calc(2.4*var(--space-8));">
+  <p style="font-family:var(--font-body);font-size:13px;color:#5c6a4a;margin:0 0 20px;">
+    <a href="Chaitanya Landing.dc.html" style="text-decoration:none;color:inherit;">Home</a> &nbsp;/&nbsp;
+    <a href="Services.dc.html" style="text-decoration:none;color:inherit;">Services</a> &nbsp;/&nbsp;
+    <span style="color:#072E34;">{{ item.name }}</span>
+  </p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,72px);align-items:start;">
+    <div style="position:sticky;top:96px;display:flex;flex-direction:column;gap:12px;height:calc(100vh - 180px);min-height:420px;max-height:720px;">
+      <div style="position:relative;width:100%;flex:1 1 auto;min-height:0;overflow:hidden;background:#f5f6f4;">
+        <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="5">
+          <div style="{{ ph.stageStyle }}position:absolute;inset:0;transition:opacity 0.6s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);">
+            <image-slot id="{{ ph.slotId }}" shape="rect" placeholder="{{ ph.label }}" style="display:block;width:100%;height:100%;"></image-slot>
+          </div>
+        </sc-for>
+        <div style="position:absolute;left:16px;bottom:16px;z-index:3;display:flex;align-items:center;gap:8px;background:rgba(7,46,52,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;padding:7px 12px;font-family:var(--font-body);font-size:12.5px;font-weight:700;letter-spacing:0.06em;pointer-events:none;">
+          <span>{{ counterLabel }}</span>
+          <span style="width:1px;height:12px;background:rgba(255,255,255,0.4);"></span>
+          <span style="font-weight:500;letter-spacing:0;">{{ activeLabel }}</span>
+        </div>
+        <div style="position:absolute;right:16px;bottom:16px;z-index:3;display:flex;gap:6px;">
+          <button type="button" onClick="{{ prevPhoto }}" aria-label="Previous photo" style="width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,0.92);color:#072E34;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.15);transition:background 0.2s ease;" style-hover="background:#fff;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+          </button>
+          <button type="button" onClick="{{ nextPhoto }}" aria-label="Next photo" style="width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,0.92);color:#072E34;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.15);transition:background 0.2s ease;" style-hover="background:#fff;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+          </button>
+        </div>
+      </div>
+      <div style="flex:none;display:flex;gap:10px;height:clamp(56px,9vh,84px);">
+        <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="5">
+          <button type="button" onClick="{{ ph.onSelect }}" aria-label="{{ ph.label }}" aria-pressed="{{ ph.active }}" style="{{ ph.thumbStyle }}position:relative;flex:1 1 0;min-width:0;height:100%;padding:0;border:none;background:#f5f6f4;cursor:pointer;overflow:hidden;transition:opacity 0.25s ease, outline-color 0.25s ease;outline-offset:2px;">
+            <image-slot id="{{ ph.slotId }}" shape="rect" placeholder="{{ ph.num }}" style="display:block;width:100%;height:100%;pointer-events:none;"></image-slot>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div class="chy-detail-scroll" style="position:sticky;top:96px;max-height:calc(100vh - 120px);overflow-y:auto;padding:8px 8px 8px 0;box-sizing:border-box;">
+      <span style="display:block;font-family:var(--font-body);font-size:12.5px;letter-spacing:0.1em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">{{ item.category }}</span>
+      <h1 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(28px,3.6vw,40px);line-height:1.15;color:#201e1d;margin:0 0 var(--space-4);">{{ item.name }}</h1>
+      <div style="display:flex;align-items:center;gap:24px;padding:16px 0;border-top:1px solid #eceae0;border-bottom:1px solid #eceae0;margin-bottom:var(--space-6);">
+        <div>
+          <span style="display:block;font-family:var(--font-body);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#8a8577;margin-bottom:2px;">Duration</span>
+          <span style="font-family:var(--font-heading);font-weight:600;font-size:16px;color:#201e1d;">{{ item.duration }}</span>
+        </div>
+        <div style="width:1px;height:32px;background:#e4e2dc;"></div>
+        <div>
+          <span style="display:block;font-family:var(--font-body);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#8a8577;margin-bottom:2px;">Price</span>
+          <span style="font-family:var(--font-heading);font-weight:600;font-size:16px;color:#007D67;">{{ item.priceLabel }}</span>
+        </div>
+      </div>
+      <p style="font-family:var(--font-body);font-size:15.5px;line-height:1.75;color:#4a473f;margin:0 0 calc(1.6*var(--space-8));max-width:48ch;">{{ item.description }}</p>
+      <div style="display:flex;gap:6px;">
+        <button type="button" onClick="{{ openModal }}" style="display:flex;align-items:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:15px;border:none;cursor:pointer;padding:16px 30px;border-radius:99px;height:48px;box-sizing:border-box;">Book Now</button>
+        <button type="button" onClick="{{ openModal }}" aria-label="Book Now" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;border:none;cursor:pointer;width:48px;height:48px;border-radius:99px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeModal }}" style="position:fixed;inset:0;background:rgba(7,46,52,0.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;">
+    <div onClick="{{ stopClick }}" style="background:#fff;border-radius:20px;max-width:480px;width:100%;padding:calc(1.6*var(--space-8));box-sizing:border-box;position:relative;">
+      <button type="button" onClick="{{ closeModal }}" aria-label="Close" style="position:absolute;top:16px;right:16px;background:transparent;border:none;cursor:pointer;color:#8a8577;padding:4px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
+      </button>
+      <span style="display:block;font-family:var(--font-body);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-2);">{{ item.category }}</span>
+      <h3 style="font-family:var(--font-heading);font-weight:700;font-size:24px;color:#201e1d;margin:0 0 var(--space-3);">{{ item.name }}</h3>
+      <p style="font-family:var(--font-body);font-size:14.5px;line-height:1.65;color:#5c5648;margin:0 0 calc(1.4*var(--space-8));">{{ item.description }}</p>
+      <p style="font-family:var(--font-body);font-weight:700;font-size:14px;color:#201e1d;margin:0 0 var(--space-4);">How would you like to book?</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <a href="{{ item.therapistHref }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:18px 16px;border:1px solid #e4e2dc;border-radius:14px;text-decoration:none;color:#201e1d;transition:border-color 0.2s ease,background 0.2s ease;" style-hover="border-color:#007D67;background:#f5f6f4;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#007D67" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-3.9 3.6-7 8-7s8 3.1 8 7"></path></svg>
+          <span>
+            <span style="display:block;font-family:var(--font-heading);font-weight:600;font-size:15.5px;">Choose by Therapist</span>
+            <span style="display:block;font-family:var(--font-body);font-size:13px;color:#6b6a63;margin-top:2px;">Pick your preferred therapist first</span>
+          </span>
+        </a>
+        <a href="{{ item.availabilityHref }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:18px 16px;border:1px solid #e4e2dc;border-radius:14px;text-decoration:none;color:#201e1d;transition:border-color 0.2s ease,background 0.2s ease;" style-hover="border-color:#007D67;background:#f5f6f4;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#007D67" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="M8 3v4"></path><path d="M16 3v4"></path></svg>
+          <span>
+            <span style="display:block;font-family:var(--font-heading);font-weight:600;font-size:15.5px;">Choose by Availability</span>
+            <span style="display:block;font-family:var(--font-body);font-size:13px;color:#6b6a63;margin-top:2px;">Pick a date &amp; time, we&rsquo;ll assign a therapist</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<dc-import name="SiteFooter" hint-size="100%,600px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { modalOpen: false, photo: 0 };
+  PHOTO_LABELS = ['Treatment room', 'Therapy in session', 'Oils & ingredients', 'Relaxation lounge', 'Detail shot'];
+  setPhoto = (i) => { const n = this.PHOTO_LABELS.length; this.setState({ photo: (i + n) % n }); };
+  prevPhoto = () => this.setPhoto(this.state.photo - 1);
+  nextPhoto = () => this.setPhoto(this.state.photo + 1);
+  componentDidMount() {
+    this._onKey = (e) => {
+      if (this.state.modalOpen) { if (e.key === 'Escape') this.closeModal(); return; }
+      const t = e.target && e.target.tagName;
+      if (t === 'INPUT' || t === 'TEXTAREA') return;
+      if (e.key === 'ArrowLeft') this.prevPhoto();
+      if (e.key === 'ArrowRight') this.nextPhoto();
+    };
+    window.addEventListener('keydown', this._onKey);
+  }
+  componentWillUnmount() { window.removeEventListener('keydown', this._onKey); }
+  openModal = () => this.setState({ modalOpen: true });
+  closeModal = () => this.setState({ modalOpen: false });
+  stopClick = (e) => e.stopPropagation();
+  services() {
+    if (this._services) return this._services;
+    const svc = (id, name, category, duration, price) => ({
+      id, name, category, duration, priceLabel: `NPR ${price}`,
+      mainSlotId: `detail-main-${id}`,
+      thumbSlotIds: [1, 2, 3, 4].map((n) => `detail-thumb-${id}-${n}`),
+      bookHref: `Booking.dc.html?service=${encodeURIComponent(name)}`,
+      therapistHref: `Booking.dc.html?flow=therapist&service=${encodeURIComponent(name)}`,
+      availabilityHref: `Booking.dc.html?flow=availability&service=${encodeURIComponent(name)}`,
+      description: `A ${duration} ${category.toLowerCase()} session tailored to your constitution, helping you restore balance and leave feeling renewed.`,
+    });
+    this._services = [
+      svc(1, 'Signature Panchakarma Retreat', 'Featured', '7 days', '45,000'),
+      svc(2, 'Aroma Hot Stone Massage', 'Featured', '75 min', '3,800'),
+      svc(3, 'Shirodhara Therapy', 'Featured', '60 min', '4,200'),
+      svc(4, 'Deep Tissue Relaxation', 'Featured', '60 min', '3,500'),
+      svc(5, 'Herbal Body Polish', 'Featured', '45 min', '2,600'),
+      svc(6, '3-Day Detox Retreat', 'Lifestyle Wellness Package', '3 days', '18,500'),
+      svc(7, 'Stress Recovery Program', 'Lifestyle Wellness Package', '5 sessions', '12,000'),
+      svc(8, 'Couples Wellness Package', 'Lifestyle Wellness Package', '90 min', '7,600'),
+      svc(9, 'Insomnia Care Package', 'Lifestyle Wellness Package', '4 sessions', '9,800'),
+      svc(10, 'Abhyanga Oil Massage', 'Relax and Revitalize', '60 min', '3,200'),
+      svc(11, 'Swedish Relaxation Massage', 'Relax and Revitalize', '60 min', '3,000'),
+      svc(12, 'Aromatherapy Massage', 'Relax and Revitalize', '75 min', '3,600'),
+      svc(13, 'Foot Reflexology', 'Relax and Revitalize', '45 min', '2,200'),
+      svc(14, 'Nasya Therapy', 'Wellness Therapies', '30 min', '1,800'),
+      svc(15, 'Herbal Steam Therapy', 'Wellness Therapies', '30 min', '1,500'),
+      svc(16, 'Yoga & Meditation Session', 'Wellness Therapies', '60 min', '1,200'),
+      svc(17, 'Ayurvedic Diet Consultation', 'Wellness Therapies', '45 min', '1,500'),
+      svc(18, 'Hydrating Facial', 'Beauty and Salon', '50 min', '2,800'),
+      svc(19, 'Anti-Acne Facial Therapy', 'Beauty and Salon', '50 min', '2,900'),
+      svc(20, 'Beauty Threading', 'Beauty and Salon', '15 min', '250'),
+      svc(21, 'Hair Spa Treatment', 'Beauty and Salon', '45 min', '2,200'),
+      svc(22, 'Classic Manicure & Pedicure', 'Beauty and Salon', '60 min', '2,000'),
+    ];
+    return this._services;
+  }
+  renderVals() {
+    const params = new URLSearchParams(window.location.search);
+    const id = Number(params.get('id')) || 1;
+    const list = this.services();
+    const item = list.find((s) => s.id === id) || list[0];
+    const active = this.state.photo;
+    const photos = this.PHOTO_LABELS.map((label, i) => {
+      const on = i === active;
+      return {
+        label, num: String(i + 1).padStart(2, '0'), active: on,
+        slotId: i === 0 ? item.mainSlotId : `detail-thumb-${item.id}-${i}`,
+        onSelect: () => this.setPhoto(i),
+        stageStyle: `opacity:${on ? 1 : 0};transform:scale(${on ? 1 : 1.04});z-index:${on ? 2 : 1};pointer-events:${on ? 'auto' : 'none'};`,
+        thumbStyle: `opacity:${on ? 1 : 0.55};outline:2px solid ${on ? '#007D67' : 'transparent'};`,
+      };
+    });
+    return { item, photos, prevPhoto: this.prevPhoto, nextPhoto: this.nextPhoto,
+      counterLabel: `${String(active + 1).padStart(2, '0')} / ${String(photos.length).padStart(2, '0')}`,
+      activeLabel: this.PHOTO_LABELS[active],
+      modalOpen: this.state.modalOpen, openModal: this.openModal, closeModal: this.closeModal, stopClick: this.stopClick };
+  }
+}
+
+</script>
+</body>
+</html>

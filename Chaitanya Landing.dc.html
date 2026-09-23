@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preload" as="image" href="assets/photos/md/spa-woman-flower.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/styles.css">
+  <script src="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <script src="./demo-photos.js"></script>
+  <script src="./motion.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Lato:wght@400;500;600;700&display=swap');
+    :root {
+      --color-bg: #f7f1de;
+      --color-surface: #efe6cc;
+      --color-text: #072E34;
+      --color-accent: #007D67;
+      --color-accent-2: #007D67;
+      --color-divider: color-mix(in srgb, #072E34 35%, transparent);
+      --color-accent-100: #E3F5F0;
+      --color-accent-200: #C2E8DE;
+      --color-accent-300: #8FD3C4;
+      --color-accent-400: #4FBBA5;
+      --color-accent-500: #007D67;
+      --color-accent-600: #046B59;
+      --color-accent-700: #045A4A;
+      --color-accent-800: #072E34;
+      --color-accent-900: #041519;
+      --color-accent-2-100: #E3F5F0;
+      --color-accent-2-200: #C2E8DE;
+      --color-accent-2-300: #8FD3C4;
+      --color-accent-2-400: #4FBBA5;
+      --color-accent-2-500: #007D67;
+      --color-accent-2-600: #046B59;
+      --color-accent-2-700: #045A4A;
+      --color-accent-2-800: #072E34;
+      --color-accent-2-900: #041519;
+      --font-heading: 'El Messiri', sans-serif;
+      --font-heading-weight: 600;
+      --font-body: 'Lato', system-ui, sans-serif;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+    }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; }
+    @supports (height: 100dvh) { section[data-hero] { height: 100dvh !important; } }
+    a { color: var(--color-accent); }
+    a:hover { color: var(--color-accent-700); }
+    h1, h2, h3, h4, h5, h6 { letter-spacing: 0.008em; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+    @keyframes barShine { 0% { transform: translateX(-100%); } 100% { transform: translateX(320%); } }
+    @keyframes scrollBounce { 0%,100% { transform: translateY(0); opacity: 0.6; } 50% { transform: translateY(10px); opacity: 1; } }
+    @keyframes mouseScrollDot { 0% { transform: translateY(0); opacity: 1; } 70% { opacity: 0; } 100% { transform: translateY(14px); opacity: 0; } }
+    @keyframes heroFadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes aboutFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes feedbackSlide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    #services-row::-webkit-scrollbar { display: none; }
+    @keyframes confettiBurst {
+      0% { opacity: 1; transform: translate(0,0) rotate(0deg) scale(1); }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.4); }
+    }
+    @keyframes awardFadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes awardCardIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+    @keyframes goldShimmerPass { 0% { transform: translateX(-120%) rotate(8deg); } 100% { transform: translateX(220%) rotate(8deg); } }
+    #award-badge::part(frame), image-slot[id^="client-logo"]::part(frame), image-slot[id^="wallet-logo"]::part(frame) { background: transparent; }
+    @keyframes clientLogosSlide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) {
+      .award-confetti { display: none; }
+    }
+  </style>
+</helmet>
+
+<sc-if value="{{ loaderVisible }}" hint-placeholder-val="{{ true }}">
+  <div style="{{ loaderOverlayStyle }}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:28px;padding:0 24px;text-align:center;">
+      <img src="assets/chaitanya-logo.svg" alt="Chaitanya Health &amp; Wellness" style="{{ loaderMarkStyle }}">
+      <p style="{{ loaderTaglineStyle }}">Begin your journey to relaxation,<br>balance, and renewed well-being.</p>
+      <div style="{{ loaderBarWrapStyle }}">
+        <div style="{{ loaderBarFillStyle }}">
+          <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.55),transparent);animation:barShine 1.1s ease-in-out infinite;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<main id="top">
+
+<section data-hero="{{ true }}" style="position:relative;width:100%;height:100vh;min-height:560px;display:flex;flex-direction:column;overflow:hidden;color:var(--color-bg);">
+  <video ref="{{ heroVideoRef }}" loop="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.55) saturate(0.9);">
+    <source src="assets/hero-spa.mp4" type="video/mp4">
+  </video>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,46,52,0.5) 0%, rgba(7,46,52,0.35) 40%, rgba(7,46,52,0.65) 100%);"><div style="position: absolute; inset: 0; z-index: 2; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10vh;">
+
+  <div style="position: relative; z-index: 1; text-align: center; max-width: 980px; padding: clamp(32px,10vw,calc(4*var(--space-8))) clamp(20px,6vw,250px); display: flex; flex-direction: column; align-items: center; width: auto; box-sizing: border-box; height: auto">
+    <span style="display: flex; align-items: center; gap: 10px; font-family: var(--font-body); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; margin-bottom: var(--space-4); opacity: 0; animation: heroFadeUp 0.9s ease 0.1s forwards;"><span style="display:block;width:28px;height:1px;background:rgba(255,255,255,0.6);"></span>Ayurveda · Lalitpur, Nepal<span style="display:block;width:28px;height:1px;background:rgba(255,255,255,0.6);"></span></span>
+    <h1 style="font-size:clamp(36px,5vw,62px);line-height:1.15;letter-spacing:0.005em;margin:0;opacity:0;animation:heroFadeUp 0.9s ease 0.3s forwards;">
+      <span style="display: block; font-size: clamp(32px,5vw,58px);">CHAITANYA<br>HEALTH &amp; WELLNESS&nbsp;</span>
+
+    </h1>
+    <p style="font-family: var(--font-body); font-size: clamp(15px,2.6vw,17px); line-height: 1.7; max-width: 46ch; color: rgba(255,255,255,0.82); margin: var(--space-4) 0 0; opacity: 0; animation: heroFadeUp 0.9s ease 0.5s forwards;">Experience personalized naturopathy and holistic wellness designed to restore balance, vitality, and inner peace.</p>
+    <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: clamp(28px,5vw,calc(1.4*var(--space-8))); opacity: 0; animation: heroFadeUp 0.9s ease 0.7s forwards;">
+      <a href="Services.dc.html" style="display: flex; align-items: center; text-decoration: none; color: #fff; font-family: var(--font-heading); font-weight: 600; font-size: 15px; padding: 16px 30px; background-color: #007D67; border-radius: 999px; height: 48px; letter-spacing: 0.01em; transition: background 0.25s ease, transform 0.25s ease;" style-hover="background:#046a58;transform:translateY(-1px);">Reserve Now</a>
+      <a href="Services.dc.html" aria-label="Reserve Now" style="display: flex; align-items: center; justify-content: center; text-decoration: none; color: #fff; background-color: #007D67; border-radius: 999px; height: 48px; width: 48px; transition: background 0.25s ease, transform 0.25s ease;" style-hover="background:#046a58;transform:translateY(-1px);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="stroke-width: 0px"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+      </a>
+
+    </div>
+  </div></div></div>
+  <div style="position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <span style="font-family:var(--font-body);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.85);">Scroll Down</span>
+    <div style="width:22px;height:36px;border:2px solid rgba(255,255,255,0.85);border-radius:12px;display:flex;justify-content:center;padding-top:6px;box-sizing:border-box;">
+      <span style="width:4px;height:4px;border-radius:50%;background:#fff;animation:mouseScrollDot 1.6s ease-in-out infinite;"></span>
+    </div>
+  </div>
+  <dc-import name="SiteHeader" current-page="home" variant="overlay" hint-size="100%,96px" style="position:relative;z-index:2;"></dc-import>
+
+</section>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,6vw,250px);">
+  <div style="height:2px;background:var(--color-divider);"></div>
+</div>
+
+
+
+
+
+<section id="about" style="position: relative; padding: calc(2.4*var(--space-8)) clamp(20px,6vw,250px); box-sizing: border-box; background-color: #ffffff;" ref="{{ refAbout }}" data-om-label="About Us">
+  <div style="text-align:center;max-width:720px;margin:0 auto calc(2*var(--space-8));animation:aboutFloat 6s ease-in-out infinite;">
+    <span style="display:block;font-family:var(--font-body);font-size:13px;letter-spacing:0.08em;color:#007D67;margin-bottom:var(--space-3);">About Chaitanya</span>
+    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:38px;color:#201e1d;margin:0 0 var(--space-4);">Nurturing Wellness, Naturally</h2>
+    <p style="font-family:var(--font-body);font-size:16px;line-height:1.7;color:#5c5648;margin:0 0 var(--space-6);">We combine naturopathy, therapeutic massage, spa rituals, &amp; holistic <br>care to help you restore balance, relieve stress, &amp; feel your best.</p>
+    <div style="display: flex; gap: 6px; justify-content: center">
+      <a href="AboutUs.dc.html" style="display: flex; align-items: center; background: #007D67; color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 14px; text-decoration: none; padding: 13px 28px; border-radius: 99px; height: 44px">More About Us</a>
+      <a href="AboutUs.dc.html" aria-label="More About Us" style="display: flex; align-items: center; justify-content: center; background: #007D67; color: #fff; text-decoration: none; width: 44px; height: 44px; border-radius: 99px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+      </a>
+    </div>
+  </div>
+  <div style="display:flex;gap:var(--space-6);width:100%;">
+        <figure style="margin:0;flex:1 1 0;min-width:0;display:flex;flex-direction:column;{{ aboutPhotoLeftStyle }}">
+      <figcaption style="margin-bottom:var(--space-4);text-align:center;">
+        <span style="display:block;font-family:var(--font-heading);font-weight:700;font-size:18px;color:#201e1d;margin-bottom:4px;">Therapeutic Spa &amp; Massage</span>
+        <span style="display: block; font-family: var(--font-body); font-size: 13.5px; color: #6b6a63; width: 618px; height: 26px">Relaxation and recovery through expert hands.</span>
+      </figcaption>
+      <image-slot src="assets/photos/md/spa-woman-flower.jpg" id="about-photo-left" shape="rect" placeholder="Treatment room" style="width:100%;aspect-ratio:4/3;"></image-slot>
+    </figure>
+    <figure style="margin:0;flex:1 1 0;min-width:0;display:flex;flex-direction:column;{{ aboutPhotoRightStyle }}">
+      <figcaption style="margin-bottom:var(--space-4);text-align:center;">
+        <span style="display:block;font-family:var(--font-heading);font-weight:700;font-size:18px;color:#201e1d;margin-bottom:4px;">Holistic Naturopathy Care</span>
+        <span style="display: block; font-family: var(--font-body); font-size: 13.5px; color: #6b6a63; width: 620px; height: 23px">Natural treatments tailored to your well-being.</span>
+      </figcaption>
+      <image-slot src="assets/photos/md/spa-young-woman.jpg" id="about-photo-right" shape="rect" placeholder="Herbal pharmacy consultation" style="width:100%;aspect-ratio:4/3;"></image-slot>
+    </figure>
+  </div>
+</section>
+
+<section id="featured-services" style="color: #fff; overflow: hidden; background-color: #262524; min-height: 100vh; display: flex; flex-direction: column; box-sizing: border-box; padding: calc(2.4*var(--space-8)) 0;" (--space-8))="" 0;"="">
+  <div style="max-width:1600px;margin:0 auto;padding:0 48px;box-sizing:border-box;width:100%;display:flex;flex-direction:column;flex:1;min-height:0;">
+    <div style="text-align:left;margin-bottom:var(--space-6);">
+      <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: 38px; line-height: 1.1; margin: 0 0 var(--space-2); color: #fff">Signature Treatments</h2>
+      <p style="font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.75); margin: 0; width: 100%; white-space: nowrap;">Thoughtfully crafted treatments to restore balance and reveal your natural glow.</p>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-8);">
+      <sc-for list="{{ serviceTabs }}" as="tab" hint-placeholder-count="4">
+        <button type="button" onClick="{{ tab.onClick }}" style="{{ tab.style }}">{{ tab.label }}</button>
+      </sc-for>
+      <div style="display:flex;align-items:center;gap:var(--space-3);margin-left:auto;">
+        <a href="Services.dc.html" style="text-decoration:none;box-sizing:border-box;display:inline-flex;align-items:center;font-family: var(--font-body); font-size: 13.5px; padding: 10px 20px; border: 1px solid #0C3F47; background: transparent; color: #fff; cursor: pointer; white-space: nowrap; border-radius: 99px">View All</a>
+        <button type="button" onClick="{{ scrollServicesPrev }}" aria-label="Previous" style="width: 40px; height: 40px; background: transparent; border: 1px solid #0C3F47; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 99px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+        </button>
+        <button type="button" onClick="{{ scrollServicesNext }}" aria-label="Next" style="width: 40px; height: 40px; background: transparent; border: 1px solid #0C3F47; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 99px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="services-row" ref="{{ servicesRowRef }}" style="display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3.2);gap:16px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:4px;flex:1;min-height:0;scrollbar-width:none;-ms-overflow-style:none;">
+      <sc-for list="{{ featuredServices }}" as="svc" hint-placeholder-count="4">
+        <div onMouseEnter="{{ svc.onEnter }}" onMouseLeave="{{ svc.onLeave }}" style="position:relative;height:100%;display:flex;flex-direction:column;">
+          <figure style="margin:0;position:relative;flex:1;min-height:0;overflow:hidden;">
+            <image-slot id="{{ svc.slotId }}" shape="rect" placeholder="{{ svc.label }}" style="{{ svc.imgStyle }}"></image-slot>
+            <span style="position: absolute; top: 16px; left: 16px; background: transparent; color: #fff; font-family: var(--font-body); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 0; text-shadow: 0 1px 6px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.5)">{{ svc.category }}</span>
+          </figure>
+          <div style="flex:none;padding:14px 4px 0;display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);">
+            <div style="position:relative;flex:1;min-width:0;height:24px;">
+              <div style="{{ svc.titleStyle }}">
+                <h3 style="font-family:var(--font-heading);font-weight:400;font-size:16px;letter-spacing:0.03em;text-transform:uppercase;margin:0;color:#fff;white-space:nowrap;">{{ svc.title }}</h3>
+              </div>
+              <div style="{{ svc.bookNowStyle }}">
+                <span style="font-family:var(--font-heading);font-weight:600;font-size:16px;letter-spacing:0.03em;text-transform:uppercase;color:#fff;white-space:nowrap;">Book Now →</span>
+              </div>
+            </div>
+            <span style="flex:none;color:#fff;font-family:var(--font-body);font-size:14px;font-weight:600;">{{ svc.price }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="ritual" style="background:#f7f4ee;padding:calc(2.4*var(--space-8)) 0;" data-om-label="Ritual Storytelling">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(16px,6vw,120px);margin-bottom:var(--space-6);">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);">
+      <div>
+        <span style="display:block;font-family:var(--font-body);font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">The Experience</span>
+        <h2 style="font-family:var(--font-heading);font-weight:500;font-size:38px;color:#201e1d;margin:0;">A Ritual Designed Around You</h2>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;min-width:180px;">
+        <span style="font-family:var(--font-body);font-size:13px;color:#8a8577;white-space:nowrap;">{{ ritualStepLabel }}</span>
+        <div style="flex:1;min-width:120px;height:1px;background:#e4e0d5;position:relative;">
+          <div style="{{ ritualProgressFillStyle }}position:absolute;left:0;top:0;height:1px;background:#007D67;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ref="{{ ritualSectionRef }}" style="max-width:1600px;margin:0 auto;padding:0 clamp(16px,6vw,120px);">
+    <sc-for list="{{ ritualStages }}" as="stage" hint-placeholder-count="4">
+      <div ref="{{ stage.revealRef }}" style="width:100%;">
+      <div ref="{{ stage.ref }}" style="{{ stage.rowStyle }}">
+        <div style="flex:1 1 0;min-width:0;">
+          <span style="{{ stage.numStyle }}">{{ stage.num }} — {{ stage.eyebrow }}</span>
+          <h3 style="{{ stage.titleStyle }}">{{ stage.title }}</h3>
+          <p style="{{ stage.descStyle }}">{{ stage.desc }}</p>
+        </div><sc-if value="{{ stage.imageFirst }}" hint-placeholder-val="{{ true }}">
+          <div style="height:60vh;flex:1 1 0;min-width:0;">
+            <image-slot id="{{ stage.slotId }}" shape="rect" placeholder="{{ stage.imgLabel }}" style="{{ stage.imageStyle }}"></image-slot>
+          </div>
+        </sc-if>
+        
+        <sc-if value="{{ stage.contentFirst }}" hint-placeholder-val="{{ false }}">
+          <div style="height:60vh;flex:1 1 0;min-width:0;">
+            <image-slot id="{{ stage.slotId }}" shape="rect" placeholder="{{ stage.imgLabel }}" style="{{ stage.imageStyle }}"></image-slot>
+          </div>
+        </sc-if>
+      </div>
+      </div>
+    </sc-for>
+  </div>
+
+  
+</section>
+
+<section id="room-tour" style="position:relative;min-height:800px;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#fff;" data-om-label="CTA">
+  <video ref="{{ roomTourVideoRef }}" loop="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.55) saturate(0.95);">
+    <source src="assets/hero-spa.mp4" type="video/mp4">
+  </video>
+  
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,46,52,0.35), rgba(7,46,52,0.55));"></div>
+  <div style="position:relative;z-index:1;text-align:center;max-width:980px;padding:calc(3*var(--space-8)) clamp(20px,5vw,72px);display:flex;flex-direction:column;align-items:center;">
+    <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: 38px; line-height: 1.15; margin: 0; color: #fff;">Step Into Our Luxury Spa Sanctuary</h2>
+    <p style="font-family: var(--font-body); font-size: 16px; line-height: 1.65; max-width: 52ch; color: color-mix(in srgb, #fff 88%, transparent); margin: var(--space-2) 0 0;">A glimpse inside our serene spa spaces, designed for comfort, relaxation, and rejuvenation.</p>
+    <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: var(--space-8)">
+      <a href="Services.dc.html" style="display: flex; align-items: center; text-decoration: none; background: #007D67; color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 15px; padding: 16px 28px; height: 44px; border-radius: 999px">Relax With Us Today</a>
+      <a href="Services.dc.html" aria-label="Relax With Us Today" style="display: flex; align-items: center; justify-content: center; text-decoration: none; background: #007D67; color: #fff; border-radius: 999px; width: 44px; height: 44px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="height:20px;width:20px;"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="products" style="background:#ffffff;color:#201e1d;padding:calc(2.4*var(--space-8)) 0;" data-om-label="Products">
+  
+<div style="max-width: 1600px; margin: 0 auto; padding: 0 clamp(20px,6vw,250px); box-sizing: border-box;">
+    <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-3);">
+      <span style="font-family:var(--font-body);font-size:12.5px;letter-spacing:0.14em;text-transform:uppercase;color:#007D67;">Our Products</span>
+      <span style="width:70px;height:1px;background:#c9cabf;display:block;"></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007D67" stroke-width="1.5"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7c0 .3-.02.6-.05.9M11 20c-4-1-6-4-6-8m6 8c1.5-1 4-3.5 4-8"></path></svg>
+    </div>
+    <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: 38px; line-height: 1.2; margin: 0 0 var(--space-8); color: #201e1d">Personalized Wellness<br>&amp; Healing Services</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);align-items:stretch;">
+      <sc-for list="{{ products }}" as="prod" hint-placeholder-count="6">
+        <div style="position:relative;display:flex;flex-direction:column;height:100%;">
+          <a href="{{ prod.href }}" aria-label="{{ prod.name }}" style="position:absolute;inset:0;z-index:1;"></a>
+          <figure style="margin:0 0 var(--space-4);overflow:hidden;">
+            <image-slot id="{{ prod.slotId }}" shape="rect" placeholder="{{ prod.label }}" style="width:100%;aspect-ratio:1/1;transition:transform 0.6s cubic-bezier(.2,.7,.2,1);" style-hover="transform:scale(1.08);"></image-slot>
+          </figure>
+          <h3 style="font-family:var(--font-body);font-weight:700;font-size:13.5px;letter-spacing:0.03em;text-transform:uppercase;margin:0 0 var(--space-2);color:#201e1d;">{{ prod.name }}</h3>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;">
+            <span style="font-family:var(--font-body);font-size:13px;color:#6b6a63;">NPR <strong style="color:#201e1d;">{{ prod.price }}</strong></span>
+            <a href="{{ prod.href }}" style="position:relative;z-index:2;display:flex;align-items:center;gap:6px;font-family:var(--font-body);font-size:12.5px;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;color:#201e1d;background:transparent;border:none;cursor:pointer;padding:0;text-decoration:none;">
+              Buy Now
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+            </a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="text-align:center;margin-top:var(--space-8);">
+      <div style="display: inline-flex; gap: 6px">
+        <a href="Products.dc.html" style="display:flex;align-items:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:14px;text-decoration:none;padding:13px 28px;border-radius:99px;height:44px;">View All</a>
+        <a href="Products.dc.html" aria-label="View All" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;text-decoration:none;width:44px;height:44px;border-radius:99px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+        </a>
+      </div>
+    </div>
+  </div></section><section ref="{{ membershipSectionRef }}" id="membership" style="position:relative;height:220vh;" data-om-label="Membership">
+  <div style="position:sticky;top:0;height:100vh;display:flex;flex-wrap:nowrap;overflow:hidden;">
+  <div style="{{ membershipTextPanelStyle }}">
+    <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);">
+      <span style="font-family:var(--font-body);font-size:12.5px;letter-spacing:0.08em;color:#007D67;">Membership Benefits</span>
+      <span style="width:70px;height:1px;background:#8a9a6b;display:block;"></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007D67" stroke-width="1.5"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7c0 .3-.02.6-.05.9M11 20c-4-1-6-4-6-8m6 8c1.5-1 4-3.5 4-8"></path></svg>
+    </div>
+    <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: 38px; line-height: 1.35; margin: 0 0 var(--space-8); color: #201e1d">Experience Premium Benefits of Membership</h2>
+    <div style="display:flex;flex-direction:column;gap:var(--space-6);">
+      <div style="display:flex;gap:var(--space-3);align-items:flex-start;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#007D67" stroke="#fff" stroke-width="1.3" style="flex: none; width: 32px; height: 32px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><path d="M9 12h2v-2M11 12v2h2" stroke="#fff"></path></svg>
+        <div>
+          <h4 style="font-family: var(--font-heading); font-weight: 700; font-size: 20px">Exclusive Treatments</h4>
+          <p style="font-family: var(--font-body); font-size: 16px; color: #5c5648; margin: 0">Access members-only therapies and signature experiences.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:var(--space-3);align-items:flex-start;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#007D67" stroke="#fff" stroke-width="1.3" style="flex:none;"><path d="M20.59 13.41 12 22 2 12l8.59-8.59A2 2 0 0 1 12 3h7a2 2 0 0 1 2 2v7a2 2 0 0 1-.41 1.41z"></path><circle cx="16" cy="8" r="1.2" fill="#fff" stroke="none"></circle></svg>
+        <div>
+          <h4 style="font-family: var(--font-heading); font-weight: 700; font-size: 20px; letter-spacing: 0.02em; text-transform: none; margin: 0 0 4px; color: #4e6b39">Special Pricing</h4>
+          <p style="font-family: var(--font-body); font-size: 16px; color: #5c5648; margin: 0">Enjoy discounted rates on all services year-round.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:var(--space-3);align-items:flex-start;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#007D67" stroke="#fff" stroke-width="1.3" style="flex:none;"><rect x="3" y="4" width="18" height="18" rx="1"></rect><path d="M16 2v4M8 2v4" stroke="#fff"></path><path d="M3 10h18" stroke="#fff"></path><path d="m9 16 2 2 4-4" stroke="#fff"></path></svg>
+        <div>
+          <h4 style="font-family: var(--font-heading); font-weight: 700; font-size: 20px; letter-spacing: 0.02em; text-transform: none; margin: 0 0 4px; color: #4e6b39">Priority Booking</h4>
+          <p style="font-family: var(--font-body); font-size: 16px; color: #5c5648; margin: 0">Skip the wait with fast-track reservations anytime.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:var(--space-3);align-items:flex-start;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#007D67" stroke="#fff" stroke-width="1.3" style="flex:none;"><circle cx="12" cy="8" r="6"></circle><path d="M8.5 13.5 7 22l5-3 5 3-1.5-8.5" stroke="#fff"></path></svg>
+        <div>
+          <h4 style="font-family: var(--font-heading); font-weight: 700; font-size: 20px; letter-spacing: 0.02em; text-transform: none; margin: 0 0 4px; color: #4e6b39">Member Rewards</h4>
+          <p style="font-family: var(--font-body); font-size: 16px; color: #5c5648; margin: 0">Earn points, gifts, and exclusive perks.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="{{ membershipVideoPanelStyle }}">
+    <video ref="{{ membershipVideoRef }}" loop="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <source src="assets/hero-spa.mp4" type="video/mp4">
+    </video>
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,46,52,0.05), rgba(7,46,52,0.65)); pointer-events: none; width: 100%"><div style="position: absolute; left: 0; right: 0; bottom: 0; padding: calc(1.6*var(--space-8)) clamp(24px,5vw,56px); box-sizing: border-box;">
+      <h3 style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(20px,2.3vw,27px); line-height: 1.3; color: #fff; margin: 0 0 var(--space-4); max-width: 26ch;">Join Today and Experience Exclusive Membership Benefits</h3>
+      <div style="display: flex; gap: 6px">
+        <a href="Membership.dc.html" style="display: flex; align-items: center; background: #007D67; color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 14px; text-decoration: none; padding: 13px 28px; height: 44px; border-radius: 99px">Join Now</a>
+        <a href="Membership.dc.html" aria-label="Join Now" style="display: flex; align-items: center; justify-content: center; background: #007D67; color: #fff; text-decoration: none; width: 44px; height: 44px; border-radius: 99px; gap: 8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+        </a>
+      </div>
+    </div></div>
+    
+  </div>
+  </div>
+</section>
+
+<section id="client-feedback" style="background:#ffffff;padding:calc(2.4*var(--space-8)) 0;overflow:hidden;box-sizing:border-box;" data-om-label="Feedback">
+  <div style="padding:0 clamp(20px,6vw,250px);text-align:center;margin-bottom:calc(2*var(--space-8));">
+    
+    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:44px;color:#201e1d;margin:0 0 var(--space-4);">What Our Clients are Saying</h2>
+    <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:#6b6a63;max-width:52ch;margin:0 auto;">Hear directly from our guests about their experiences and the results we’ve delivered. Explore client feedback.</p>
+  </div>
+
+  <div style="width:100%;overflow:hidden;">
+    <div style="display:flex;gap:20px;width:max-content;animation:feedbackSlide 45s linear infinite;">
+      <sc-for list="{{ feedbackCardsLoop }}" as="t" hint-placeholder-count="12">
+        <div style="flex:0 0 360px;background:#f5f6f4;padding:calc(1.3*var(--space-6));text-align:left;">
+          <div style="display:flex;gap:4px;margin-bottom:var(--space-4);">
+            <sc-for list="{{ t.starFills }}" as="fill" hint-placeholder-count="5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="{{ fill }}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
+            </sc-for>
+          </div>
+          <p style="font-family:var(--font-body);font-size:15px;line-height:1.65;color:#3a3833;margin:0 0 var(--space-6);min-height:96px;">{{ t.quote }}</p>
+          <div style="height:1px;border-top:1px dashed #d6d5cf;margin-bottom:var(--space-6);"></div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <image-slot id="{{ t.slotId }}" shape="circle" placeholder="Client photo" style="width:48px;height:48px;flex:none;"></image-slot>
+            <div>
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:15px;color:#201e1d;margin:0;">{{ t.name }}</p>
+              <p style="font-family:var(--font-body);font-size:13px;color:#8a8a80;margin:2px 0 0;">{{ t.role }}</p>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="essence-gallery" style="padding: calc(2.4*var(--space-8)) 0 0; background-color: #F7F4EE" data-om-label="Gallery Section">
+  <div style="padding:0 clamp(20px,6vw,250px);margin-bottom:calc(2*var(--space-8));">
+    <div style="display:grid;grid-template-columns:0.8fr 2fr;gap:clamp(24px,5vw,80px);align-items:start;">
+      <span style="font-family:var(--font-body);font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#4FBBA5;">Our Gallery</span>
+      <div>
+        <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(28px,3.4vw,42px);line-height:1.15;color:#000;margin:0 0 var(--space-4);max-width:34ch;">A Glimpse Into the Chaitanya Experience</h2>
+        <p style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:#5c5b55;max-width:64ch;margin:0;">Explore the essence of Chaitanya through moments of care, relaxation, and rejuvenation. From soothing therapies and personalized wellness treatments to serene spaces designed for comfort, every detail is thoughtfully created to help you slow down, reconnect with yourself, and leave feeling refreshed and renewed.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:0.8fr 2fr;gap:clamp(24px,5vw,96px);align-items:start;margin-top:calc(2*var(--space-8));">
+      <div></div>
+      <div style="display:flex;gap:clamp(32px,6vw,96px);flex-wrap:wrap;">
+      <div>
+        <span style="display:block;font-family:var(--font-heading);font-style:italic;font-weight:600;font-size:clamp(30px,4vw,44px);color:#000;">126+</span>
+        <span style="font-family:var(--font-body);font-size:14px;color:#6b6a63;">Wellness Services</span>
+      </div>
+      <div>
+        <span style="display:block;font-family:var(--font-heading);font-style:italic;font-weight:600;font-size:clamp(30px,4vw,44px);color:#000;">92+</span>
+        <span style="font-family:var(--font-body);font-size:14px;color:#6b6a63;">Guest Reviews</span>
+      </div>
+      <div>
+        <span style="display:block;font-family:var(--font-heading);font-style:italic;font-weight:600;font-size:clamp(30px,4vw,44px);color:#000;">8 AM – 8 PM</span>
+        <span style="font-family:var(--font-body);font-size:14px;color:#6b6a63;">Daily Wellness Hours</span>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div style="width:100%;">
+    <div style="display:flex;gap:0;align-items:stretch;">
+      <figure style="margin:0;flex:1 1 0;min-width:0;">
+        <image-slot src="assets/photos/md/spa-couple-facial.jpg" id="essence-1" shape="rect" placeholder="Guest relaxing during treatment" style="width:100%;height:clamp(280px,42vw,480px);object-fit:cover;"></image-slot>
+      </figure>
+      <figure style="margin:0;flex:1 1 0;min-width:0;">
+        <image-slot src="assets/photos/md/spa-juice.jpg" id="essence-2" shape="rect" placeholder="Foot therapy with herbal petals" style="width:100%;height:clamp(280px,42vw,480px);object-fit:cover;"></image-slot>
+      </figure>
+      <figure style="margin:0;flex:1 1 0;min-width:0;">
+        <image-slot src="assets/photos/md/spa-tea-robes.jpg" id="essence-3" shape="rect" placeholder="Back massage close-up" style="width:100%;height:clamp(280px,42vw,480px);object-fit:cover;"></image-slot>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="trust-strip" style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse 60% 50% at 50% 35%, rgba(212,175,55,0.14) 0%, transparent 60%), linear-gradient(180deg, #111111 0%, #0B0B0C 100%);" ref="{{ refAward }}" data-om-label="Award">
+  <div style="position:absolute;inset:0;opacity:0.05;background-image:radial-gradient(circle at 20% 30%, #fff 0.5px, transparent 0.5px), radial-gradient(circle at 70% 60%, #fff 0.5px, transparent 0.5px);background-size:3px 3px, 4px 4px;pointer-events:none;"></div>
+  <div class="award-confetti">
+  <sc-for list="{{ confettiPieces }}" as="c" hint-placeholder-count="0">
+    <span style="{{ c.style }}"></span>
+  </sc-for>
+  </div>
+  <div style="position:relative;z-index:1;max-width:900px;margin:0 auto;text-align:center;padding:0 clamp(20px,5vw,40px);">
+    <div style="position: relative; display: inline-block; overflow: hidden; background: transparent; border: none; border-radius: 20px; padding: calc(1.6*var(--space-8)) clamp(24px,5vw,64px); box-shadow: none; animation: awardCardIn 1s cubic-bezier(0.16,1,0.3,1) both; width: 402px; height: 312px">
+      <span style="position:absolute;top:0;left:0;width:60%;height:100%;background:linear-gradient(100deg, transparent, rgba(255,255,255,0.16), transparent);animation:goldShimmerPass 1.8s 0.8s ease-in-out both;pointer-events:none;"></span>
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.3" style="margin:0 auto var(--space-4);display:block;filter:drop-shadow(0 2px 6px rgba(212,175,55,0.4));"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"></path><path d="M7 5H4a2 2 0 0 0 0 4c.6 1.6 1.6 2.8 3 3.6"></path><path d="M17 5h3a2 2 0 0 1 0 4c-.6 1.6-1.6 2.8-3 3.6"></path></svg>
+      <image-slot id="award-badge" shape="rect" placeholder="Tripadvisor Travelers' Choice 2022 badge" style="width: 280px; aspect-ratio: 1/1; margin: 0 auto 4px; height: 180px; background: transparent;"></image-slot>
+      <p style="font-family:var(--font-body);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#D4AF37;margin:0;">Travelers’ Choice Award · 2022</p>
+    </div>
+    <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px,4vw,42px); color: #fff; letter-spacing: 0.01em; margin: calc(1.6*var(--space-8)) 0 var(--space-4); animation: awardFadeUp 1s 0.15s cubic-bezier(0.16,1,0.3,1) both;">A Wellness Experience Worth Remembering</h2>
+    <p style="font-family: var(--font-body); font-size: 17px; line-height: 1.75; color: rgba(255,255,255,0.68); max-width: 56ch; margin: 0 auto; animation: awardFadeUp 1s 0.3s cubic-bezier(0.16,1,0.3,1) both;">Recognized with the Travelers’ Choice Award 2022, Chaitanya combines thoughtful care, peaceful surroundings, and rejuvenating experiences.</p>
+  </div>
+</section>
+
+<section id="contact" style="padding: calc(2.4*var(--space-8)) clamp(20px,6vw,250px); background-color: #FFFFFF" data-om-label="Contact Us">
+  <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,64px);align-items:stretch;">
+    <div style="position:relative;overflow:hidden;min-height:680px;">
+      <image-slot src="assets/photos/md/spa-team.jpg" id="contact-photo" shape="rect" placeholder="Guest at spa reception" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"></image-slot>
+      <div style="position:absolute;left:20px;right:20px;bottom:20px;display:flex;gap:12px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:180px;padding:14px 18px;display:flex;align-items:center;gap:12px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none;filter:drop-shadow(0 1px 4px rgba(0,0,0,0.5));"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <div>
+            <span style="display:block;font-family:var(--font-body);font-size:12px;color:rgba(255,255,255,0.85);text-shadow:0 1px 4px rgba(0,0,0,0.5);">Call Us</span>
+            <span style="display:block;font-family:var(--font-heading);font-weight:700;font-size:15px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);">+977-9851123301</span>
+          </div>
+        </div>
+        <div style="flex:1;min-width:180px;padding:14px 18px;display:flex;align-items:center;gap:12px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none;filter:drop-shadow(0 1px 4px rgba(0,0,0,0.5));"><path d="M4 4h16v16H4z" opacity="0"></path><path d="M22 6l-10 7L2 6"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+          <div>
+            <span style="display:block;font-family:var(--font-body);font-size:12px;color:rgba(255,255,255,0.85);text-shadow:0 1px 4px rgba(0,0,0,0.5);">Email Us</span>
+            <span style="display:block;font-family:var(--font-heading);font-weight:700;font-size:15px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);">info@chaitanyahealth.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center;">
+      <span style="display:block;font-family:var(--font-body);font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">Get In Touch</span>
+      <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: 38px; line-height: 1.15; color: #201e1d; margin: 0 0 var(--space-6);">Have Questions or Want to Visit?</h2>
+
+      <sc-if value="{{ feedbackFormSubmitted }}" hint-placeholder-val="{{ false }}">
+        <p style="font-family:var(--font-body);color:#201e1d;font-size:15px;margin:0;">Thank you, we’ll reach out shortly to confirm.</p>
+      </sc-if>
+      <sc-if value="{{ feedbackFormNotSubmitted }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ handleFeedbackSubmit }}" style="display:flex;flex-direction:column;gap:var(--space-4);">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);">
+            <div>
+              <label style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;margin-bottom:8px;">First Name *</label>
+              <input class="input" name="fname" type="text" placeholder="Enter your first name" required="{{ true }}" style="width:100%;background:#fff;border:1px solid #e4e2dc;color:#201e1d;border-radius:10px;height:48px;padding:0 16px;box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;margin-bottom:8px;">Last Name *</label>
+              <input class="input" name="lname" type="text" placeholder="Enter your last name" required="{{ true }}" style="width:100%;background:#fff;border:1px solid #e4e2dc;color:#201e1d;border-radius:10px;height:48px;padding:0 16px;box-sizing:border-box;">
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);">
+            <div>
+              <label style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;margin-bottom:8px;">Email Address *</label>
+              <input class="input" name="email" type="email" placeholder="Enter your email" required="{{ true }}" style="width:100%;background:#fff;border:1px solid #e4e2dc;color:#201e1d;border-radius:10px;height:48px;padding:0 16px;box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;margin-bottom:8px;">Phone *</label>
+              <input class="input" name="phone" type="tel" placeholder="+977" required="{{ true }}" style="width:100%;background:#fff;border:1px solid #e4e2dc;color:#201e1d;border-radius:10px;height:48px;padding:0 16px;box-sizing:border-box;">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;margin-bottom:8px;">Select Treatment *</label>
+            <select class="input" name="service" style="width:100%;background:#fff;border:1px solid #e4e2dc;color:#201e1d;border-radius:10px;height:48px;padding:0 16px;box-sizing:border-box;">
+              <option value="">Select one...</option>
+              <sc-for list="{{ treatmentOptions }}" as="opt" hint-placeholder-count="7">
+                <option value="{{ opt }}">{{ opt }}</option>
+              </sc-for>
+            </select>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);">
+            <div>
+              <label style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;margin-bottom:8px;">Location</label>
+              <input class="input" name="location" type="text" value="Bakhundole, Lalitpur" style="width:100%;background:#fff;border:1px solid #e4e2dc;color:#201e1d;border-radius:10px;height:48px;padding:0 16px;box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;margin-bottom:8px;">Preferred Date</label>
+              <input class="input" name="date" type="date" style="width:100%;background:#fff;border:1px solid #e4e2dc;color:#201e1d;border-radius:10px;height:48px;padding:0 16px;box-sizing:border-box;">
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:var(--space-2);">
+            <button type="submit" style="flex:1;display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:15px;border:none;padding:16px 28px;cursor:pointer;border-radius:99px;">Book Your Appointment</button>
+            <button type="submit" aria-label="Book Your Appointment" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;border:none;cursor:pointer;width:52px;height:52px;flex:none;border-radius:99px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+            </button>
+          </div>
+        </form>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff;padding:calc(1.6*var(--space-8)) 0;overflow:hidden;" data-om-label="Client Logos">
+  <p style="text-align:center;font-family:var(--font-body);font-size:15px;color:#6b6a63;margin:0 0 calc(1.2*var(--space-8));">Trusted by Leading Platforms &amp; Events</p>
+  <div style="width:100%;overflow:hidden;">
+    <div style="display:flex;gap:64px;width:max-content;align-items:center;animation:clientLogosSlide 32s linear infinite;">
+      <sc-for list="{{ clientLogosLoop }}" as="logo" hint-placeholder-count="14">
+        <image-slot id="{{ logo.slotId }}" src="{{ logo.src }}" fit="contain" shape="rect" placeholder="{{ logo.label }}" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="background: #fff; padding: 0;" data-om-label="Pre footer" ref="{{ refPreFooter }}">
+  <div style="{{ preFooterCardStyle }}">
+    <div style="position: absolute; inset: 0; pointer-events: none; background: url(&quot;./screenshot-2026-09-21-at-10-33-45-am-muaup1c2-2q8d.png&quot;) center / cover no-repeat"></div>
+    <div style="position:relative;z-index:1;">
+      <h3 style="font-family: var(--font-heading); font-weight: 700; font-size: 32px; line-height: 1.1; letter-spacing: 0.006em; margin: 0 auto var(--space-2); max-width: none; white-space: nowrap; color: #fff;">Begin Your Journey to Relaxation</h3>
+      <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:rgba(255,255,255,0.8);max-width:44ch;margin:0 auto;">Take a moment for yourself with personalized care designed to restore, relax, and rejuvenate.</p>
+      <div style="display: flex; justify-content: center; gap: 6px; margin-top: var(--space-8)">
+        <a href="Services.dc.html" style="display:flex;align-items:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:14px;text-decoration:none;padding:13px 28px;height:44px;border-radius:99px;">Book Your Appointment</a>
+        <a href="Services.dc.html" aria-label="Book Your Appointment" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;text-decoration:none;width:44px;height:44px;border-radius:99px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section><dc-import name="SiteFooter" hint-size="100%,600px"></dc-import></main>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;showLoader&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;heroCta&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Book Appointment&quot;,&quot;options&quot;:[&quot;Book Appointment&quot;,&quot;Call Clinic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;roomTourVideoSrc&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;assets/hero-spa.mp4&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  state = { loaderPhase: 0, navScrolled: false, revealed: {}, bookingSubmitted: false, bookingName: '', activeServiceTab: 'Featured', reviewRating: 1, feedbackFormSubmitted: false, activeRitual: 0, ritualProgress: 0, roomTourVideoOverride: null };
+  sectionRefs = {};
+
+  componentDidMount() {
+    this._timers = [];
+    const overrides = [
+      [this.heroVideoEl, this.props.heroVideoSrc],
+      [this.roomTourVideoEl, this.state.roomTourVideoOverride || this.props.roomTourVideoSrc],
+      [this.membershipVideoEl, this.props.membershipVideoSrc],
+    ];
+    overrides.forEach(([v, src]) => {
+      if (!v) return;
+      if (src) { v.querySelector('source').src = src; v.load(); }
+      v.muted = true; v.autoplay = true; v.playsInline = true;
+      const p = v.play();
+      if (p && p.catch) p.catch(() => {});
+    });
+    if (this.props.showLoader === false) {
+      this.setState({ loaderPhase: 5 });
+    } else {
+      document.body.style.overflow = 'hidden';
+      const at = (ms, phase) => this._timers.push(setTimeout(() => {
+        this.setState({ loaderPhase: phase });
+        if (phase === 5) document.body.style.overflow = '';
+      }, ms));
+      at(100, 1); at(600, 2); at(1200, 3); at(1900, 4); at(2400, 5);
+    }
+    this._onScroll = () => {
+      const scrolled = window.scrollY > 24;
+      if (scrolled !== this.state.navScrolled) this.setState({ navScrolled: scrolled });
+      this.updateRitual();
+      this.updateMembership();
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    (this._timers || []).forEach(clearTimeout);
+    window.removeEventListener('scroll', this._onScroll);
+    if (this.observer) this.observer.disconnect();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.roomTourVideoOverride !== this.state.roomTourVideoOverride && this.roomTourVideoEl) {
+      this.roomTourVideoEl.querySelector('source').src = this.state.roomTourVideoOverride;
+      this.roomTourVideoEl.load();
+      const p = this.roomTourVideoEl.play();
+      if (p && p.catch) p.catch(() => {});
+    }
+  }
+
+  refFor(id) {
+    if (!this.sectionRefs[id]) {
+      this.sectionRefs[id] = (el) => {
+        if (!el) return;
+        if (!this.observer) {
+          this.observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const key = entry.target.dataset.revealId;
+                this.setState((s) => ({ revealed: { ...s.revealed, [key]: true } }));
+                this.observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.12 });
+        }
+        el.dataset.revealId = id;
+        this.observer.observe(el);
+      };
+    }
+    return this.sectionRefs[id];
+  }
+
+  get preFooterCardStyle() {
+    const inView = !!this.state.revealed.preFooter;
+    return `position:relative;border-radius:0;overflow:hidden;background:#072E34;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:380px;padding:calc(2*var(--space-8)) clamp(20px,6vw,80px);margin:0 auto;width:${inView ? '100%' : '78%'};transition:width 1.4s cubic-bezier(0.16,1,0.3,1);`;
+  }
+
+  confettiData() {
+    if (!this._confetti) {
+      const golds = ['#D4AF37', '#E9CE7A', '#F3E3AE', '#B8912C'];
+      this._confetti = Array.from({ length: 46 }, (_, i) => {
+        const left = 30 + Math.random() * 40;
+        const size = 2 + Math.random() * 5;
+        const delay = Math.random() * 0.5;
+        const duration = 1.5 + Math.random() * 0.5;
+        const drift = (Math.random() - 0.5) * 260;
+        const dy = -60 - Math.random() * 140;
+        const rot = 180 + Math.random() * 360;
+        const color = golds[i % golds.length];
+        const isSpark = Math.random() > 0.6;
+        return {
+          style: {
+            position: 'absolute', left: `${left}%`, zIndex: 2,
+            width: `${size}px`, height: `${size}px`,
+            background: color, borderRadius: '50%',
+            boxShadow: isSpark ? `0 0 6px 1px ${color}` : 'none',
+            opacity: 0,
+            '--dx': `${drift}px`, '--dy': `${dy}px`, '--rot': `${rot}deg`,
+            top: '42%',
+            animation: `confettiBurst ${duration}s ${delay}s cubic-bezier(.12,.7,.3,1) forwards`,
+            pointerEvents: 'none',
+          },
+        };
+      });
+    }
+    return this._confetti;
+  }
+
+  reveal(id) {
+    const on = !!this.state.revealed[id];
+    return {
+      opacity: on ? 1 : 0,
+      transform: on ? 'translateY(0)' : 'translateY(28px)',
+      transition: 'opacity 0.8s cubic-bezier(.2,.7,.2,1), transform 0.8s cubic-bezier(.2,.7,.2,1)',
+    };
+  }
+
+  ritualSectionRef = (el) => { this.ritualSectionEl = el; };
+  membershipSectionRef = (el) => { this.membershipSectionEl = el; };
+  updateMembership = () => {
+    if (!this.membershipSectionEl) return;
+    const r = this.membershipSectionEl.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const scrollable = r.height - vh;
+    let progress = scrollable > 0 ? (-r.top) / scrollable : 0;
+    progress = Math.min(1, Math.max(0, progress));
+    if (Math.abs(progress - (this.state.membershipProgress || 0)) > 0.004) {
+      this.setState({ membershipProgress: progress });
+    }
+  };
+  ritualStageRef(i) {
+    if (!this._ritualRefs) this._ritualRefs = {};
+    if (!this._ritualRefs[i]) this._ritualRefs[i] = (el) => { if (!this.ritualStageEls) this.ritualStageEls = []; this.ritualStageEls[i] = el; };
+    return this._ritualRefs[i];
+  }
+  updateRitual = () => {
+    if (!this.ritualStageEls) return;
+    let active = this.state.activeRitual;
+    this.ritualStageEls.forEach((el, i) => {
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      if (r.top <= window.innerHeight * 0.5) active = i;
+    });
+    let progress = this.state.ritualProgress;
+    if (this.ritualSectionEl) {
+      const r = this.ritualSectionEl.getBoundingClientRect();
+      const total = r.height - window.innerHeight;
+      progress = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
+    }
+    if (active !== this.state.activeRitual || Math.abs(progress - this.state.ritualProgress) > 0.004) {
+      this.setState({ activeRitual: active, ritualProgress: progress });
+    }
+  };
+
+  handleBookingSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    this.setState({ bookingSubmitted: true, bookingName: data.get('name') || 'there' });
+    e.target.reset();
+  };
+
+  renderVals() {
+    const phase = this.state.loaderPhase;
+    const scrolled = this.state.navScrolled;
+    const heroCta = this.props.heroCta || 'Book Appointment';
+
+    const treatmentsRaw = [
+      ['01', 'Panchakarma', 'A five-action deep detox protocol, tailored to your constitution and run over 7\u201321 days.'],
+      ['02', 'Abhyanga', 'Warm herbal oil massage that softens tension, improves circulation, and grounds the nervous system.'],
+      ['03', 'Shirodhara', 'A continuous, steady stream of warm oil across the forehead to quiet an overactive mind.'],
+      ['04', 'Nasya Therapy', 'Medicated oils administered through the nasal passage to clear sinuses and sharpen the senses.'],
+      ['05', 'Diet & Lifestyle Consultation', 'A personalised plan built around your dosha, the season, and your daily rhythm.'],
+      ['06', 'Yoga & Meditation', 'Guided practice to steady the breath, the posture, and the mind alike.'],
+    ];
+
+    return {
+      loaderVisible: phase < 5,
+      loaderOverlayStyle: {
+        position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: 'var(--color-text)',
+        opacity: phase >= 4 ? 0 : 1,
+        transform: phase >= 4 ? 'translateY(-100%)' : 'translateY(0)',
+        transition: 'opacity 1s ease, transform 1.1s cubic-bezier(.65,0,.35,1)',
+        pointerEvents: phase >= 4 ? 'none' : 'auto',
+      },
+      loaderMarkStyle: {
+        height: '120px', width: 'auto', filter: 'invert(1) brightness(2)',
+        opacity: phase >= 1 ? 1 : 0,
+        transform: phase >= 1 ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.94)',
+        transition: 'opacity 0.7s ease, transform 0.7s ease',
+      },
+      loaderTaglineStyle: {
+        fontFamily: 'var(--font-heading)', fontSize: '24px', color: 'var(--color-bg)', margin: 0, maxWidth: '36ch', lineHeight: 1.5, letterSpacing: '0.02em',
+        opacity: phase >= 2 ? 1 : 0,
+        transform: phase >= 2 ? 'translateY(0)' : 'translateY(8px)',
+        transition: 'opacity 0.6s ease, transform 0.6s ease',
+      },
+      loaderBarWrapStyle: {
+        opacity: phase >= 2 ? 1 : 0, transition: 'opacity 0.4s ease',
+        width: '180px', height: '2px', background: 'color-mix(in srgb, var(--color-bg) 25%, transparent)',
+        overflow: 'hidden', position: 'relative',
+      },
+      loaderBarFillStyle: {
+        width: phase >= 3 ? '100%' : '0%', transition: 'width 1.1s cubic-bezier(.4,0,.2,1)',
+        height: '100%', background: 'var(--color-accent)', position: 'relative', overflow: 'hidden',
+      },
+
+      navBarStyle: {
+        background: 'transparent',
+        color: 'var(--color-bg)',
+        position: 'relative', zIndex: 2,
+        display: 'flex', alignItems: 'center',
+        boxShadow: 'none',
+        paddingLeft: 'clamp(16px, 6vw, 250px)', paddingRight: 'clamp(16px, 6vw, 250px)',
+        marginTop: '20px',
+        flexWrap: 'nowrap', overflowX: 'auto', gap: 'clamp(10px,2vw,32px)',
+      },
+
+      heroCtaLabel: heroCta,
+      heroCtaHref: heroCta === 'Call Clinic' ? 'tel:+9779851123301' : '#contact',
+      heroVideoRef: (el) => { this.heroVideoEl = el; },
+      handleRoomTourVideoPick: (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const url = URL.createObjectURL(file);
+        this.setState({ roomTourVideoOverride: url });
+      },
+      products: [
+        { href: 'ProductDetail.dc.html?id=1', slotId: 'prod-1', label: 'Beetroot powder', name: 'Beetroot Powder', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=2', slotId: 'prod-2', label: 'Flax seed oil', name: 'Flax Seed Oil', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=3', slotId: 'prod-3', label: 'Hibiscus powder', name: 'Hibiscus Powder', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=4', slotId: 'prod-4', label: 'Pancake mix', name: 'Kodali Pancake Mix', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=5', slotId: 'prod-5', label: 'Milk thistle powder', name: 'Milk Thistle Powder', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=6', slotId: 'prod-6', label: 'Multani mitti', name: 'Multani Mitti', price: '250.00' },
+      ],
+      roomTourVideoRef: (el) => { this.roomTourVideoEl = el; },
+      membershipVideoRef: (el) => { this.membershipVideoEl = el; },
+      membershipSectionRef: this.membershipSectionRef,
+      membershipTextPanelStyle: {
+        flex: `0 0 ${Math.max(0, 50 - (this.state.membershipProgress || 0) * 110)}%`,
+        minWidth: '0',
+        opacity: Math.max(0, 1 - (this.state.membershipProgress || 0) * 1.8),
+        overflow: 'hidden',
+        background: '#eaddba',
+        padding: (this.state.membershipProgress || 0) > 0.92 ? '0' : 'calc(2*var(--space-8)) clamp(48px,8vw,120px)',
+        display: 'flex', flexDirection: 'column', justifyContent: 'center',
+      },
+      membershipVideoPanelStyle: {
+        flex: `1 1 auto`,
+        position: 'relative', height: '100%', overflow: 'hidden',
+      },
+
+      refAward: this.refFor('award'),
+      confettiPieces: this.state.revealed.award ? this.confettiData() : [],
+      clientLogosLoop: (() => {
+        const logos = [['lotus','Lotus Retreats'],['evergreen','Evergreen'],['aurum','Aurum'],['himalaya','Himalaya Travel'],['saffron','Saffron & Co'],['stillwater','Stillwater'],['kinfolk','Kinfolk Hotels']];
+        const one = logos.map(([f, label], i) => ({ slotId: `client-logo-${i}`, label, src: `assets/logos/${f}.svg` }));
+        return [...one, ...one.map((l, i) => ({ ...l, slotId: `client-logo-b-${i}` }))];
+      })(),
+
+      ritualSectionRef: this.ritualSectionRef,
+      ritualStepLabel: `0${this.state.activeRitual + 1} / 04`,
+      ritualProgressFillStyle: { width: `${Math.round(this.state.ritualProgress * 100)}%` },
+      ritualStages: [
+        { num: '01', eyebrow: 'Arrive', title: 'Leave the Outside World Behind', desc: 'Step into a peaceful environment where you can pause, breathe, and leave the day\u2019s distractions behind.', slotId: 'ritual-1', imgLabel: 'Guest arriving into a calm spa lobby', reverse: false },
+        { num: '02', eyebrow: 'Unwind', title: 'Settle Into Stillness', desc: 'Take a moment to relax as your surroundings, calming aromas, and thoughtful details create a sense of complete ease.', slotId: 'ritual-2', imgLabel: 'Guest settling into stillness amid calming aromas', reverse: true },
+        { num: '03', eyebrow: 'Restore', title: 'Care That Meets Your Needs', desc: 'Experience thoughtfully selected treatments designed to ease tension, restore balance, and support your natural well-being.', slotId: 'ritual-3', imgLabel: 'Therapist providing a restorative treatment', reverse: false },
+        { num: '04', eyebrow: 'Rejuvenate', title: 'Leave Feeling Renewed', desc: 'Step back into your day feeling lighter, refreshed, and more connected to yourself.', slotId: 'ritual-4', imgLabel: 'Guest leaving the spa renewed and refreshed', reverse: true },
+      ].map((s, i) => {
+        const active = i === this.state.activeRitual;
+        return {
+          ...s,
+          ref: this.ritualStageRef(i),
+          revealRef: this.refFor(`ritual-${i}`),
+          imageFirst: !s.reverse,
+          contentFirst: s.reverse,
+          rowStyle: {
+            position: 'relative', flexDirection: s.reverse ? 'row-reverse' : 'row', display: 'flex', alignItems: 'center', gap: '40px', padding: 'var(--space-8) 0',
+            transform: this.state.revealed[`ritual-${i}`] ? 'translateX(0)' : 'translateX(-60px)',
+            opacity: this.state.revealed[`ritual-${i}`] ? 1 : 0,
+            transition: 'transform 0.9s cubic-bezier(0.22,1,0.36,1), opacity 0.9s ease',
+          },
+          numStyle: {
+            display: 'block', fontFamily: 'var(--font-body)', fontSize: '13px', letterSpacing: '0.1em', marginBottom: 'var(--space-3)',
+            color: '#007D67',
+          },
+          titleStyle: {
+            fontFamily: 'var(--font-heading)', margin: '0 0 16px', fontSize: 'clamp(24px,2.8vw,32px)', fontWeight: 500,
+            color: '#201e1d',
+          },
+          descStyle: {
+            fontFamily: 'var(--font-body)', fontSize: '15.5px', lineHeight: 1.7, color: '#5c5648', maxWidth: '44ch',
+            maxHeight: '220px', opacity: 1, marginTop: '0px', overflow: 'hidden',
+          },
+          imageStyle: {
+            width: '100%', height: '100%', objectFit: 'cover',
+            transform: 'scale(1)', opacity: 1,
+          },
+        };
+      }),
+
+      ratingStars: [0, 1, 2, 3, 4].map((i) => ({
+        onClick: () => this.setState({ reviewRating: i + 1 }),
+        fill: i < this.state.reviewRating ? '#007D67' : 'none',
+      })),
+      openingHours: [
+        { label: 'Clinic Hour', time: '08:00 AM - 12:00 PM' },
+        { label: 'Fresh Hour', time: '08:00 AM - 12:00 PM' },
+        { label: 'Lazy Hour', time: '08:00 AM - 12:00 PM' },
+        { label: 'Relax Hour', time: '08:00 AM - 12:00 PM' },
+      ],
+      feedbackFormSubmitted: this.state.feedbackFormSubmitted,
+      feedbackFormNotSubmitted: !this.state.feedbackFormSubmitted,
+      handleFeedbackSubmit: (e) => { e.preventDefault(); this.setState({ feedbackFormSubmitted: true }); },
+
+      feedbackCardsLoop: (() => {
+        const stars = (n) => Array.from({ length: 5 }, (_, i) => (i < n ? '#201e1d' : '#d7d6cf'));
+        const people = [
+          { slotId: 'fb-av-1', name: 'S. Maharjan', role: 'Wellness Client', rating: 5, quote: 'The Panchakarma retreat reset something in me I didn\u2019t know was off balance. Three months on, I still sleep like I did as a child.' },
+          { slotId: 'fb-av-2', name: 'R. Karki', role: 'Regular Guest', rating: 5, quote: 'My physician actually talked to my therapist between sessions. I\u2019ve never felt so looked-after at a clinic.' },
+          { slotId: 'fb-av-3', name: 'A. Sharma', role: 'Founder, Ritof Studio', rating: 4, quote: 'The atmosphere was calm, peaceful, and incredibly welcoming from the moment I walked in \u2014 the therapy itself was excellent.' },
+          { slotId: 'fb-av-4', name: 'P. Basnet', role: 'Wellness Client', rating: 5, quote: 'Shirodhara on a Friday evening is now non-negotiable. Calmest I feel all week.' },
+          { slotId: 'fb-av-5', name: 'A. Thapa', role: 'Member', rating: 4, quote: 'Every visit feels personal \u2014 they remember my constitution, my history, my preferences.' },
+          { slotId: 'fb-av-6', name: 'J. Alison', role: 'Project Manager', rating: 4, quote: 'Was initially hesitant about the treatment, but the team quickly put my mind at ease. The results exceeded my expectations.' },
+        ].map((p) => ({ ...p, starFills: stars(p.rating) }));
+        return [...people, ...people];
+      })(),
+
+      refServices: this.refFor('services'), servicesReveal: this.reveal('services'),
+
+      servicesRowRef: (el) => { this.servicesRowEl = el; },
+      scrollServicesPrev: () => { if (this.servicesRowEl) this.servicesRowEl.scrollBy({ left: -360, behavior: 'smooth' }); },
+      scrollServicesNext: () => { if (this.servicesRowEl) this.servicesRowEl.scrollBy({ left: 360, behavior: 'smooth' }); },
+      serviceTabs: ['Featured', 'Body Therapies', 'Facial & Skin', 'Hair & Spa'].map((label) => ({
+        label,
+        onClick: () => this.setState({ activeServiceTab: label }),
+        style: {
+          fontFamily: 'var(--font-body)', fontSize: '13.5px', padding: '10px 20px',
+          border: '1px solid #0C3F47', cursor: 'pointer', whiteSpace: 'nowrap',
+          ...(label === this.state.activeServiceTab
+            ? { background: '#007D67', color: '#fff', borderColor: '#007D67' }
+            : { background: 'transparent', color: '#fff' }),
+        },
+      })),
+      featuredServices: [
+        { slotId: 'svc-1', label: 'Relaxing massage', category: 'Massage Therapy', title: 'Relaxing Massage', price: 'NPR 3,500' },
+        { slotId: 'svc-2', label: 'Hydrating facial', category: 'Facial Treatments', title: 'Hydrating Facial', price: 'NPR 2,800' },
+        { slotId: 'svc-3', label: 'Herbal body polish', category: 'Body Scrubs', title: 'Herbal Body Polish', price: 'NPR 2,600' },
+        { slotId: 'svc-4', label: 'Shirodhara therapy', category: 'Ayurvedic Care', title: 'Shirodhara Therapy', price: 'NPR 4,200' },
+      ].map((s) => {
+        const hovered = this.state.hoveredService === s.slotId;
+        return {
+          ...s,
+          onEnter: () => this.setState({ hoveredService: s.slotId }),
+          onLeave: () => this.setState({ hoveredService: null }),
+          imgStyle: { width: '100%', height: '100%', transform: hovered ? 'scale(1.08)' : 'scale(1)', transition: 'transform 0.6s cubic-bezier(.2,.7,.2,1)' },
+          titleStyle: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', opacity: hovered ? 0 : 1, transform: hovered ? 'translateY(-6px)' : 'translateY(0)', transition: 'opacity 0.3s ease, transform 0.3s ease' },
+          bookNowStyle: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', opacity: hovered ? 1 : 0, transform: hovered ? 'translateY(0)' : 'translateY(6px)', transition: 'opacity 0.3s ease, transform 0.3s ease', pointerEvents: hovered ? 'auto' : 'none' },
+        };
+      }),
+
+      refAbout: this.refFor('about'),
+      aboutPhotoLeftStyle: {
+        opacity: this.state.revealed.about ? 1 : 0,
+        transform: this.state.revealed.about ? 'translateX(0)' : 'translateX(-70px)',
+        transition: 'opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1)',
+      },
+      aboutPhotoRightStyle: {
+        opacity: this.state.revealed.about ? 1 : 0,
+        transform: this.state.revealed.about ? 'translateX(0)' : 'translateX(70px)',
+        transition: 'opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1)',
+      },
+      aboutRuleLeftStyle: {
+        transform: this.state.revealed.about ? 'scaleX(1)' : 'scaleX(0)',
+        transformOrigin: 'right',
+        transition: 'transform 0.7s cubic-bezier(.2,.7,.2,1) 0.5s',
+      },
+      aboutRuleRightStyle: {
+        transform: this.state.revealed.about ? 'scaleX(1)' : 'scaleX(0)',
+        transformOrigin: 'left',
+        transition: 'transform 0.7s cubic-bezier(.2,.7,.2,1) 0.5s',
+      },
+      aboutLineTopStyle: {
+        transform: this.state.revealed.about ? 'scaleY(1)' : 'scaleY(0)',
+        transformOrigin: 'bottom',
+        transition: 'transform 0.6s ease 0.3s',
+      },
+      aboutLineBottomStyle: {
+        transform: this.state.revealed.about ? 'scaleY(1)' : 'scaleY(0)',
+        transformOrigin: 'top',
+        transition: 'transform 0.6s ease 0.9s',
+      },
+      aboutTextStyle: {
+        opacity: this.state.revealed.about ? 1 : 0,
+        transform: this.state.revealed.about ? 'translateY(0)' : 'translateY(16px)',
+        transition: 'opacity 0.7s ease 0.65s, transform 0.7s ease 0.65s',
+      },
+      refPhilosophy: this.refFor('philosophy'),
+      philosophyImageStyle: { ...this.reveal('philosophy'), order: 2 },
+      philosophyTextStyle: { ...this.reveal('philosophy'), order: 1 },
+      refTeam: this.refFor('team'), teamReveal: this.reveal('team'),
+      refTestimonials: this.refFor('testimonials'), testimonialsReveal: this.reveal('testimonials'),
+      refPricing: this.refFor('pricing'), pricingReveal: this.reveal('pricing'),
+      refGallery: this.refFor('gallery'), galleryReveal: this.reveal('gallery'),
+      refLocation: this.refFor('location'), locationReveal: this.reveal('location'),
+      refContact: this.refFor('contact'), contactReveal: this.reveal('contact'),
+      refPreFooter: this.refFor('preFooter'), preFooterCardStyle: this.preFooterCardStyle,
+
+      treatments: treatmentsRaw.map(([num, title, desc], i) => ({ num, title, desc, notFirst: i > 0 })),
+
+      team: [
+        { slotId: 'team-1', name: 'Dr. Anjali Sharma', role: 'Chief Ayurvedic Physician', credential: 'BAMS' },
+        { slotId: 'team-2', name: 'Dr. Bikash Shrestha', role: 'Panchakarma Specialist', credential: 'BAMS, MD (Ay.)' },
+        { slotId: 'team-3', name: 'Sunita Gurung', role: 'Senior Therapist', credential: 'Abhyanga & Shirodhara' },
+        { slotId: 'team-4', name: 'Ramesh Tiwari', role: 'Yoga & Meditation Instructor', credential: 'RYT-500' },
+      ],
+
+      testimonials: [
+        { quote: 'The Panchakarma retreat reset something in me I didn\u2019t know was off balance. Three months on, I still sleep like I did as a child.', name: 'S. Maharjan' },
+        { quote: 'My physician actually talked to my therapist between sessions. I\u2019ve never felt so looked-after at a clinic.', name: 'R. Karki' },
+        { quote: 'Shirodhara on a Friday evening is now non-negotiable. Calmest I feel all week.', name: 'P. Basnet' },
+      ],
+
+      pricingPlans: [
+        { name: 'Consultation', includes: 'Initial assessment & dosha analysis', price: 'NPR 1,500' },
+        { name: 'Panchakarma Retreat (7 days)', includes: 'Full detox program, meals & daily therapies', price: 'NPR 45,000' },
+        { name: 'Wellness Membership (monthly)', includes: 'Unlimited yoga, quarterly consultation, therapy discounts', price: 'NPR 8,000 / mo' },
+      ],
+
+      galleryItems: [
+        { id: 'gallery-1', label: 'Treatment room' },
+        { id: 'gallery-2', label: 'Herbal pharmacy' },
+        { id: 'gallery-3', label: 'Reception lounge' },
+        { id: 'gallery-4', label: 'Yoga hall' },
+        { id: 'gallery-5', label: 'Steam therapy room' },
+        { id: 'gallery-6', label: 'Garden courtyard' },
+      ],
+
+      treatmentOptions: ['Free Consultation', 'Panchakarma', 'Abhyanga', 'Shirodhara', 'Nasya Therapy', 'Diet & Lifestyle Consultation', 'Yoga & Meditation'],
+
+      bookingSubmitted: this.state.bookingSubmitted,
+      bookingNotSubmitted: !this.state.bookingSubmitted,
+      bookingName: this.state.bookingName,
+      handleBookingSubmit: this.handleBookingSubmit,
+
+      year: new Date().getFullYear(),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

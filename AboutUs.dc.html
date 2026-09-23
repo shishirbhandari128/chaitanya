@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preload" as="image" href="assets/photos/md/spa-woman-flower.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/styles.css">
+  <script src="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <script src="./demo-photos.js"></script>
+  <script src="./motion.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Lato:wght@400;500;600;700&display=swap');
+    :root {
+      --color-bg: #f7f1de; --color-text: #072E34; --color-accent: #007D67; --color-accent-700: #045A4A;
+      --font-heading: 'El Messiri', sans-serif; --font-body: 'Lato', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; } body { margin: 0; background: #fff; }
+    a { color: var(--color-accent); } a:hover { color: var(--color-accent-700); }
+  </style>
+</helmet>
+
+<dc-import name="SiteHeader" current-page="about" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
+
+<section style="background:#f7f1de;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:calc(1.6*var(--space-8));align-items:stretch;min-height:600px;">
+  <div style="align-self:center;padding:calc(2.4*var(--space-8)) 0 calc(2.4*var(--space-8)) clamp(20px,6vw,120px);">
+    <span style="display:block;font-family:var(--font-body);font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">About Chaitanya</span>
+    <h1 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(30px,4vw,48px);line-height:1.15;margin:0 0 var(--space-4);color:#201e1d;">Naturopathy care for a modern life</h1>
+    <p style="font-family:var(--font-body);font-size:16px;line-height:1.7;color:#2F4A47;max-width:none;margin:0;">Chaitanya Health &amp; Wellness Center is a naturopathy clinic in Bakhundole, Lalitpur, offering holistic solutions for the well-being of your body, mind, and soul — with customized wellness packages for arthritis, migraines, stress, insomnia, musculoskeletal and lifestyle disorders.</p>
+  </div>
+  <figure style="margin:0;height:100%;align-self:stretch;">
+    <image-slot src="assets/photos/md/spa-woman-flower.jpg" id="about-hero" shape="rect" placeholder="Clinic reception area" style="width:100%;height:100%;object-fit:cover;"></image-slot>
+  </figure>
+</section>
+
+<section style="background:#fff;padding:calc(2.4*var(--space-8)) clamp(20px,6vw,120px);">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:var(--space-6);flex-wrap:wrap;max-width:1200px;margin:0 auto calc(1.4*var(--space-8));">
+    <div style="max-width:64ch;">
+      <span style="display:block;font-family:var(--font-body);font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">Chaitanya By The Numbers</span>
+      <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(26px,3.2vw,38px);line-height:1.2;margin:0;color:#201e1d;">Fifteen years of consistent, personalized care — measured in the people who trust us with it.</h2>
+    </div>
+    <div style="flex:none;display:flex;gap:6px;">
+      <a href="Booking.dc.html" style="display:flex;align-items:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:14px;text-decoration:none;padding:13px 28px;border-radius:99px;height:44px;box-sizing:border-box;">Book Appointment</a>
+      <a href="Booking.dc.html" aria-label="Book Appointment" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;text-decoration:none;width:44px;height:44px;border-radius:99px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+      </a>
+    </div>
+  </div>
+  <div ref="{{ statsGridRef }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));max-width:1200px;margin:0 auto;">
+    <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+      <div style="{{ s.bg }}padding:var(--space-6);display:flex;flex-direction:column;height:280px;justify-content:center;">
+        <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;">
+          <span style="{{ s.valueColor }}font-family:var(--font-heading);font-weight:700;font-size:clamp(32px,4vw,46px);line-height:1;">{{ s.value }}</span>
+          <span style="{{ s.labelColor }}font-family:var(--font-body);font-size:14px;font-weight:600;">{{ s.label }}</span>
+        </div>
+        <div style="{{ s.dividerColor }}height:1px;margin:var(--space-4) 0 var(--space-4);"></div>
+        <p style="{{ s.descColor }}font-family:var(--font-body);font-size:13.5px;line-height:1.6;margin:0;">{{ s.desc }}</p>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section style="background:#f5f6f4;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));min-height:560px;">
+  <figure style="margin:0;height:100%;">
+    <image-slot src="assets/photos/md/spa-young-woman.jpg" id="our-story-photo" shape="rect" placeholder="Therapist preparing herbal treatment" style="width:100%;height:100%;min-height:320px;object-fit:cover;"></image-slot>
+  </figure>
+  <div style="display:flex;flex-direction:column;justify-content:center;padding:calc(2*var(--space-8)) clamp(28px,6vw,80px);">
+    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:30px;color:#201e1d;margin:0 0 var(--space-4);">Our Story</h2>
+    <p style="font-family:var(--font-body);font-size:15.5px;line-height:1.75;color:#4a473f;margin:0 0 var(--space-4);max-width:48ch;">Founded on the belief that healing begins with balance, Chaitanya brings together classical naturopathy, Ayurvedic protocols, and modern clinical care under one roof. Every plan starts with an honest assessment of your constitution — never a one-size-fits-all prescription.</p>
+    <p style="font-family:var(--font-body);font-size:15.5px;line-height:1.75;color:#4a473f;margin:0;max-width:48ch;">Our therapists and physicians work as one team, so the therapy you receive in the treatment room is exactly what was prescribed for you — nothing more, nothing generic.</p>
+  </div>
+</section>
+
+<section style="padding: calc(2.4*var(--space-8)) 0; background-color: #FFFFFF">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(16px,6vw,120px);margin-bottom:var(--space-6);">
+    <span style="display:block;font-family:var(--font-body);font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">Our Values</span>
+    <h2 style="font-family:var(--font-heading);font-weight:500;font-size:38px;color:#201e1d;margin:0;">What We Stand For</h2>
+  </div>
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(16px,6vw,120px);">
+    <sc-for list="{{ values }}" as="v" hint-placeholder-count="4">
+      <div ref="{{ v.revealRef }}" style="{{ v.rowStyle }}">
+        <div style="flex:1 1 0;min-width:0;">
+          <h3 style="font-family:var(--font-heading);margin:0 0 16px;font-size:clamp(24px,2.8vw,32px);font-weight:500;color:#201e1d;">{{ v.title }}</h3>
+          <p style="font-family:var(--font-body);font-size:15.5px;line-height:1.7;color:#5c5648;max-width:46ch;margin:0;">{{ v.desc }}</p>
+        </div>
+        <div style="height:60vh;flex:1 1 0;min-width:0;">
+          <image-slot id="{{ v.slotId }}" shape="rect" placeholder="{{ v.imgLabel }}" style="width:100%;height:100%;object-fit:cover;"></image-slot>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section style="background: #fff; padding: calc(2.4*var(--space-8)) 0 0;" data-om-label="Pre footer section" ref="{{ refCta }}">
+  <div style="{{ ctaCardStyle }}">
+    <div style="position: absolute; inset: 0; pointer-events: none; background: url(&quot;./screenshot-2026-09-21-at-10-33-45-am-muarqugw-qnb4.png&quot;) center / cover no-repeat"></div>
+    <div style="position:relative;z-index:1;">
+      <h3 style="font-family: var(--font-heading); font-weight: 700; font-size: 32px; line-height: 1.1; letter-spacing: 0.006em; margin: 0 auto var(--space-2); max-width: none; white-space: nowrap; color: #fff;">Begin Your Journey to Relaxation</h3>
+      <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:rgba(255,255,255,0.8);max-width:44ch;margin:0 auto;">Take a moment for yourself with personalized care designed to restore, relax, and rejuvenate.</p>
+      <div style="display: flex; justify-content: center; gap: 6px; margin-top: var(--space-8)">
+        <a href="Booking.dc.html" style="display:flex;align-items:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:14px;text-decoration:none;padding:13px 28px;height:44px;border-radius:99px;">Book Your Appointment</a>
+        <a href="Booking.dc.html" aria-label="Book Your Appointment" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;text-decoration:none;width:44px;height:44px;border-radius:99px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<dc-import name="SiteFooter" hint-size="100%,600px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1300}}">
+class Component extends DCLogic {
+  state = { ctaInView: false, statCounts: [0, 0, 0, 0], statsPlayed: false, revealed: {} };
+  refs = {};
+  refFor(id) {
+    if (!this._sectionRefs) this._sectionRefs = {};
+    if (!this._sectionRefs[id]) {
+      this._sectionRefs[id] = (el) => {
+        if (!el) return;
+        if (!this._observer) {
+          this._observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const key = entry.target.dataset.revealId;
+                this.setState((s) => ({ revealed: { ...s.revealed, [key]: true } }));
+                this._observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.15 });
+        }
+        el.dataset.revealId = id;
+        this._observer.observe(el);
+      };
+    }
+    return this._sectionRefs[id];
+  }
+  statsRef = (el) => {
+    if (!el || this._statsObserver) return;
+    this._statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) this.playStatsCount();
+        else this.setState({ statCounts: [0, 0, 0, 0] });
+      });
+    }, { threshold: 0.4 });
+    this._statsObserver.observe(el);
+  };
+  playStatsCount() {
+    const targets = [15, 25000, 787, 12];
+    const start = performance.now();
+    const duration = 1400;
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      this.setState({ statCounts: targets.map((v) => Math.round(v * eased)) });
+      if (t < 1) this._statsRaf = requestAnimationFrame(tick);
+    };
+    if (this._statsRaf) cancelAnimationFrame(this._statsRaf);
+    this._statsRaf = requestAnimationFrame(tick);
+  }
+  componentDidMount() {
+    this.ctaObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        this.setState({ ctaInView: true });
+        this.ctaObserver.disconnect();
+      }
+    }, { threshold: 0.3 });
+    if (this.refs.refCta) this.ctaObserver.observe(this.refs.refCta);
+  }
+  componentWillUnmount() {
+    if (this.ctaObserver) this.ctaObserver.disconnect();
+  }
+  renderVals() {
+    return {
+      refCta: (el) => { this.refs.refCta = el; },
+      ctaCardStyle: `position:relative;border-radius:0;overflow:hidden;background:#072E34;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:480px;padding:calc(2*var(--space-8)) clamp(20px,6vw,80px);margin:0 auto;width:${this.state.ctaInView ? '100%' : '78%'};transition:width 1.4s cubic-bezier(0.16,1,0.3,1);`,
+      statsGridRef: this.statsRef,
+      stats: [
+        { value: `${this.state.statCounts[0]}+`, label: 'Years of Practice', bg: 'background:#E3F5F0;', desc: 'Continuous operation in Bakhundole, refining protocols across generations of patients.', valueColor: 'color:#072E34;', labelColor: 'color:#2F4A47;', dividerColor: 'background:color-mix(in srgb, #072E34 25%, transparent);', descColor: 'color:#2F4A47;' },
+        { value: `${this.state.statCounts[1].toLocaleString()}+`, label: 'Guests Treated', bg: 'background:#072E34;', desc: 'Each guest receives a plan built around their own constitution, not a fixed menu.', valueColor: 'color:#fff;', labelColor: 'color:rgba(255,255,255,0.85);', dividerColor: 'background:rgba(255,255,255,0.25);', descColor: 'color:rgba(255,255,255,0.85);' },
+        { value: `${this.state.statCounts[2]}`, label: 'Verified Reviews', bg: 'background:#E3F5F0;', desc: 'Patient feedback shapes how our therapists and physicians work together, visit after visit.', valueColor: 'color:#072E34;', labelColor: 'color:#2F4A47;', dividerColor: 'background:color-mix(in srgb, #072E34 25%, transparent);', descColor: 'color:#2F4A47;' },
+        { value: `${this.state.statCounts[3]}`, label: 'Physicians &amp; Therapists', bg: 'background:#072E34;', desc: 'A small, BAMS-qualified team closely involved in every case, not a rotating roster.', valueColor: 'color:#fff;', labelColor: 'color:rgba(255,255,255,0.85);', dividerColor: 'background:rgba(255,255,255,0.25);', descColor: 'color:rgba(255,255,255,0.85);' },
+      ],
+      values: [
+        { title: 'Personalized Care', desc: 'No two constitutions are the same, so no two treatment plans should be either. Every visit begins with a thorough dosha assessment that looks at your body, lifestyle, and history before a single herb or therapy is ever prescribed.', slotId: 'value-1', imgLabel: 'Dosha consultation', rowStyle: { display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '40px', padding: 'var(--space-8) 0' } },
+        { title: 'Clinical Rigor', desc: 'Our BAMS-qualified physicians hold to the discipline of classical Ayurvedic texts while pairing it with modern diagnostics, so tradition and clinical evidence work together rather than in isolation.', slotId: 'value-2', imgLabel: 'Physician consultation', rowStyle: { display: 'flex', flexDirection: 'row-reverse', alignItems: 'center', gap: '40px', padding: 'var(--space-8) 0' } },
+        { title: 'Warm Hospitality', desc: 'From the moment you arrive, every detail of the space is considered — quiet corners, unhurried pacing, and a team that treats your comfort as seriously as your treatment plan, so real rest is possible.', slotId: 'value-3', imgLabel: 'Clinic lounge', rowStyle: { display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '40px', padding: 'var(--space-8) 0' } },
+        { title: 'Community First', desc: 'Our packages are built around the conditions our community actually lives with — arthritis, migraines, stress, insomnia — not seasonal trends, so care stays relevant long after your first visit.', slotId: 'value-4', imgLabel: 'Group therapy session', rowStyle: { display: 'flex', flexDirection: 'row-reverse', alignItems: 'center', gap: '40px', padding: 'var(--space-8) 0' } },
+      ].map((v, i) => {
+        const key = `value-${i}`;
+        const shown = !!this.state.revealed[key];
+        const fromLeft = i % 2 === 0;
+        return {
+          ...v,
+          revealRef: this.refFor(key),
+          rowStyle: {
+            ...v.rowStyle,
+            opacity: shown ? 1 : 0,
+            transform: shown ? 'translateX(0)' : `translateX(${fromLeft ? '-70px' : '70px'})`,
+            transition: 'opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1)',
+          },
+        };
+      }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preload" as="image" href="assets/photos/md/spa-team.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/styles.css">
+  <script src="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <script src="./demo-photos.js"></script>
+  <script src="./motion.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Lato:wght@400;500;600;700&display=swap');
+    :root {
+      --color-bg: #f7f1de; --color-text: #072E34; --color-accent: #007D67; --color-accent-700: #045A4A;
+      --font-heading: 'El Messiri', sans-serif; --font-body: 'Lato', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; } body { margin: 0; background: #fff; }
+    a { color: var(--color-accent); } a:hover { color: var(--color-accent-700); }
+  </style>
+</helmet>
+
+<dc-import name="SiteHeader" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));min-height:calc(100vh - 76px);background:#fff;">
+  <div style="position:relative;overflow:hidden;min-height:320px;">
+    <image-slot src="assets/photos/md/spa-team.jpg" id="signin-photo" shape="rect" placeholder="Calm treatment room" style="position:absolute;inset:0;width:100%;height:100%;"></image-slot>
+    <div style="position:absolute;inset:0;background:rgba(7,46,52,0.45);pointer-events:none;"></div>
+    <div style="position:absolute;left:clamp(24px,5vw,64px);right:clamp(24px,5vw,64px);bottom:clamp(28px,6vw,64px);color:#fff;pointer-events:none;">
+      <span style="display:block;font-family:var(--font-body);font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:var(--space-3);text-shadow:0 1px 6px rgba(0,0,0,0.4);">Member Area</span>
+      <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(28px,3.4vw,40px);line-height:1.15;margin:0 0 var(--space-2);max-width:18ch;text-shadow:0 2px 10px rgba(0,0,0,0.35);">Your wellness journey, all in one place</h2>
+      <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;margin:0;max-width:42ch;text-shadow:0 1px 6px rgba(0,0,0,0.35);">Track bookings, rebook favourite therapists and manage your membership.</p>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:center;padding:clamp(32px,6vw,80px) clamp(20px,5vw,72px);">
+    <div style="width:100%;max-width:440px;">
+      <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:left;">
+          <div style="width:56px;height:56px;border-radius:50%;background:#E3F5F0;color:#007D67;display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-4);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          </div>
+          <h1 style="font-family:var(--font-heading);font-weight:700;font-size:32px;color:#201e1d;margin:0 0 var(--space-2);">{{ doneTitle }}</h1>
+          <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:#6b6a63;margin:0 0 var(--space-6);">{{ doneText }}</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="Services.dc.html" style="display:flex;align-items:center;height:48px;padding:0 24px;border-radius:99px;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:700;font-size:15px;text-decoration:none;">Book a Treatment</a>
+            <a href="Chaitanya Landing.dc.html" style="display:flex;align-items:center;height:48px;padding:0 24px;border-radius:99px;border:1px solid #d9dcd6;color:#201e1d;font-family:var(--font-body);font-weight:700;font-size:15px;text-decoration:none;box-sizing:border-box;">Back to Home</a>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isForm }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <h1 style="font-family:var(--font-heading);font-weight:700;font-size:34px;color:#201e1d;margin:0 0 var(--space-2);">{{ title }}</h1>
+          <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:#6b6a63;margin:0 0 var(--space-6);">{{ subtitle }}</p>
+
+          <div role="tablist" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;background:#f0f1ee;border-radius:99px;margin-bottom:var(--space-6);">
+            <button type="button" role="tab" onClick="{{ toLogin }}" style="{{ loginTabStyle }}height:40px;border:none;border-radius:99px;font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;transition:background .25s ease,color .25s ease;">Sign In</button>
+            <button type="button" role="tab" onClick="{{ toSignup }}" style="{{ signupTabStyle }}height:40px;border:none;border-radius:99px;font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;transition:background .25s ease,color .25s ease;">Create Account</button>
+          </div>
+
+          <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:var(--space-4);">
+            <sc-if value="{{ isSignup }}" hint-placeholder-val="{{ false }}">
+              <label style="display:flex;flex-direction:column;gap:8px;">
+                <span style="font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;">Full Name</span>
+                <input name="name" type="text" required="{{ true }}" placeholder="Your full name" style="height:48px;padding:0 16px;box-sizing:border-box;background:#f5f5f3;border:1px solid #e4e2dc;border-radius:10px;font-family:var(--font-body);font-size:15px;color:#201e1d;">
+              </label>
+              <label style="display:flex;flex-direction:column;gap:8px;">
+                <span style="font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;">Phone</span>
+                <input name="phone" type="tel" placeholder="+977" style="height:48px;padding:0 16px;box-sizing:border-box;background:#f5f5f3;border:1px solid #e4e2dc;border-radius:10px;font-family:var(--font-body);font-size:15px;color:#201e1d;">
+              </label>
+            </sc-if>
+            <label style="display:flex;flex-direction:column;gap:8px;">
+              <span style="font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;">Email Address</span>
+              <input name="email" type="email" required="{{ true }}" placeholder="you@example.com" style="height:48px;padding:0 16px;box-sizing:border-box;background:#f5f5f3;border:1px solid #e4e2dc;border-radius:10px;font-family:var(--font-body);font-size:15px;color:#201e1d;">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:8px;">
+              <span style="display:flex;justify-content:space-between;align-items:baseline;">
+                <span style="font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#201e1d;">Password</span>
+                <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+                  <a href="#" onClick="{{ forgot }}" style="font-family:var(--font-body);font-size:13px;font-weight:600;text-decoration:none;">Forgot password?</a>
+                </sc-if>
+              </span>
+              <input name="password" type="password" required="{{ true }}" minlength="6" placeholder="At least 6 characters" style="height:48px;padding:0 16px;box-sizing:border-box;background:#f5f5f3;border:1px solid #e4e2dc;border-radius:10px;font-family:var(--font-body);font-size:15px;color:#201e1d;">
+            </label>
+            <sc-if value="{{ hasNote }}" hint-placeholder-val="{{ false }}">
+              <p style="font-family:var(--font-body);font-size:13.5px;color:#007D67;background:#E3F5F0;border-radius:10px;padding:12px 14px;margin:0;">{{ note }}</p>
+            </sc-if>
+            <button type="submit" style="height:52px;border:none;border-radius:99px;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:700;font-size:15px;cursor:pointer;margin-top:var(--space-2);">{{ submitLabel }}</button>
+          </form>
+
+          <p style="font-family:var(--font-body);font-size:14px;color:#6b6a63;margin:var(--space-6) 0 0;">{{ switchText }} <button type="button" onClick="{{ switchMode }}" style="background:transparent;border:none;padding:0;font-family:var(--font-body);font-size:14px;font-weight:700;color:#007D67;cursor:pointer;">{{ switchLabel }}</button></p>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<dc-import name="SiteFooter" hint-size="100%,600px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { mode: 'login', done: false, name: '', note: '' };
+
+  componentDidMount() {
+    if (/signup|register/.test(window.location.hash)) this.setState({ mode: 'signup' });
+  }
+
+  renderVals() {
+    const login = this.state.mode === 'login';
+    const on = 'background:#fff;color:#072E34;box-shadow:0 2px 8px -2px rgba(7,46,52,0.18);';
+    const off = 'background:transparent;color:#6b6a63;';
+    return {
+      isForm: !this.state.done,
+      isDone: this.state.done,
+      isLogin: login,
+      isSignup: !login,
+      title: login ? 'Welcome back' : 'Create your account',
+      subtitle: login ? 'Sign in to view your bookings and membership.' : 'Save your details for faster booking next time.',
+      submitLabel: login ? 'Sign In' : 'Create Account',
+      switchText: login ? 'New to Chaitanya?' : 'Already have an account?',
+      switchLabel: login ? 'Create an account' : 'Sign in',
+      loginTabStyle: login ? on : off,
+      signupTabStyle: login ? off : on,
+      hasNote: !!this.state.note,
+      note: this.state.note,
+      doneTitle: login ? 'You\u2019re signed in' : `Welcome, ${this.state.name || 'friend'}`,
+      doneText: login ? 'Your bookings and membership are ready whenever you are.' : 'Your account is ready. Book your first treatment and we\u2019ll remember your details.',
+      toLogin: () => this.setState({ mode: 'login', note: '' }),
+      toSignup: () => this.setState({ mode: 'signup', note: '' }),
+      switchMode: () => this.setState((s) => ({ mode: s.mode === 'login' ? 'signup' : 'login', note: '' })),
+      forgot: (e) => { e.preventDefault(); this.setState({ note: 'Enter your email above and we\u2019ll send you a reset link.' }); },
+      submit: (e) => {
+        e.preventDefault();
+        const d = new FormData(e.target);
+        this.setState({ done: true, name: String(d.get('name') || '').split(' ')[0] });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/styles.css">
+  <script src="_ds/modernist-98a70415-c33a-4296-991c-e65a2cbfd8c7/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <script src="./demo-photos.js"></script>
+  <script src="./motion.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Lato:wght@400;500;600;700&display=swap');
+    :root {
+      --color-bg: #f7f1de; --color-text: #072E34; --color-accent: #007D67; --color-accent-700: #045A4A;
+      --font-heading: 'El Messiri', sans-serif; --font-body: 'Lato', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; } body { margin: 0; background: #fff; }
+    a { color: var(--color-accent); } a:hover { color: var(--color-accent-700); }
+    .chy-slot:hover, .chy-therapist:hover { border-color: #007D67 !important; }
+    @keyframes chySuccessIn { from { opacity: 0; transform: translateY(18px) scale(0.98); } to { opacity: 1; transform: none; } }
+    @keyframes chyCheckPop { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: scale(1); } }
+    @keyframes chyConfettiFall { 0% { opacity: 0; transform: translate3d(0,0,0) rotate(0deg) scale(0.4); } 6% { opacity: 1; transform: translate3d(calc(var(--bx) * 0.35), calc(var(--by) * 0.35), 0) rotate(calc(var(--rot) * 0.15)) scale(1); } 32% { transform: translate3d(var(--bx), var(--by), 0) rotate(calc(var(--rot) * 0.4)) scale(1); } 85% { opacity: 1; } 100% { opacity: 0; transform: translate3d(var(--dx), var(--dy), 0) rotate(var(--rot)) scale(0.9); } }
+    @keyframes chyConfettiSway { 0%,100% { margin-left: 0; } 50% { margin-left: var(--sway); } }
+    @keyframes chyBurstRing { 0% { opacity: 0.55; transform: translate(-50%,-50%) scale(0.2); } 100% { opacity: 0; transform: translate(-50%,-50%) scale(2.6); } }
+    @keyframes chyConfettiFlip { 0%,100% { transform: rotateX(0deg); } 50% { transform: rotateX(180deg); } }
+    @keyframes chyModalIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    .chy-slot:disabled, .chy-therapist:disabled { cursor: not-allowed !important; }
+    #bk-name:focus, #bk-phone:focus, #bk-email:focus, #bk-notes:focus, #acct-login-email:focus, #acct-login-pass:focus, #acct-su-pass:focus, #acct-su-pass2:focus { outline: none; border-color: #007D67 !important; background: #fff !important; }
+    .chy-day:not(:disabled):hover { background: #f5f6f4 !important; }
+  </style>
+</helmet>
+
+<dc-import name="SiteHeader" current-page="services" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
+
+<section style="background:#f5f6f4;padding:18px clamp(20px,6vw,60px);border-bottom:1px solid #e6e4da;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+        <div style="{{ s.pillStyle }}display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;">
+          <span style="{{ s.numStyle }}width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:700;font-size:12px;flex:none;">{{ s.num }}</span>
+          <span style="font-family:var(--font-body);font-weight:700;font-size:14px;white-space:nowrap;">{{ s.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex:none;">
+      <div style="display:flex;gap:3px;">
+        <sc-for list="{{ progressBars }}" as="b" hint-placeholder-count="5">
+          <span style="{{ b.style }}width:6px;height:20px;border-radius:2px;display:block;"></span>
+        </sc-for>
+      </div>
+      <span style="font-family:var(--font-heading);font-weight:700;font-size:16px;color:#201e1d;">{{ stepNumLabel }}</span>
+      <span style="font-family:var(--font-body);font-size:13px;color:#8a8577;">{{ totalLabel }}</span>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff;padding:calc(1.6*var(--space-8)) clamp(20px,6vw,60px) 0;overflow-x:clip;">
+  <div style="max-width:1200px;margin:0 auto;">
+
+    <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin:0 0 calc(1.2*var(--space-8));">
+        <div style="min-width:0;flex:1 1 320px;">
+          <h2 style="font-family:var(--font-heading);font-weight:700;font-size:26px;margin:0 0 6px;color:#201e1d;">Choose Your Appointment Schedule</h2>
+          <p style="font-family:var(--font-body);font-size:14.5px;color:#8a8577;margin:0;">{{ scheduleSubtitle }}</p>
+        </div>
+        <sc-if value="{{ showTherapistChip }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end;">
+            <span style="display:flex;align-items:center;gap:10px;background:#E3F5F0;padding:8px 14px 8px 8px;border-radius:999px;">
+              <span style="width:30px;height:30px;border-radius:50%;background:#007D67;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:700;font-size:12px;">{{ chipInitials }}</span>
+              <span style="display:flex;flex-direction:column;">
+                <span style="font-family:var(--font-body);font-size:14px;font-weight:700;color:#072E34;">{{ chipName }}</span>
+                <span style="font-family:var(--font-body);font-size:12px;color:#4a6a64;">{{ chipDays }}</span>
+              </span>
+            </span>
+            <button type="button" onClick="{{ openTherapistModal }}" style="background:transparent;border:none;padding:0;font-family:var(--font-body);font-size:13.5px;font-weight:700;color:#007D67;cursor:pointer;text-decoration:underline;">Change therapist</button>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start;">
+        <div style="background:#f7f7f6;padding:20px;display:flex;flex-direction:column;gap:20px;min-width:0;">
+          <div style="background:#fff;padding:24px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
+              <h3 style="font-family:var(--font-heading);font-weight:700;font-size:18px;letter-spacing:0.02em;text-transform:uppercase;margin:0;color:#201e1d;">Calendar</h3>
+              <div style="display:flex;">
+                <select onChange="{{ onYearChange }}" value="{{ viewYear }}" aria-label="Year" style="font-family:var(--font-body);font-size:15px;color:#201e1d;background:#fff;border:1px solid #e0e0e0;border-radius:0;height:44px;padding:0 36px 0 18px;cursor:pointer;">
+                  <sc-for list="{{ yearOptions }}" as="y" hint-placeholder-count="3">
+                    <option value="{{ y }}">{{ y }}</option>
+                  </sc-for>
+                </select>
+                <select onChange="{{ onMonthChange }}" value="{{ viewMonth }}" aria-label="Month" style="font-family:var(--font-body);font-size:15px;text-transform:uppercase;color:#201e1d;background:#fff;border:1px solid #e0e0e0;border-left:none;border-radius:0;height:44px;padding:0 36px 0 18px;cursor:pointer;">
+                  <sc-for list="{{ monthOptions }}" as="m" hint-placeholder-count="12">
+                    <option value="{{ m.value }}">{{ m.label }}</option>
+                  </sc-for>
+                </select>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:12px;">
+              <sc-for list="{{ weekdayLabels }}" as="wd" hint-placeholder-count="7">
+                <span style="{{ wd.style }}font-family:var(--font-body);font-size:14px;padding:0 12px;">{{ wd.label }}</span>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid #e6e6e6;border-left:1px solid #e6e6e6;">
+              <sc-for list="{{ calendarCells }}" as="c" hint-placeholder-count="35">
+                <button type="button" onClick="{{ c.onClick }}" disabled="{{ c.disabled }}" class="chy-day" style="{{ c.style }}height:62px;border:none;border-right:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;border-radius:0;background:#fff;padding:12px;display:flex;align-items:flex-start;justify-content:flex-start;font-family:var(--font-body);font-size:16px;text-align:left;">
+                  <span style="{{ c.numStyle }}display:flex;align-items:center;justify-content:center;border-radius:50%;">{{ c.label }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff;padding:24px;">
+            <h3 style="font-family:var(--font-heading);font-weight:700;font-size:18px;letter-spacing:0.02em;text-transform:uppercase;margin:0 0 6px;color:#201e1d;">Available Time</h3>
+            <p style="font-family:var(--font-body);font-size:13px;color:#8a8577;margin:0 0 16px;">{{ timeHint }}</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:16px;">
+              <sc-for list="{{ timeOptions }}" as="t" hint-placeholder-count="6">
+                <button type="button" onClick="{{ t.onClick }}" disabled="{{ t.disabled }}" class="chy-slot" style="{{ t.style }}height:50px;border-radius:0;cursor:pointer;font-family:var(--font-body);font-size:15px;">{{ t.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <dc-import name="TherapyDetailCard" data="{{ detailCardData }}" hint-size="100%,420px"></dc-import>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+      <h2 style="font-family:var(--font-heading);font-weight:700;font-size:26px;margin:0 0 6px;color:#201e1d;">Choose Your Therapist</h2>
+      <p style="font-family:var(--font-body);font-size:14.5px;color:#8a8577;margin:0 0 calc(1.4*var(--space-8));">Select who you&rsquo;d like to perform your treatment.</p>
+      <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">
+          <sc-for list="{{ therapistOptions }}" as="th" hint-placeholder-count="4">
+            <button type="button" onClick="{{ th.onClick }}" disabled="{{ th.disabled }}" class="chy-therapist" style="{{ th.style }}display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 14px;border-radius:14px;cursor:pointer;text-align:center;">
+              <div style="width:56px;height:56px;border-radius:50%;background:#E3F5F0;color:#007D67;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:700;font-size:18px;">{{ th.initials }}</div>
+              <span style="font-family:var(--font-heading);font-weight:600;font-size:14.5px;color:#201e1d;">{{ th.name }}</span>
+              <span style="font-family:var(--font-body);font-size:12px;color:#8a8577;">{{ th.role }}</span>
+              <span style="{{ th.noteStyle }}font-family:var(--font-body);font-size:11.5px;font-weight:700;">{{ th.note }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <dc-import name="TherapyDetailCard" data="{{ detailCardData }}" hint-size="100%,420px"></dc-import>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+      <h2 style="font-family:var(--font-heading);font-weight:700;font-size:26px;margin:0 0 6px;color:#201e1d;">Payment Method</h2>
+      <p style="font-family:var(--font-body);font-size:14.5px;color:#8a8577;margin:0 0 calc(1.4*var(--space-8));">Choose how you&rsquo;d like to pay. You won&rsquo;t be charged until after your visit.</p>
+      <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <p style="font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8a8577;margin:0 0 2px;">Pay at Clinic</p>
+          <sc-for list="{{ paymentOptions }}" as="p" hint-placeholder-count="2">
+            <button type="button" onClick="{{ p.onClick }}" style="{{ p.style }}display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:10px;cursor:pointer;text-align:left;">
+              <span style="font-family:var(--font-heading);font-weight:600;font-size:15px;color:#201e1d;">{{ p.label }}</span>
+              <span style="{{ p.dotStyle }}width:18px;height:18px;border-radius:50%;flex:none;"></span>
+            </button>
+          </sc-for>
+          <p style="font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8a8577;margin:var(--space-4) 0 2px;">Pay by Digital Wallet</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;">
+            <sc-for list="{{ walletOptions }}" as="w" hint-placeholder-count="3">
+              <div role="button" tabIndex="0" onClick="{{ w.onClick }}" onKeyDown="{{ w.onKey }}" aria-pressed="{{ w.selected }}" style="{{ w.style }}position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px 14px;border-radius:10px;cursor:pointer;text-align:center;box-sizing:border-box;">
+                <span style="{{ w.logoStyle }}position:relative;width:52px;height:52px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:800;font-size:22px;color:#fff;">
+                  <sc-if value="{{ w.hasSlot }}" hint-placeholder-val="{{ true }}"><image-slot id="{{ w.slotId }}" shape="rounded" radius="12" fit="contain" placeholder="" title="Drop a logo" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;background:transparent;"></image-slot></sc-if>
+                  <sc-if value="{{ w.isBank }}" hint-placeholder-val="{{ false }}">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M5 21V10"></path><path d="M19 21V10"></path><path d="M9 21V10"></path><path d="M15 21V10"></path><path d="M12 3 2 9h20z"></path></svg>
+                  </sc-if>
+                  <sc-if value="{{ w.isMark }}" hint-placeholder-val="{{ true }}">{{ w.mark }}</sc-if>
+                </span>
+                <span style="font-family:var(--font-heading);font-weight:700;font-size:14.5px;color:#201e1d;">{{ w.label }}</span>
+                <span style="font-family:var(--font-body);font-size:11.5px;color:#8a8577;">{{ w.sub }}</span>
+                <span style="{{ w.dotStyle }}position:absolute;top:12px;right:12px;width:16px;height:16px;border-radius:50%;"></span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <dc-import name="TherapyDetailCard" data="{{ detailCardData }}" hint-size="100%,420px"></dc-import>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isStep4 }}" hint-placeholder-val="{{ false }}">
+      <h2 style="font-family:var(--font-heading);font-weight:700;font-size:26px;margin:0 0 6px;color:#201e1d;">Your Details</h2>
+      <p style="font-family:var(--font-body);font-size:14.5px;color:#8a8577;margin:0 0 calc(1.4*var(--space-8));">Just a few details so we can confirm your booking.</p>
+      <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start;">
+        <form onSubmit="{{ handleDetailsSubmit }}" style="display:flex;flex-direction:column;gap:var(--space-4);">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-4);">
+            <div class="field"><label for="bk-name">Full name</label><input class="input" id="bk-name" name="name" type="text" required="{{ true }}" defaultValue="{{ formName }}" style="background:#f5f5f3;border:1px solid #e4e2dc;height:48px;box-sizing:border-box;padding:0 16px;border-radius:0;"></div>
+            <div class="field"><label for="bk-phone">Phone</label><input class="input" id="bk-phone" name="phone" type="tel" required="{{ true }}" defaultValue="{{ formPhone }}" style="background:#f5f5f3;border:1px solid #e4e2dc;height:48px;box-sizing:border-box;padding:0 16px;border-radius:0;"></div>
+          </div>
+          <div class="field"><label for="bk-email">Email (optional)</label><input class="input" id="bk-email" name="email" type="email" defaultValue="{{ formEmail }}" style="background:#f5f5f3;border:1px solid #e4e2dc;height:48px;box-sizing:border-box;padding:0 16px;border-radius:0;"></div>
+          <div class="field"><label for="bk-notes">Notes for us (optional)</label><textarea class="input" id="bk-notes" name="notes" rows="3" defaultValue="{{ formNotes }}" style="background:#f5f5f3;border:1px solid #e4e2dc;box-sizing:border-box;padding:14px 16px;min-height:112px;border-radius:0;resize:vertical;"></textarea></div>
+          <button type="submit" style="display:none;" aria-hidden="true"></button>
+          <div style="margin-top:var(--space-4);border:1px solid #e4e2dc;background:#fbfaf7;padding:var(--space-6);">
+            <sc-if value="{{ acctIsNone }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:flex-start;gap:14px;min-width:0;flex:1 1 260px;">
+                  <div style="flex:none;width:44px;height:44px;border-radius:50%;background:#E3F5F0;color:#007D67;display:flex;align-items:center;justify-content:center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-3.9 3.6-7 8-7s8 3.1 8 7"></path></svg>
+                  </div>
+                  <div>
+                    <p style="font-family:var(--font-heading);font-weight:700;font-size:16.5px;color:#201e1d;margin:0 0 4px;">Book faster next time</p>
+                    <p style="font-family:var(--font-body);font-size:13.5px;line-height:1.55;color:#6b6a63;margin:0;">Log in to fill your details automatically, or create an account to track bookings and membership perks.</p>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                  <button type="button" onClick="{{ openLogin }}" style="height:44px;padding:0 22px;border-radius:99px;border:1px solid #072E34;background:#fff;color:#072E34;font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;">Log In</button>
+                  <button type="button" onClick="{{ openSignup }}" style="height:44px;padding:0 22px;border-radius:99px;border:none;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;">Create Account</button>
+                </div>
+              </div>
+              <p style="font-family:var(--font-body);font-size:12.5px;color:#8a8577;margin:var(--space-4) 0 0;">Prefer not to? You can continue as a guest &mdash; no account needed.</p>
+            </sc-if>
+
+            <sc-if value="{{ acctIsLogin }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:var(--space-4);">
+                <p style="font-family:var(--font-heading);font-weight:700;font-size:16.5px;color:#201e1d;margin:0;">Log in to your account</p>
+                <button type="button" onClick="{{ closeAccount }}" style="background:transparent;border:none;padding:0;font-family:var(--font-body);font-size:13px;font-weight:700;color:#6b6a63;cursor:pointer;">Cancel</button>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);">
+                <div class="field"><label for="acct-login-email">Email or phone</label><input class="input" id="acct-login-email" type="text" autocomplete="username" style="background:#f5f5f3;border:1px solid #e4e2dc;height:48px;box-sizing:border-box;padding:0 16px;border-radius:0;"></div>
+                <div class="field"><label for="acct-login-pass">Password</label><input class="input" id="acct-login-pass" type="password" autocomplete="current-password" style="background:#f5f5f3;border:1px solid #e4e2dc;height:48px;box-sizing:border-box;padding:0 16px;border-radius:0;"></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:var(--space-4);">
+                <a href="SignIn.dc.html" style="font-family:var(--font-body);font-size:13px;font-weight:600;text-decoration:none;">Forgot password?</a>
+                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                  <span style="font-family:var(--font-body);font-size:13px;color:#6b6a63;">New here? <button type="button" onClick="{{ openSignup }}" style="background:transparent;border:none;padding:0;font-family:var(--font-body);font-size:13px;font-weight:700;color:#007D67;cursor:pointer;">Create an account</button></span>
+                  <button type="button" onClick="{{ doLogin }}" style="height:44px;padding:0 26px;border-radius:99px;border:none;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;">Log In</button>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ acctIsSignup }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:var(--space-4);">
+                <p style="font-family:var(--font-heading);font-weight:700;font-size:16.5px;color:#201e1d;margin:0;">Create your account</p>
+                <button type="button" onClick="{{ closeAccount }}" style="background:transparent;border:none;padding:0;font-family:var(--font-body);font-size:13px;font-weight:700;color:#6b6a63;cursor:pointer;">Cancel</button>
+              </div>
+              <p style="font-family:var(--font-body);font-size:13px;color:#6b6a63;margin:0 0 var(--space-4);">We&rsquo;ll use the name, phone and email you entered above &mdash; just set a password.</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);">
+                <div class="field"><label for="acct-su-pass">Password</label><input class="input" id="acct-su-pass" type="password" autocomplete="new-password" style="background:#f5f5f3;border:1px solid #e4e2dc;height:48px;box-sizing:border-box;padding:0 16px;border-radius:0;"></div>
+                <div class="field"><label for="acct-su-pass2">Confirm password</label><input class="input" id="acct-su-pass2" type="password" autocomplete="new-password" style="background:#f5f5f3;border:1px solid #e4e2dc;height:48px;box-sizing:border-box;padding:0 16px;border-radius:0;"></div>
+              </div>
+              <label style="display:flex;align-items:flex-start;gap:10px;margin-top:var(--space-4);font-family:var(--font-body);font-size:13px;color:#4a473f;cursor:pointer;">
+                <input type="checkbox" id="acct-su-terms" style="margin-top:2px;accent-color:#007D67;">
+                I agree to the Terms &amp; Privacy Policy and would like occasional wellness offers.
+              </label>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:var(--space-4);">
+                <span style="font-family:var(--font-body);font-size:13px;color:#6b6a63;">Already have one? <button type="button" onClick="{{ openLogin }}" style="background:transparent;border:none;padding:0;font-family:var(--font-body);font-size:13px;font-weight:700;color:#007D67;cursor:pointer;">Log in</button></span>
+                <button type="button" onClick="{{ doSignup }}" style="height:44px;padding:0 26px;border-radius:99px;border:none;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;">Create Account</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ acctIsIn }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <div style="flex:none;width:40px;height:40px;border-radius:50%;background:#007D67;color:#fff;display:flex;align-items:center;justify-content:center;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                  </div>
+                  <div>
+                    <p style="font-family:var(--font-heading);font-weight:700;font-size:15.5px;color:#201e1d;margin:0;">{{ acctTitle }}</p>
+                    <p style="font-family:var(--font-body);font-size:13px;color:#6b6a63;margin:2px 0 0;">This booking will be saved to your account.</p>
+                  </div>
+                </div>
+                <button type="button" onClick="{{ doLogout }}" style="background:transparent;border:none;padding:0;font-family:var(--font-body);font-size:13px;font-weight:700;color:#6b6a63;cursor:pointer;text-decoration:underline;">Not you? Log out</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ acctHasError }}" hint-placeholder-val="{{ false }}">
+              <p role="alert" style="font-family:var(--font-body);font-size:13px;font-weight:600;color:#b3261e;margin:var(--space-3) 0 0;">{{ acctError }}</p>
+            </sc-if>
+          </div>
+        </form>
+        <dc-import name="TherapyDetailCard" data="{{ detailCardData }}" hint-size="100%,420px"></dc-import>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isConfirmed }}" hint-placeholder-val="{{ false }}">
+      <div style="position:relative;overflow:hidden;text-align:center;background:linear-gradient(180deg,#f7f8f7,#eef2f1);margin:calc(-1.6*var(--space-8)) calc(50% - 50vw) 0;padding:clamp(32px,6vh,72px) 20px;min-height:calc(100svh - 160px - 1.6*var(--space-8));box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        {{ confettiLayer }}
+        <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:var(--space-6);width:100%;animation:chySuccessIn 0.7s cubic-bezier(0.22,1,0.36,1) both;">
+          <div style="position:relative;width:100%;max-width:420px;filter:drop-shadow(0 24px 40px rgba(7,46,52,0.14));text-align:left;">
+            <div style="background:#fff;border-radius:22px 22px 0 0;padding:36px 32px 26px;text-align:center;">
+              <div style="width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:#E3F5F0;display:flex;align-items:center;justify-content:center;animation:chyCheckPop 0.5s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#007D67" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 11.3 2 22l10.7-3.79"></path><path d="M4 3h.01"></path><path d="M22 8h.01"></path><path d="M15 2h.01"></path><path d="M22 20h.01"></path><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"></path><path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17"></path><path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7"></path><path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"></path></svg>
+              </div>
+              <h2 style="font-family:var(--font-heading);font-weight:700;font-size:28px;color:#201e1d;margin:0 0 8px;">Thank you!</h2>
+              <p style="font-family:var(--font-body);font-size:15px;line-height:1.55;color:#6b6a63;margin:0 auto;max-width:26ch;">Your booking has been confirmed successfully</p>
+            </div>
+            <div style="position:relative;height:28px;background:radial-gradient(circle at 0 50%, transparent 14px, #fff 14.5px) left / 51% 100% no-repeat, radial-gradient(circle at 100% 50%, transparent 14px, #fff 14.5px) right / 51% 100% no-repeat;">
+              <div style="position:absolute;left:28px;right:28px;top:50%;border-top:2px dashed #d9dcd6;"></div>
+            </div>
+            <div style="background:#fff;padding:22px 32px 28px;display:flex;flex-direction:column;gap:20px;">
+              <div style="display:flex;justify-content:space-between;gap:16px;">
+                <div style="min-width:0;">
+                  <span style="display:block;font-family:var(--font-body);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#8a8577;margin-bottom:4px;">Booking ID</span>
+                  <span style="font-family:var(--font-body);font-weight:700;font-size:16px;color:#201e1d;">{{ receiptRef }}</span>
+                </div>
+                <div style="text-align:right;flex:none;">
+                  <span style="display:block;font-family:var(--font-body);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#8a8577;margin-bottom:4px;">Amount</span>
+                  <span style="font-family:var(--font-body);font-weight:700;font-size:16px;color:#007D67;">{{ receiptAmount }}</span>
+                </div>
+              </div>
+              <div>
+                <span style="display:block;font-family:var(--font-body);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#8a8577;margin-bottom:4px;">Treatment</span>
+                <span style="font-family:var(--font-body);font-weight:700;font-size:16px;color:#201e1d;">{{ selectedServiceName }}</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+                <div>
+                  <span style="display:block;font-family:var(--font-body);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#8a8577;margin-bottom:4px;">Date &amp; Time</span>
+                  <span style="font-family:var(--font-body);font-weight:700;font-size:16px;color:#201e1d;">{{ selectedDateTimeLabel }}</span>
+                </div>
+                <div style="text-align:right;">
+                  <span style="display:block;font-family:var(--font-body);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#8a8577;margin-bottom:4px;">Therapist</span>
+                  <span style="font-family:var(--font-body);font-weight:700;font-size:16px;color:#201e1d;">{{ receiptTherapist }}</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;background:#f5f6f4;border-radius:14px;padding:16px 18px;">
+                <span style="flex:none;width:40px;height:40px;border-radius:10px;background:#007D67;color:#fff;display:flex;align-items:center;justify-content:center;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg>
+                </span>
+                <span style="min-width:0;">
+                  <span style="display:block;font-family:var(--font-body);font-weight:700;font-size:15px;color:#201e1d;">{{ receiptPayer }}</span>
+                  <span style="display:block;font-family:var(--font-body);font-size:13px;color:#6b6a63;margin-top:2px;">{{ receiptPayment }}</span>
+                </span>
+              </div>
+            </div>
+            <div style="height:2px;background:repeating-linear-gradient(90deg,#eceae4 0 18px,transparent 18px 26px);"></div>
+            <div style="background:#fff;padding:24px 32px 34px;display:flex;flex-direction:column;align-items:center;gap:6px;">
+              <div aria-label="Booking barcode" style="display:flex;align-items:stretch;width:min(300px,72%);height:68px;gap:0;">
+                <sc-for list="{{ receiptBars }}" as="bar" hint-placeholder-count="40">
+                  <span style="{{ bar }}display:block;height:100%;min-width:0;"></span>
+                </sc-for>
+              </div>
+              <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:0.22em;color:#4a473f;">{{ receiptDigits }}</span>
+            </div>
+            <div style="height:18px;background:radial-gradient(circle at 50% 100%, transparent 17px, #fff 17.5px) top left / 68px 18px repeat-x;"></div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+            <button type="button" onClick="{{ downloadBooking }}" style="display:flex;align-items:center;gap:10px;height:48px;padding:0 22px;background:#007D67;border:none;color:#fff;font-family:var(--font-body);font-weight:700;font-size:15px;cursor:pointer;border-radius:99px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"></path><path d="m7 10 5 5 5-5"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path></svg>
+              {{ downloadLabel }}
+            </button>
+            <a href="Chaitanya Landing.dc.html" style="display:flex;align-items:center;height:48px;padding:0 22px;border:1px solid #d9dcd6;border-radius:99px;color:#201e1d;font-family:var(--font-body);font-weight:700;font-size:15px;text-decoration:none;box-sizing:border-box;background:#fff;">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+      <div style="position:sticky;bottom:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;width:100vw;box-sizing:border-box;margin:calc(1.6*var(--space-8)) 0 0 calc(50% - 50vw);padding:16px clamp(20px,6vw,60px);background:#fff;border-top:1px solid #eceae0;box-shadow:0 -8px 24px -12px rgba(7,46,52,0.18);">
+        <button type="button" onClick="{{ goBack }}" style="{{ backButtonStyle }}display:flex;align-items:center;gap:8px;background:transparent;border:none;font-family:var(--font-body);font-weight:600;font-size:14px;cursor:pointer;padding:0;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+          Go Back
+        </button>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
+          <sc-if value="{{ showAlert }}" hint-placeholder-val="{{ false }}">
+            <div role="alert" style="display:flex;align-items:center;gap:8px;background:#fdecea;border:1px solid #f5c2bb;color:#b3261e;font-family:var(--font-body);font-size:13.5px;font-weight:600;padding:10px 14px;border-radius:10px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+              {{ alertText }}
+            </div>
+          </sc-if>
+          <button type="button" onClick="{{ resetStep }}" style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #d8d9d1;color:#072E34;font-family:var(--font-body);font-weight:600;font-size:14px;padding:12px 22px;border-radius:10px;cursor:pointer;">
+            Reset
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+          </button>
+          <button type="button" onClick="{{ goNext }}" style="{{ nextButtonStyle }}display:flex;align-items:center;gap:8px;font-family:var(--font-body);font-weight:600;font-size:14px;padding:12px 24px;border:none;border-radius:10px;cursor:pointer;">
+            {{ nextLabel }}
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </button>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+<sc-if value="{{ showTherapistModal }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:200;background:#fff;overflow-y:auto;animation:chyModalIn 0.35s cubic-bezier(0.22,1,0.36,1) both;">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(20px,6vw,60px);">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:calc(1.4*var(--space-8));">
+        <div>
+          <span style="display:block;font-family:var(--font-body);font-size:12.5px;letter-spacing:0.1em;text-transform:uppercase;color:#007D67;margin-bottom:8px;">Step 1 &middot; {{ selectedServiceName }}</span>
+          <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(26px,3.4vw,36px);color:#201e1d;margin:0 0 6px;">Choose Your Therapist</h2>
+          <p style="font-family:var(--font-body);font-size:15px;color:#6b6a63;margin:0;">Pick who you&rsquo;d like to see. You&rsquo;ll then only see the dates and times they&rsquo;re available.</p>
+        </div>
+        <button type="button" onClick="{{ closeTherapistModal }}" aria-label="Close" style="flex:none;width:44px;height:44px;border-radius:50%;border:1px solid #e4e2dc;background:#fff;color:#201e1d;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;">
+        <sc-for list="{{ modalTherapists }}" as="mt" hint-placeholder-count="4">
+          <button type="button" onClick="{{ mt.onClick }}" class="chy-therapist" style="{{ mt.style }}display:flex;flex-direction:column;text-align:left;padding:0;cursor:pointer;background:#fff;overflow:hidden;transition:border-color 0.2s ease,box-shadow 0.2s ease;">
+            <image-slot id="{{ mt.slotId }}" shape="rect" placeholder="{{ mt.name }}" style="display:block;width:100%;aspect-ratio:4/3;"></image-slot>
+            <span style="display:flex;flex-direction:column;gap:6px;padding:18px;">
+              <span style="font-family:var(--font-heading);font-weight:700;font-size:17px;color:#201e1d;">{{ mt.name }}</span>
+              <span style="font-family:var(--font-body);font-size:13px;color:#6b6a63;">{{ mt.role }}</span>
+              <span style="display:flex;align-items:center;gap:6px;font-family:var(--font-body);font-size:12.5px;font-weight:600;color:#007D67;margin-top:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M3 10h18"></path></svg>
+                {{ mt.daysLabel }}
+              </span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<dc-import name="SiteFooter" hint-size="100%,600px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SERVICES = [
+  { name: 'Signature Panchakarma Retreat', category: 'Featured', duration: '7 days', price: '45,000' },
+  { name: 'Aroma Hot Stone Massage', category: 'Featured', duration: '75 min', price: '3,800' },
+  { name: 'Shirodhara Therapy', category: 'Featured', duration: '60 min', price: '4,200' },
+  { name: 'Deep Tissue Relaxation', category: 'Featured', duration: '60 min', price: '3,500' },
+  { name: 'Abhyanga Oil Massage', category: 'Relax and Revitalize', duration: '60 min', price: '3,200' },
+  { name: 'Hydrating Facial', category: 'Beauty and Salon', duration: '50 min', price: '2,800' },
+  { name: 'Yoga & Meditation Session', category: 'Wellness Therapies', duration: '60 min', price: '1,200' },
+];
+const ALL_TIMES = ['09:00 AM', '12:00 PM', '02:00 PM', '04:00 PM', '06:00 PM', '08:00 PM'];
+const THERAPISTS = [
+  { id: 'as', name: 'Dr. Anjali Sharma', role: 'Senior Ayurvedic Physician', initials: 'AS', days: [1, 2, 3, 4, 5], times: ['09:00 AM', '12:00 PM', '02:00 PM', '04:00 PM'] },
+  { id: 'sg', name: 'Sunita Gurung', role: 'Massage Therapist', initials: 'SG', days: [0, 2, 4, 6], times: ['12:00 PM', '02:00 PM', '04:00 PM', '06:00 PM', '08:00 PM'] },
+  { id: 'rt', name: 'Ramesh Tiwari', role: 'Naturopathy Specialist', initials: 'RT', days: [1, 3, 5, 6], times: ['09:00 AM', '12:00 PM', '06:00 PM', '08:00 PM'] },
+  { id: 'pk', name: 'Priya Karki', role: 'Facial & Beauty Therapist', initials: 'PK', days: [0, 1, 2, 3, 4], times: ['09:00 AM', '02:00 PM', '04:00 PM', '06:00 PM'] },
+];
+const NO_PREF = { id: 'any', name: 'No preference', role: 'We will assign for you', initials: '?', days: [0, 1, 2, 3, 4, 5, 6], times: ALL_TIMES };
+const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const hashStr = (s) => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; };
+const dayOff = (th, d) => th.id !== 'any' && hashStr(th.id + d.toDateString()) % 6 === 0;
+const dayAvailable = (th, d) => th.days.includes(d.getDay()) && !dayOff(th, d);
+const slotAvailable = (th, d, t) => dayAvailable(th, d) && th.times.includes(t) && (th.id === 'any' || hashStr(th.id + d.toDateString() + t) % 5 !== 0);
+const daysLabel = (th) => 'Available ' + th.days.map((i) => DAY_SHORT[i]).join(', ');
+const css = (o) => Object.entries(o).map(([k, v]) => k.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase()) + ':' + v).join(';') + ';';
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+class Component extends DCLogic {
+  state = {
+    step: 1, flow: 'therapist', selectedService: null, selectedDate: null, selectedTime: null,
+    selectedTherapist: null, selectedPayment: null, monthOffset: 0,
+    formName: '', formPhone: '', formEmail: '', confirmed: false,
+  };
+  readDetails() {
+    const g = (id) => { const el = document.querySelector(id); return el ? el.value : ''; };
+    return { formName: g('#bk-name') || this.state.formName, formPhone: g('#bk-phone') || this.state.formPhone, formEmail: g('#bk-email') || this.state.formEmail, formNotes: g('#bk-notes') || this.state.formNotes };
+  }
+  openLogin = () => this.setState({ ...this.readDetails(), acctMode: 'login', acctError: '' });
+  openSignup = () => this.setState({ ...this.readDetails(), acctMode: 'signup', acctError: '' });
+  closeAccount = () => this.setState({ ...this.readDetails(), acctMode: 'none', acctError: '' });
+  doLogin = () => {
+    const id = (document.querySelector('#acct-login-email') || {}).value || '';
+    const pw = (document.querySelector('#acct-login-pass') || {}).value || '';
+    if (!id.trim() || !pw) { this.setState({ acctError: 'Please enter your email or phone and password.' }); return; }
+    const isEmail = id.includes('@');
+    const d = this.readDetails();
+    const name = d.formName || 'Aarav Shrestha';
+    this.setState({ ...d, formName: name, formEmail: isEmail ? id : (d.formEmail || ''), formPhone: !isEmail ? id : (d.formPhone || '+977 9800000000'), acctMode: 'in', acctUser: name, acctError: '' });
+  };
+  doSignup = () => {
+    const d = this.readDetails();
+    const p1 = (document.querySelector('#acct-su-pass') || {}).value || '';
+    const p2 = (document.querySelector('#acct-su-pass2') || {}).value || '';
+    const terms = (document.querySelector('#acct-su-terms') || {}).checked;
+    if (!d.formName.trim() || !d.formPhone.trim()) { this.setState({ ...d, acctError: 'Please fill in your name and phone above first.' }); return; }
+    if (p1.length < 6) { this.setState({ ...d, acctError: 'Password must be at least 6 characters.' }); return; }
+    if (p1 !== p2) { this.setState({ ...d, acctError: 'Passwords do not match.' }); return; }
+    if (!terms) { this.setState({ ...d, acctError: 'Please accept the Terms & Privacy Policy.' }); return; }
+    this.setState({ ...d, acctMode: 'in', acctUser: d.formName, acctCreated: true, acctError: '' });
+  };
+  doLogout = () => this.setState({ acctMode: 'none', acctUser: '', acctCreated: false, acctError: '' });
+  loadJsPDF() {
+    if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve(window.jspdf.jsPDF);
+    if (this._jspdfP) return this._jspdfP;
+    this._jspdfP = new Promise((res, rej) => {
+      const sc = document.createElement('script');
+      sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      sc.onload = () => (window.jspdf && window.jspdf.jsPDF ? res(window.jspdf.jsPDF) : rej(new Error('jsPDF missing')));
+      sc.onerror = () => { this._jspdfP = null; rej(new Error('jsPDF failed to load')); };
+      document.head.appendChild(sc);
+    });
+    return this._jspdfP;
+  }
+  downloadInvoice = async (dateTimeLabel) => {
+    const s = this.state;
+    if (!s.bookingRef) this.setState({ bookingRef: 'CHY-' + Date.now().toString().slice(-6), issuedAt: new Date() });
+    const ref = s.bookingRef || 'CHY-' + Date.now().toString().slice(-6);
+    const issued = s.issuedAt || new Date();
+    const svc = s.selectedService || { name: 'Treatment', category: '', duration: '-', price: '0' };
+    const amount = Number(String(svc.price).replace(/[^0-9.]/g, '')) || 0;
+    const fmt = (n) => 'NPR ' + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const pay = s.selectedPayment || '-';
+    const prepaid = ['eSewa', 'Khalti by IME', 'Mobile Banking'].includes(pay);
+    this.setState({ downloading: true });
+    let jsPDF;
+    try { jsPDF = await this.loadJsPDF(); } catch (e) { this.setState({ downloading: false }); alert('Could not load the PDF generator. Please check your connection and try again.'); return; }
+    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+    const W = doc.internal.pageSize.getWidth();
+    const M = 48;
+    const teal = [0, 125, 103], dark = [7, 46, 52], ink = [32, 30, 29], mute = [107, 106, 99], line = [228, 226, 220], tint = [227, 245, 240];
+    // header band
+    doc.setFillColor(...dark); doc.rect(0, 0, W, 118, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(20);
+    doc.text('Chaitanya', M, 56);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.setTextColor(200, 225, 220);
+    doc.text('HEALTH & WELLNESS', M, 72);
+    doc.text('Bakhundole, Lalitpur 44700, Nepal', M, 92);
+    doc.text('+977-9851123301  ·  info@chaitanyahealth.com', M, 105);
+    doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(22);
+    doc.text('BOOKING INVOICE', W - M, 58, { align: 'right' });
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(200, 225, 220);
+    doc.text('Invoice No.  ' + ref, W - M, 80, { align: 'right' });
+    doc.text('Issued  ' + issued.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }), W - M, 95, { align: 'right' });
+    // status pill
+    let y = 150;
+    const status = prepaid ? 'PAID' : 'CONFIRMED · PAY AT CLINIC';
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
+    const sw = doc.getTextWidth(status) + 24;
+    doc.setFillColor(...tint); doc.roundedRect(W - M - sw, y - 14, sw, 22, 11, 11, 'F');
+    doc.setTextColor(...teal); doc.text(status, W - M - sw / 2, y + 1, { align: 'center' });
+    // billed to / appointment
+    doc.setTextColor(...mute); doc.setFontSize(8.5); doc.text('BILLED TO', M, y - 4);
+    doc.setTextColor(...ink); doc.setFont('helvetica', 'bold'); doc.setFontSize(12);
+    doc.text(s.formName || 'Guest', M, y + 14);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(...mute);
+    let by = y + 30;
+    if (s.formPhone) { doc.text(s.formPhone, M, by); by += 14; }
+    if (s.formEmail) { doc.text(s.formEmail, M, by); by += 14; }
+    y = Math.max(by, y + 44) + 20;
+    // appointment box
+    doc.setDrawColor(...line); doc.setFillColor(251, 250, 247); doc.rect(M, y, W - 2 * M, 74, 'FD');
+    const cols = [['DATE & TIME', dateTimeLabel || '-'], ['THERAPIST', s.selectedTherapist ? s.selectedTherapist.name : 'Assigned on arrival'], ['PAYMENT METHOD', pay]];
+    const cw = (W - 2 * M) / 3;
+    cols.forEach(([k, v], i) => {
+      const x = M + 18 + i * cw;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(...mute); doc.text(k, x, y + 28);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(...ink);
+      doc.text(doc.splitTextToSize(String(v), cw - 28), x, y + 46);
+    });
+    y += 106;
+    // items table
+    doc.setFillColor(...dark); doc.rect(M, y, W - 2 * M, 28, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
+    doc.text('DESCRIPTION', M + 14, y + 18); doc.text('DURATION', W - M - 210, y + 18); doc.text('QTY', W - M - 120, y + 18); doc.text('AMOUNT', W - M - 14, y + 18, { align: 'right' });
+    y += 28;
+    doc.setDrawColor(...line); doc.rect(M, y, W - 2 * M, 52);
+    doc.setTextColor(...ink); doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.text(svc.name, M + 14, y + 22);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(...mute); doc.text(svc.category || 'Wellness treatment', M + 14, y + 37);
+    doc.setFontSize(10.5); doc.setTextColor(...ink);
+    doc.text(String(svc.duration || '-'), W - M - 210, y + 29); doc.text('1', W - M - 120, y + 29); doc.text(fmt(amount), W - M - 14, y + 29, { align: 'right' });
+    y += 76;
+    // totals
+    const tx = W - M - 220;
+    const row = (label, val, bold) => {
+      doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(bold ? 12 : 10.5);
+      doc.setTextColor(...(bold ? ink : mute)); doc.text(label, tx, y);
+      doc.setTextColor(...ink); doc.text(val, W - M - 14, y, { align: 'right' }); y += bold ? 0 : 20;
+    };
+    row('Subtotal', fmt(amount)); row('Discount', fmt(0));
+    doc.setDrawColor(...line); doc.line(tx, y - 6, W - M, y - 6); y += 14;
+    doc.setFillColor(...teal); doc.rect(tx - 12, y - 18, W - M - tx + 12, 32, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(12.5);
+    doc.text(prepaid ? 'Total Paid' : 'Total Due at Clinic', tx, y + 3); doc.text(fmt(amount), W - M - 14, y + 3, { align: 'right' });
+    y += 58;
+    // notes
+    if (s.formNotes) {
+      doc.setTextColor(...mute); doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.text('YOUR NOTES', M, y);
+      doc.setTextColor(...ink); doc.setFontSize(10); const nl = doc.splitTextToSize(s.formNotes, W - 2 * M); doc.text(nl, M, y + 16); y += 24 + nl.length * 13;
+    }
+    doc.setTextColor(...mute); doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.text('GOOD TO KNOW', M, y);
+    doc.setTextColor(...ink); doc.setFontSize(10);
+    ['Please arrive 10 minutes before your session.', 'Need to reschedule? Call us at least 24 hours in advance.', 'Bring this invoice (printed or on your phone) to the front desk.']
+      .forEach((t, i) => doc.text('•  ' + t, M, y + 18 + i * 16));
+    // footer
+    const H = doc.internal.pageSize.getHeight();
+    doc.setDrawColor(...line); doc.line(M, H - 70, W - M, H - 70);
+    doc.setTextColor(...teal); doc.setFont('helvetica', 'bold'); doc.setFontSize(11);
+    doc.text('Thank you for choosing Chaitanya.', W / 2, H - 48, { align: 'center' });
+    doc.setTextColor(...mute); doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5);
+    doc.text('This is a computer-generated invoice and does not require a signature.', W / 2, H - 32, { align: 'center' });
+    doc.save('Chaitanya-Invoice-' + ref + '.pdf');
+    this.setState({ downloading: false });
+  };
+  openTherapistModal = () => this.setState({ therapistModalOpen: true });
+  closeTherapistModal = () => {
+    if (this.state.selectedTherapist) { this.setState({ therapistModalOpen: false }); return; }
+    if (window.history.length > 1) window.history.back(); else window.location.href = 'Services.dc.html';
+  };
+  pickTherapistFromModal = (th) => {
+    const same = this.state.selectedTherapist && this.state.selectedTherapist.id === th.id;
+    this.setState({ selectedTherapist: th, therapistModalOpen: false, ...(same ? {} : { selectedDate: null, selectedTime: null }) });
+  };
+  prevMonth = () => this.setState((s) => ({ monthOffset: s.monthOffset - 1, selectedDate: null }));
+  nextMonth = () => this.setState((s) => ({ monthOffset: s.monthOffset + 1, selectedDate: null }));
+
+  componentDidMount() {
+    const params = new URLSearchParams(window.location.search);
+    let stored = null;
+    try { stored = JSON.parse(sessionStorage.getItem('chy-booking-service') || 'null'); } catch (e) {}
+    const hash = params.get('service') || decodeURIComponent(window.location.hash.replace('#service=', '')) || (stored && stored.name) || '';
+    const flow = params.get('flow') === 'availability' ? 'availability' : 'therapist';
+    let selectedService = null;
+    if (hash) {
+      selectedService = SERVICES.find((s) => s.name === hash) || (stored && stored.name === hash ? stored : { name: hash, category: 'Featured', duration: '60 min', price: '3,000' });
+    }
+    this.setState({ flow, selectedService, therapistModalOpen: flow === 'therapist' });
+  }
+
+  sequence() {
+    return this.state.flow === 'availability' ? ['datetime', 'therapist', 'details', 'payment'] : ['datetime', 'details', 'payment'];
+  }
+  currentKey() { return this.sequence()[this.state.step - 1]; }
+  missingFor(key) {
+    const st = this.state;
+    if (key === 'datetime') {
+      if (!st.selectedDate && !st.selectedTime) return 'Please select a date and time to continue.';
+      if (!st.selectedDate) return 'Please select a date to continue.';
+      if (!st.selectedTime) return 'Please select a time to continue.';
+    }
+    if (key === 'therapist' && !st.selectedTherapist) return 'Please choose a therapist to continue.';
+    if (key === 'payment' && !st.selectedPayment) return 'Please choose a payment method to continue.';
+    return '';
+  }
+  goNext = () => {
+    const seq = this.sequence();
+    const key = this.currentKey();
+    const missing = this.missingFor(key);
+    if (missing) {
+      clearTimeout(this._alertTimer);
+      this.setState({ alertText: missing });
+      this._alertTimer = setTimeout(() => this.setState({ alertText: '' }), 4000);
+      return;
+    }
+    if (this.state.alertText) this.setState({ alertText: '' });
+    const patch = {};
+    if (key === 'details') {
+      const name = document.querySelector('#bk-name');
+      const phone = document.querySelector('#bk-phone');
+      const email = document.querySelector('#bk-email');
+      const notes = document.querySelector('#bk-notes');
+      if (name && !name.value.trim()) { name.reportValidity(); return; }
+      if (phone && !phone.value.trim()) { phone.reportValidity(); return; }
+      Object.assign(patch, { formName: name ? name.value : '', formPhone: phone ? phone.value : '', formEmail: email ? email.value : '', formNotes: notes ? notes.value : '' });
+    }
+    if (this.state.step >= seq.length) {
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const palette = ['#FF5A5F', '#FFB400', '#00A699', '#007D67', '#7B61FF', '#FF7EB3', '#3EC1F3', '#F9D342', '#FF8A3D', '#4FBBA5'];
+      const rnd = (a, z) => a + Math.random() * (z - a);
+      const make = (i, ox, oy, angMin, angMax, power) => {
+        const shape = i % 6 === 0 ? 'ribbon' : i % 4 === 0 ? 'dot' : i % 7 === 0 ? 'star' : 'rect';
+        const ang = rnd(angMin, angMax) * Math.PI / 180;
+        const v = rnd(power * 0.55, power);
+        const bx = Math.cos(ang) * v, by = -Math.sin(ang) * v;
+        return {
+          ox, oy, delay: rnd(0, 0.18), dur: rnd(3.2, 4.8),
+          bx, by, dx: bx * rnd(1.15, 1.5), dy: by + rnd(520, 820), rot: rnd(-900, 900), sway: rnd(-26, 26),
+          w: shape === 'ribbon' ? rnd(18, 28) : shape === 'dot' ? rnd(6, 9) : shape === 'star' ? 12 : rnd(7, 11),
+          h: shape === 'ribbon' ? rnd(5, 7) : shape === 'dot' ? 0 : shape === 'star' ? 12 : rnd(10, 16),
+          shape, color: palette[i % palette.length],
+        };
+      };
+      const pieces = reduce ? [] : [
+        ...Array.from({ length: 70 }, (_, i) => make(i, 50, 38, 20, 160, 380)),
+        ...Array.from({ length: 45 }, (_, i) => make(i + 3, 4, 96, 50, 80, 620)),
+        ...Array.from({ length: 45 }, (_, i) => make(i + 5, 96, 96, 100, 130, 620)),
+      ];
+      this.setState({ ...patch, confirmed: true, confetti: pieces, bookingRef: this.state.bookingRef || ('CHY-' + Date.now().toString().slice(-6)), issuedAt: this.state.issuedAt || new Date() });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    this.setState({ ...patch, step: this.state.step + 1 });
+  };
+  goBack = () => {
+    const key = this.currentKey();
+    const patch = {};
+    if (key === 'details') {
+      const g = (id) => { const el = document.querySelector(id); return el ? el.value : ''; };
+      Object.assign(patch, { formName: g('#bk-name'), formPhone: g('#bk-phone'), formEmail: g('#bk-email'), formNotes: g('#bk-notes') });
+    }
+    this.setState({ ...patch, step: Math.max(1, this.state.step - 1), alertText: '' });
+  };
+  resetStep = () => {
+    const key = this.currentKey();
+    if (key === 'datetime') this.setState({ selectedDate: null, selectedTime: null });
+    else if (key === 'therapist') this.setState({ selectedTherapist: null });
+    else if (key === 'payment') this.setState({ selectedPayment: null });
+    else if (key === 'details') ['#bk-name', '#bk-phone', '#bk-email', '#bk-notes'].forEach((id) => { const el = document.querySelector(id); if (el) el.value = ''; });
+  };
+
+  renderVals() {
+    const { step, selectedService, selectedDate, selectedTime, selectedTherapist, selectedPayment, confirmed, monthOffset } = this.state;
+    const today = new Date();
+    const viewDate = new Date(today.getFullYear(), today.getMonth() + monthOffset, 1);
+    const year = viewDate.getFullYear();
+    const month = viewDate.getMonth();
+    const isCurrentMonth = monthOffset === 0;
+    const firstDow = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const cells = [];
+    for (let i = 0; i < firstDow; i++) cells.push({ blank: true });
+    for (let d = 1; d <= daysInMonth; d++) cells.push({ day: d });
+    let nextDay = 1;
+    while (cells.length % 7 !== 0) cells.push({ day: nextDay++, outside: true });
+
+    const todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const isTherapistFlow = this.state.flow === 'therapist';
+    const lockTh = isTherapistFlow ? selectedTherapist : null;
+    const calendarCells = cells.map((c, idx) => {
+      const dow = idx % 7;
+      const isWeekend = dow === 0 || dow === 6;
+      if (c.blank || c.outside) {
+        return {
+          label: c.outside ? String(c.day).padStart(2, '0') : '', disabled: true, onClick: () => {},
+          style: css({ cursor: 'default' }),
+          numStyle: css({ color: '#c4c4c4', minWidth: '28px', height: '28px', justifyContent: 'flex-start' }),
+        };
+      }
+      const cellDate = new Date(year, month, c.day);
+      const isPast = cellDate < todayMid;
+      const unavailable = !isPast && lockTh && !dayAvailable(lockTh, cellDate);
+      const isSelected = selectedDate === c.day;
+      return {
+        label: String(c.day).padStart(2, '0'),
+        disabled: isPast || unavailable,
+        onClick: () => this.setState({ selectedDate: c.day, selectedTime: null }),
+        style: css(unavailable
+          ? { cursor: 'not-allowed', background: 'repeating-linear-gradient(135deg,#fafaf9 0,#fafaf9 6px,#f2f2ef 6px,#f2f2ef 7px)' }
+          : { cursor: isPast ? 'not-allowed' : 'pointer' }),
+        numStyle: css(isSelected
+          ? { background: '#007D67', color: '#fff', fontWeight: 700, fontSize: '14px', width: '32px', height: '32px', margin: '-4px 0 0 -4px' }
+          : { color: isPast || unavailable ? '#c4c4c4' : isWeekend ? '#e0442c' : '#201e1d', textDecoration: unavailable ? 'line-through' : 'none', minWidth: '28px', height: '28px', justifyContent: 'flex-start' }),
+      };
+    });
+    const weekdayLabels = WEEKDAYS.map((w, i) => ({ label: w, style: css({ color: i === 0 || i === 6 ? '#e0442c' : '#5c5c5c' }) }));
+    const yearOptions = [today.getFullYear(), today.getFullYear() + 1, today.getFullYear() + 2];
+    const monthOptions = MONTHS.map((m, i) => ({ value: i, label: m.slice(0, 3).toUpperCase() }));
+    const setView = (y, m) => {
+      const off = (y - today.getFullYear()) * 12 + (m - today.getMonth());
+      this.setState({ monthOffset: Math.max(0, off), selectedDate: null });
+    };
+
+    const selDateObj = selectedDate ? new Date(year, month, selectedDate) : null;
+    const timeOptions = ALL_TIMES.map((t) => {
+      const off = lockTh ? (!selDateObj || !slotAvailable(lockTh, selDateObj, t)) : false;
+      const sel = t === selectedTime && !off;
+      return {
+        label: t, disabled: off,
+        onClick: () => { if (!off) this.setState({ selectedTime: t }); },
+        style: css(sel ? { background: '#007D67', color: '#fff', border: '1px solid #007D67' }
+          : off ? { background: '#f5f5f3', color: '#c4c4c4', border: '1px solid #ececea', textDecoration: 'line-through' }
+          : { background: '#fff', color: '#201e1d', border: '1px solid #e0e0e0' }),
+      };
+    });
+    const timeHint = lockTh
+      ? (selDateObj ? `Showing ${lockTh.name.split(' ').slice(-2).join(' ')}'s open slots on ${MONTHS[month]} ${selectedDate}.` : 'Select an available date to see open times.')
+      : 'Choose any time that suits you.';
+
+    const therapistOptions = [...THERAPISTS, NO_PREF].map((th) => {
+      const free = !selDateObj || !selectedTime || slotAvailable(th, selDateObj, selectedTime);
+      const sel = selectedTherapist && selectedTherapist.id === th.id;
+      return {
+        ...th, disabled: !free,
+        note: free ? (th.id === 'any' ? '' : 'Available') : 'Unavailable at this time',
+        noteStyle: css({ color: free ? '#007D67' : '#b3261e' }),
+        onClick: () => { if (free) this.setState({ selectedTherapist: th }); },
+        style: css(sel ? { background: '#E3F5F0', border: '2px solid #007D67' }
+          : free ? { background: '#f5f6f4', border: '2px solid transparent' }
+          : { background: '#f5f6f4', border: '2px solid transparent', opacity: 0.5 }),
+      };
+    });
+    const modalTherapists = THERAPISTS.map((th) => {
+      const sel = selectedTherapist && selectedTherapist.id === th.id;
+      return {
+        ...th, slotId: 'therapist-photo-' + th.id, daysLabel: daysLabel(th),
+        onClick: () => this.pickTherapistFromModal(th),
+        style: css({ border: sel ? '2px solid #007D67' : '1px solid #e4e2dc', boxShadow: sel ? '0 10px 30px -12px rgba(0,125,103,0.45)' : 'none' }),
+      };
+    });
+
+    const payments = ['Cash at Clinic', 'Card on Arrival'];
+    const WALLETS = [
+      { label: 'eSewa', sub: 'Mobile wallet', mark: 'e', color: '#60BB46' },
+      { label: 'Khalti by IME', sub: 'Mobile wallet', mark: 'K', color: '#5C2D91', slotKey: 'khalti' },
+      { label: 'Mobile Banking', sub: 'Any Nepali bank', bank: true, color: '#072E34' },
+    ];
+    const walletOptions = WALLETS.map((w) => {
+      const sel = selectedPayment === w.label;
+      return {
+        label: w.label, sub: w.sub, mark: w.mark || '', isBank: !!w.bank, isMark: !w.bank, selected: sel,
+        slotId: 'wallet-logo-' + (w.slotKey || w.label.toLowerCase().replace(/[^a-z]+/g, '-')),
+        hasSlot: !w.bank,
+        onClick: () => this.setState({ selectedPayment: w.label }),
+        onKey: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.setState({ selectedPayment: w.label }); } },
+        logoStyle: css({ background: w.color }),
+        style: css(sel ? { background: '#E3F5F0', border: '2px solid #007D67' } : { background: '#f5f6f4', border: '2px solid transparent' }),
+        dotStyle: css({ background: sel ? '#007D67' : '#fff', border: '2px solid ' + (sel ? '#007D67' : '#d8d9d1') }),
+      };
+    });
+    const paymentOptions = payments.map((label) => ({
+      label,
+      onClick: () => this.setState({ selectedPayment: label }),
+      style: css(selectedPayment === label ? { background: '#E3F5F0', border: '2px solid #007D67' } : { background: '#f5f6f4', border: '2px solid transparent' }),
+      dotStyle: css({ background: selectedPayment === label ? '#007D67' : '#fff', border: '2px solid ' + (selectedPayment === label ? '#007D67' : '#d8d9d1') }),
+    }));
+
+    const seq = this.sequence();
+    const key = confirmed ? 'booked' : seq[step - 1];
+    const LABELS = { datetime: 'Date & Time', therapist: 'Therapist', details: 'Details', payment: 'Payment' };
+    const stepLabels = [...seq.map((k) => LABELS[k]), 'Booked'];
+    const total = stepLabels.length;
+    const steps = stepLabels.map((label, i) => {
+      const num = i + 1;
+      const activeNow = confirmed ? num === total : num === step;
+      const done = confirmed ? num < total : num < step;
+      return {
+        num, label,
+        pillStyle: css({ background: activeNow ? '#007D67' : '#fff', color: activeNow ? '#fff' : '#072E34', border: activeNow ? 'none' : '1px solid #e6e4da' }),
+        numStyle: css({ background: activeNow ? 'rgba(255,255,255,0.25)' : done ? '#007D67' : '#eceae0', color: activeNow ? '#fff' : done ? '#fff' : '#8a8577' }),
+      };
+    });
+    const progressBars = stepLabels.map((_, i) => ({ style: css({ background: confirmed || i < step ? '#007D67' : '#eceae0' }) }));
+
+    const dateTimeLabel = selectedTime && selectedDate ? `${MONTHS[month]} ${selectedDate}, ${selectedTime}` : '';
+    const nextDisabled = !confirmed && !!this.missingFor(key);
+    const isLast = step >= seq.length;
+
+    return {
+      steps, progressBars,
+      acctIsNone: !this.state.acctMode || this.state.acctMode === 'none',
+      acctIsLogin: this.state.acctMode === 'login',
+      acctIsSignup: this.state.acctMode === 'signup',
+      acctIsIn: this.state.acctMode === 'in',
+      acctTitle: this.state.acctCreated ? `Account created — welcome, ${(this.state.acctUser || '').split(' ')[0]}!` : `Logged in as ${this.state.acctUser || ''}`,
+      acctHasError: !!this.state.acctError,
+      acctError: this.state.acctError || '',
+      openLogin: this.openLogin, openSignup: this.openSignup, closeAccount: this.closeAccount,
+      doLogin: this.doLogin, doSignup: this.doSignup, doLogout: this.doLogout,
+      walletOptions,
+      confettiLayer: (this.state.confetti || []).length ? React.createElement('div', { key: 'confetti', 'aria-hidden': true, style: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'visible' } },
+        React.createElement('span', { key: 'ring', style: { position: 'absolute', left: '50%', top: '38%', width: '220px', height: '220px', borderRadius: '50%', border: '2px solid rgba(0,125,103,0.35)', animation: 'chyBurstRing 1.1s cubic-bezier(0.2,0.7,0.2,1) both' } }),
+        this.state.confetti.map((p, i) => React.createElement('span', { key: i, style: {
+          position: 'absolute', left: p.ox + '%', top: p.oy + '%', width: p.w + 'px', height: (p.shape === 'dot' ? p.w : p.h) + 'px',
+          '--bx': p.bx + 'px', '--by': p.by + 'px', '--dx': p.dx + 'px', '--dy': p.dy + 'px', '--rot': p.rot + 'deg', '--sway': p.sway + 'px',
+          animation: `chyConfettiFall ${p.dur}s ${p.delay}s cubic-bezier(0.16,0.84,0.44,1) both`,
+          willChange: 'transform, opacity',
+        } }, React.createElement('span', { style: {
+          display: 'block', width: '100%', height: '100%',
+          borderRadius: p.shape === 'dot' ? '50%' : p.shape === 'ribbon' ? '3px' : '2px',
+          clipPath: p.shape === 'star' ? 'polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)' : 'none',
+          background: `linear-gradient(135deg, ${p.color}, ${p.color}dd 55%, #ffffff66)`,
+          boxShadow: `0 0 6px ${p.color}55`,
+          animation: `chyConfettiFlip ${0.7 + (i % 6) * 0.14}s linear infinite, chyConfettiSway ${1.6 + (i % 4) * 0.3}s ease-in-out infinite`,
+        } })))) : null,
+      downloadBooking: () => this.downloadInvoice(dateTimeLabel),
+      ...(() => {
+        const ref = this.state.bookingRef || 'CHY-000000';
+        const amt = Number(String(selectedService ? selectedService.price : '0').replace(/[^0-9.]/g, '')) || 0;
+        const digits = (ref.replace(/\D/g, '') + String(amt).replace(/\D/g, '') + '20260923').slice(0, 12).padEnd(12, '0');
+        const bars = [];
+        let seed = 0; for (const ch of ref + digits) seed = (seed * 131 + ch.charCodeAt(0)) >>> 0;
+        const rnd = () => { seed = (seed * 1103515245 + 12345) >>> 0; return seed / 4294967296; };
+        bars.push('flex:2 0 0;background:#201e1d;', 'flex:2 0 0;background:transparent;', 'flex:2 0 0;background:#201e1d;');
+        for (let i = 0; i < 52; i++) {
+          const w = 1 + Math.floor(rnd() * 3);
+          bars.push(`flex:${w} 0 0;background:${i % 2 ? 'transparent' : '#201e1d'};`);
+        }
+        bars.push('flex:2 0 0;background:#201e1d;', 'flex:2 0 0;background:transparent;', 'flex:2 0 0;background:#201e1d;');
+        const pay = this.state.selectedPayment || 'Pay at clinic';
+        const prepaid = ['eSewa', 'Khalti by IME', 'Mobile Banking'].includes(pay);
+        return {
+          receiptRef: ref,
+          receiptAmount: 'NPR ' + amt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+          receiptTherapist: selectedTherapist ? selectedTherapist.name : 'Assigned on arrival',
+          receiptPayer: this.state.formName || 'Guest',
+          receiptPayment: pay + (prepaid ? ' · Paid' : ' · Due at clinic'),
+          receiptBars: bars,
+          receiptDigits: digits.slice(0, 1) + ' ' + digits.slice(1, 7) + ' ' + digits.slice(7),
+        };
+      })(),
+      downloadLabel: this.state.downloading ? 'Preparing PDF…' : 'Download Invoice (PDF)',
+      showTherapistModal: isTherapistFlow && (this.state.therapistModalOpen || !selectedTherapist) && !confirmed,
+      modalTherapists, timeHint,
+      openTherapistModal: this.openTherapistModal, closeTherapistModal: this.closeTherapistModal,
+      showTherapistChip: !!lockTh,
+      chipName: lockTh ? lockTh.name : '', chipInitials: lockTh ? lockTh.initials : '', chipDays: lockTh ? daysLabel(lockTh) : '',
+      scheduleSubtitle: lockTh ? 'Only dates and times your therapist is free are selectable.' : 'Pick the date and time that works best for your wellness journey.',
+      stepNumLabel: String(confirmed ? total : step).padStart(2, '0'),
+      totalLabel: 'Out Of ' + String(total).padStart(2, '0'),
+      showNav: !confirmed,
+      isConfirmed: confirmed,
+      isStep1: key === 'datetime', isStep2: key === 'therapist', isStep3: key === 'payment', isStep4: key === 'details',
+      canGoBack: step > 1,
+      backButtonStyle: css({ color: step > 1 ? '#072E34' : '#c7c9bf', cursor: step > 1 ? 'pointer' : 'not-allowed', pointerEvents: step > 1 ? 'auto' : 'none' }),
+      goBack: this.goBack, goNext: this.goNext, resetStep: this.resetStep,
+      nextDisabled,
+      nextLabel: isLast ? 'Confirm Booking' : 'Next',
+      showAlert: !!this.state.alertText,
+      alertText: this.state.alertText || '',
+      nextButtonStyle: css(nextDisabled
+        ? { background: '#e4e4e0', color: '#8a8a82', cursor: 'pointer', boxShadow: 'none', transition: 'background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease' }
+        : { background: '#007D67', color: '#fff', cursor: 'pointer', boxShadow: '0 6px 16px -6px rgba(0,125,103,0.55)', transition: 'background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease' }),
+
+      monthLabel: `${MONTHS[month]} ${year}`,
+      prevMonth: this.prevMonth, nextMonth: this.nextMonth,
+      viewYear: year, viewMonth: month, yearOptions, monthOptions,
+      onYearChange: (e) => setView(Number(e.target.value), month),
+      onMonthChange: (e) => setView(year, Number(e.target.value)),
+      weekdayLabels, calendarCells, timeOptions, therapistOptions, paymentOptions,
+
+      selectedServiceName: selectedService ? selectedService.name : 'No treatment selected',
+      selectedServicePrice: selectedService ? selectedService.price : '0',
+      selectedDateTimeLabel: dateTimeLabel,
+
+      detailCardData: {
+        name: selectedService ? selectedService.name : 'Select a treatment',
+        price: selectedService ? `Rs. ${selectedService.price}` : 'N/A',
+        duration: selectedService ? selectedService.duration : 'N/A',
+        therapist: selectedTherapist ? selectedTherapist.name : 'N/A',
+        date: selectedDate ? `${MONTHS[month]} ${selectedDate}` : 'N/A',
+        time: selectedTime || 'N/A',
+      },
+
+      formName: this.state.formName, formPhone: this.state.formPhone, formEmail: this.state.formEmail || '', formNotes: this.state.formNotes || '',
+      formFirstName: (this.state.formName || 'there').split(' ')[0],
+      handleDetailsSubmit: (e) => e.preventDefault(),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -24,7 +24,7 @@
   </style>
 </helmet>
 
-<dc-import name="SiteHeader" current-page="services" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
+<dc-import name="SiteHeader" current-page="products" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
 
 <section style="background:#F7F4EE;padding:calc(2*var(--space-8)) clamp(20px,6vw,120px) calc(1.6*var(--space-8));">
   <p style="font-family:var(--font-body);font-size:13px;color:#6b6a63;margin:0 0 var(--space-4);">
@@ -60,7 +60,7 @@
     <sc-for list="{{ items }}" as="p" hint-placeholder-count="6">
       <a href="{{ p.href }}" style="display:flex;flex-direction:column;text-decoration:none;color:#201e1d;">
         <figure style="position:relative;margin:0 0 var(--space-4);overflow:hidden;background:#f5f6f4;">
-          <image-slot id="{{ p.slotId }}" shape="rect" placeholder="{{ p.name }}" style="display:block;width:100%;aspect-ratio:1/1;"></image-slot>
+          <image-slot id="{{ p.slotId }}" src="{{ p.src }}" shape="rect" placeholder="{{ p.name }}" style="display:block;width:100%;aspect-ratio:1/1;"></image-slot>
           <span style="position:absolute;left:12px;top:12px;background:#007D67;color:#fff;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:5px 10px;">{{ p.badge }}</span>
         </figure>
         <span style="font-family:var(--font-body);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#007D67;margin-bottom:6px;">{{ p.category }}</span>
@@ -81,12 +81,12 @@ class Component extends DCLogic {
   state = { filter: 'All', query: '', searchOpen: false };
   searchRef = React.createRef();
   PRODUCTS = [
-    { id: 1, name: 'Beetroot Powder', category: 'Superfood Powder', group: 'Powders', price: '250.00', badge: 'Bestseller' },
-    { id: 2, name: 'Flax Seed Oil', category: 'Cold-Pressed Oil', group: 'Oils', price: '250.00', badge: 'Cold-pressed' },
-    { id: 3, name: 'Hibiscus Powder', category: 'Herbal Powder', group: 'Powders', price: '250.00', badge: 'New' },
-    { id: 4, name: 'Kodali Pancake Mix', category: 'Healthy Kitchen', group: 'Kitchen', price: '250.00', badge: 'Millet-based' },
-    { id: 5, name: 'Milk Thistle Powder', category: 'Herbal Powder', group: 'Powders', price: '250.00', badge: 'Liver care' },
-    { id: 6, name: 'Multani Mitti', category: 'Natural Skincare', group: 'Skincare', price: '250.00', badge: 'Skincare' },
+    { id: 1, name: 'Beetroot Powder', category: 'Superfood Powder', group: 'Powders', price: '250.00', badge: 'Bestseller', src: 'assets/photos/beetroot powder.jpg' },
+    { id: 2, name: 'Flax Seed Oil', category: 'Cold-Pressed Oil', group: 'Oils', price: '250.00', badge: 'Cold-pressed', src: 'assets/photos/flax seed oil.jpg' },
+    { id: 3, name: 'Hibiscus Powder', category: 'Herbal Powder', group: 'Powders', price: '250.00', badge: 'New', src: 'assets/photos/Hibiscus Powder.jpg' },
+    { id: 4, name: 'Kodali Pancake Mix', category: 'Healthy Kitchen', group: 'Kitchen', price: '250.00', badge: 'Millet-based', src: 'assets/photos/Kodali Pancake Mix.jpg' },
+    { id: 5, name: 'Milk Thistle Powder', category: 'Herbal Powder', group: 'Powders', price: '250.00', badge: 'Liver care', src: 'assets/photos/Milk Thistle Powder.jpg' },
+    { id: 6, name: 'Multani Mitti', category: 'Natural Skincare', group: 'Skincare', price: '250.00', badge: 'Skincare', src: 'assets/photos/multani mitti.jpg' },
   ];
   renderVals() {
     const groups = ['All', 'Powders', 'Oils', 'Skincare', 'Kitchen'];
@@ -107,7 +107,7 @@ class Component extends DCLogic {
       noResults: list.length === 0,
       filters: groups.map((g) => ({ label: g, on: g === f, onClick: () => this.setState({ filter: g }),
         style: g === f ? 'background:#007D67;color:#fff;' : 'background:#f0f1ee;color:#201e1d;' })),
-      items: list.map((p) => ({ ...p, slotId: `prod-${p.id}`, href: `ProductDetail.dc.html?id=${p.id}` })),
+      items: list.map((p) => ({ ...p, slotId: `prod-${p.id}`, href: `ProductDetail.dc.html?id=${p.id}`, src: p.src })),
       countLabel: `${list.length} product${list.length === 1 ? '' : 's'}`,
     };
   }

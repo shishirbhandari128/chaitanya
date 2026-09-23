@@ -20,7 +20,7 @@
       <img src="assets/chaitanya-logo.svg" alt="Chaitanya Health &amp; Wellness" style="height:54px;width:auto;display:block;transition:transform .3s ease;">
     </a>
     <div style="flex:1;min-width:180px;display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,32px);flex-wrap:wrap;row-gap:6px;">
-      <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="6">
+      <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="7">
         <a href="{{ link.href }}" aria-current="{{ link.current }}" style="{{ link.solidStyle }}{{ link.solidBorder }}font-family:var(--font-body);font-size:14.5px;text-decoration:none;white-space:nowrap;padding-bottom:4px;transition:color 0.25s ease,border-color 0.25s ease;" style-hover="color:#007D67;border-bottom-color:#007D67;">{{ link.label }}</a>
       </sc-for>
     </div>
@@ -37,7 +37,7 @@
       <img src="assets/chaitanya-logo.svg" alt="Chaitanya Health &amp; Wellness" style="height:54px;width:auto;display:block;transition:transform .3s ease;filter:invert(1) brightness(2);">
     </a>
     <div style="flex:1;min-width:180px;display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,32px);flex-wrap:wrap;row-gap:6px;">
-      <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="6">
+      <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="7">
         <a href="{{ link.href }}" aria-current="{{ link.current }}" style="{{ link.overlayStyle }}{{ link.overlayBorder }}font-family:var(--font-body);font-size:14.5px;text-decoration:none;white-space:nowrap;padding-bottom:4px;transition:opacity 0.25s ease,border-color 0.25s ease;" style-hover="border-bottom-color:#fff;">{{ link.label }}</a>
       </sc-for>
     </div>
@@ -48,7 +48,7 @@
   </nav>
 </sc-if>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:84},&quot;currentPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;about&quot;,&quot;services&quot;,&quot;membership&quot;,&quot;reviews&quot;,&quot;contact&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;solid&quot;,&quot;options&quot;:[&quot;solid&quot;,&quot;overlay&quot;],&quot;tsType&quot;:&quot;'solid' | 'overlay'&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:84},&quot;currentPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;about&quot;,&quot;services&quot;,&quot;products&quot;,&quot;membership&quot;,&quot;reviews&quot;,&quot;contact&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;solid&quot;,&quot;options&quot;:[&quot;solid&quot;,&quot;overlay&quot;],&quot;tsType&quot;:&quot;'solid' | 'overlay'&quot;}}">
 class Component extends DCLogic {
   renderVals() {
     const active = this.props.currentPage || this.props.active || '';
@@ -57,6 +57,7 @@ class Component extends DCLogic {
       ['home', 'Home', 'index.html'],
       ['about', 'About Us', 'AboutUs.dc.html'],
       ['services', 'Services', 'Services.dc.html'],
+      ['products', 'Products', 'Products.dc.html'],
       ['membership', 'Membership', 'Membership.dc.html'],
       ['reviews', 'Reviews', 'Reviews.dc.html'],
       ['contact', 'Contact', 'ContactUs.dc.html'],

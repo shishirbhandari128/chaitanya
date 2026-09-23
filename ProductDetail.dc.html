@@ -27,7 +27,7 @@
   </style>
 </helmet>
 
-<dc-import name="SiteHeader" current-page="services" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
+<dc-import name="SiteHeader" current-page="products" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
 
 <section style="background:#fff;padding:24px clamp(20px,6vw,120px) calc(2.4*var(--space-8));">
   <p style="font-family:var(--font-body);font-size:13px;color:#6b6a63;margin:0 0 20px;">
@@ -41,7 +41,7 @@
       <div class="pd-stage" style="position:relative;width:100%;flex:1 1 auto;min-height:0;overflow:hidden;background:#f5f6f4;">
         <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="4">
           <div style="{{ ph.stageStyle }}position:absolute;inset:0;transition:opacity 0.6s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);">
-            <image-slot id="{{ ph.slotId }}" shape="rect" placeholder="{{ ph.label }}" style="display:block;width:100%;height:100%;"></image-slot>
+            <image-slot id="{{ ph.slotId }}" src="{{ ph.src }}" shape="rect" placeholder="{{ ph.label }}" style="display:block;width:100%;height:100%;"></image-slot>
           </div>
         </sc-for>
         <span style="position:absolute;left:16px;top:16px;z-index:3;background:#007D67;color:#fff;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:6px 12px;pointer-events:none;">{{ item.badge }}</span>
@@ -58,7 +58,7 @@
       <div style="flex:none;display:flex;gap:10px;height:clamp(64px,10vh,88px);">
         <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="4">
           <button type="button" onClick="{{ ph.onSelect }}" aria-label="{{ ph.label }}" style="{{ ph.thumbStyle }}flex:1 1 0;min-width:0;height:100%;padding:0;border:none;background:#f5f6f4;cursor:pointer;overflow:hidden;transition:opacity 0.25s ease;outline-offset:2px;">
-            <image-slot id="{{ ph.slotId }}" shape="rect" placeholder="{{ ph.num }}" style="display:block;width:100%;height:100%;pointer-events:none;"></image-slot>
+            <image-slot id="{{ ph.slotId }}" src="{{ ph.src }}" shape="rect" placeholder="{{ ph.num }}" style="display:block;width:100%;height:100%;pointer-events:none;"></image-slot>
           </button>
         </sc-for>
       </div>
@@ -155,7 +155,7 @@
     <sc-for list="{{ related }}" as="r" hint-placeholder-count="4">
       <a href="{{ r.href }}" style="display:flex;flex-direction:column;text-decoration:none;color:#201e1d;background:#fff;">
         <figure style="margin:0;overflow:hidden;">
-          <image-slot id="{{ r.slotId }}" shape="rect" placeholder="{{ r.name }}" style="display:block;width:100%;aspect-ratio:1/1;"></image-slot>
+          <image-slot id="{{ r.slotId }}" src="{{ r.src }}" shape="rect" placeholder="{{ r.name }}" style="display:block;width:100%;aspect-ratio:1/1;"></image-slot>
         </figure>
         <div style="padding:14px 16px 18px;">
           <span style="display:block;font-family:var(--font-body);font-weight:700;font-size:13.5px;letter-spacing:0.03em;text-transform:uppercase;margin-bottom:6px;">{{ r.name }}</span>
@@ -196,7 +196,7 @@
         <div>
           <h3 style="font-family:var(--font-heading);font-weight:700;font-size:26px;color:#201e1d;margin:0 0 var(--space-4);">Checkout</h3>
           <div style="display:flex;align-items:center;gap:14px;padding:14px;background:#f5f6f4;margin-bottom:var(--space-6);">
-            <image-slot id="{{ item.slotId }}" shape="rect" placeholder="{{ item.name }}" style="width:64px;height:64px;flex:none;"></image-slot>
+            <image-slot id="{{ item.slotId }}" src="{{ item.src }}" shape="rect" placeholder="{{ item.name }}" style="width:64px;height:64px;flex:none;"></image-slot>
             <div style="flex:1;min-width:0;">
               <span style="display:block;font-family:var(--font-body);font-weight:700;font-size:15px;color:#201e1d;">{{ item.name }}</span>
               <span style="display:block;font-family:var(--font-body);font-size:13px;color:#6b6a63;margin-top:2px;">{{ sizeLabel }} &middot; Qty {{ qty }}</span>
@@ -241,27 +241,27 @@ class Component extends DCLogic {
   state = { photo: 0, size: 0, qty: 1, openTab: 0, cart: 0, toast: false, checkout: false, placed: false, pay: 'Cash on Delivery', buyer: '', orderRef: '' };
 
   PRODUCTS = [
-    { id: 1, name: 'Beetroot Powder', category: 'Superfood Powder', base: 250, badge: 'Bestseller', rating: '4.8', reviews: 64,
+    { id: 1, name: 'Beetroot Powder', category: 'Superfood Powder', base: 250, badge: 'Bestseller', rating: '4.8', reviews: 64, src: 'assets/photos/beetroot powder.jpg',
       description: 'Sun-dried, stone-milled beetroot rich in natural nitrates and iron. Stir into smoothies, juices or warm water for everyday energy and healthy circulation.',
       ingredients: '100% organic beetroot, dried at low temperature and finely milled. Nothing added.',
       use: 'Mix 1 teaspoon (5g) into water, juice or a smoothie once a day. Best taken in the morning.' },
-    { id: 2, name: 'Flax Seed Oil', category: 'Cold-Pressed Oil', base: 250, badge: 'Cold-pressed', rating: '4.7', reviews: 41,
+    { id: 2, name: 'Flax Seed Oil', category: 'Cold-Pressed Oil', base: 250, badge: 'Cold-pressed', rating: '4.7', reviews: 41, src: 'assets/photos/flax seed oil.jpg',
       description: 'Cold-pressed flax seed oil, a plant source of omega-3 that supports heart health, digestion and glowing skin.',
       ingredients: 'Pure cold-pressed flax (linseed) oil. Unrefined and unfiltered.',
       use: 'Take 1 teaspoon daily or drizzle over salads. Do not heat. Refrigerate after opening.' },
-    { id: 3, name: 'Hibiscus Powder', category: 'Herbal Powder', base: 250, badge: 'New', rating: '4.6', reviews: 28,
+    { id: 3, name: 'Hibiscus Powder', category: 'Herbal Powder', base: 250, badge: 'New', rating: '4.6', reviews: 28, src: 'assets/photos/Hibiscus Powder.jpg',
       description: 'Vibrant hibiscus petal powder for hair masks, face packs and calming herbal teas, naturally rich in antioxidants.',
       ingredients: '100% hibiscus flower petals, shade-dried and powdered.',
       use: 'For hair: mix with water or yogurt, apply for 30 minutes. For tea: steep ½ teaspoon in hot water.' },
-    { id: 4, name: 'Kodali Pancake Mix', category: 'Healthy Kitchen', base: 250, badge: 'Millet-based', rating: '4.7', reviews: 35,
+    { id: 4, name: 'Kodali Pancake Mix', category: 'Healthy Kitchen', base: 250, badge: 'Millet-based', rating: '4.7', reviews: 35, src: 'assets/photos/Kodali Pancake Mix.jpg',
       description: 'A wholesome pancake mix made with kodo millet — high in fibre, gluten-light and ready in minutes.',
       ingredients: 'Kodo millet flour, whole wheat flour, jaggery, baking soda, rock salt.',
       use: 'Whisk 1 cup mix with ¾ cup milk or water. Cook on a lightly oiled pan for 2 minutes per side.' },
-    { id: 5, name: 'Milk Thistle Powder', category: 'Herbal Powder', base: 250, badge: 'Liver care', rating: '4.8', reviews: 22,
+    { id: 5, name: 'Milk Thistle Powder', category: 'Herbal Powder', base: 250, badge: 'Liver care', rating: '4.8', reviews: 22, src: 'assets/photos/Milk Thistle Powder.jpg',
       description: 'Traditionally used to support liver function and gentle detoxification, finely ground from whole milk thistle seeds.',
       ingredients: '100% milk thistle seeds, ground.',
       use: 'Take ½ teaspoon with warm water after meals, once or twice a day. Consult a physician if pregnant.' },
-    { id: 6, name: 'Multani Mitti', category: 'Natural Skincare', base: 250, badge: 'Skincare', rating: '4.9', reviews: 57,
+    { id: 6, name: 'Multani Mitti', category: 'Natural Skincare', base: 250, badge: 'Skincare', rating: '4.9', reviews: 57, src: 'assets/photos/multani mitti.jpg',
       description: 'Pure fuller\u2019s earth clay that draws out impurities, controls oil and leaves skin soft and refreshed.',
       ingredients: '100% natural fuller\u2019s earth (multani mitti), sieved and sun-dried.',
       use: 'Mix with rose water to a smooth paste. Apply for 10–15 minutes, then rinse with lukewarm water.' },
@@ -292,6 +292,7 @@ class Component extends DCLogic {
       return {
         label, num: String(i + 1).padStart(2, '0'),
         slotId: i === 0 ? `prod-${p.id}` : `prod-${p.id}-${i + 1}`,
+        src: p.src,
         onSelect: () => this.setPhoto(i),
         stageStyle: `opacity:${on ? 1 : 0};transform:scale(${on ? 1 : 1.04});z-index:${on ? 2 : 1};pointer-events:${on ? 'auto' : 'none'};`,
         thumbStyle: `opacity:${on ? 1 : 0.55};outline:2px solid ${on ? '#007D67' : 'transparent'};`,
@@ -300,7 +301,7 @@ class Component extends DCLogic {
     const tabs = [['Benefits', p.description], ['Ingredients', p.ingredients], ['How to Use', p.use]];
     const pays = ['Cash on Delivery', 'eSewa', 'Khalti by IME', 'Mobile Banking'];
     return {
-      item: { ...p, slotId: `prod-${p.id}` },
+      item: { ...p, slotId: `prod-${p.id}`, src: p.src },
       photos,
       counterLabel: `${String(this.state.photo + 1).padStart(2, '0')} / ${String(photos.length).padStart(2, '0')}`,
       prevPhoto: () => this.setPhoto(this.state.photo - 1),
@@ -332,7 +333,7 @@ class Component extends DCLogic {
           bodyStyle: `max-height:${open ? '260px' : '0'};opacity:${open ? 1 : 0};` };
       }),
       related: this.PRODUCTS.filter((x) => x.id !== p.id).slice(0, 4).map((x) => ({
-        name: x.name, price: x.base.toFixed(2), slotId: `prod-${x.id}`, href: `ProductDetail.dc.html?id=${x.id}` })),
+        name: x.name, price: x.base.toFixed(2), slotId: `prod-${x.id}`, href: `ProductDetail.dc.html?id=${x.id}`, src: x.src })),
       checkoutOpen: this.state.checkout,
       openCheckout: () => this.setState({ checkout: true, placed: false }),
       closeCheckout: () => this.setState({ checkout: false }),

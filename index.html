@@ -284,7 +284,7 @@
         <div style="position:relative;display:flex;flex-direction:column;height:100%;">
           <a href="{{ prod.href }}" aria-label="{{ prod.name }}" style="position:absolute;inset:0;z-index:1;"></a>
           <figure style="margin:0 0 var(--space-4);overflow:hidden;">
-            <image-slot id="{{ prod.slotId }}" shape="rect" placeholder="{{ prod.label }}" style="width:100%;aspect-ratio:1/1;transition:transform 0.6s cubic-bezier(.2,.7,.2,1);" style-hover="transform:scale(1.08);"></image-slot>
+            <image-slot id="{{ prod.slotId }}" src="{{ prod.src }}" shape="rect" placeholder="{{ prod.label }}" style="width:100%;aspect-ratio:1/1;transition:transform 0.6s cubic-bezier(.2,.7,.2,1);" style-hover="transform:scale(1.08);"></image-slot>
           </figure>
           <h3 style="font-family:var(--font-body);font-weight:700;font-size:13.5px;letter-spacing:0.03em;text-transform:uppercase;margin:0 0 var(--space-2);color:#201e1d;">{{ prod.name }}</h3>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;">
@@ -796,12 +796,12 @@ class Component extends DCLogic {
         this.setState({ roomTourVideoOverride: url });
       },
       products: [
-        { href: 'ProductDetail.dc.html?id=1', slotId: 'prod-1', label: 'Beetroot powder', name: 'Beetroot Powder', price: '250.00' },
-        { href: 'ProductDetail.dc.html?id=2', slotId: 'prod-2', label: 'Flax seed oil', name: 'Flax Seed Oil', price: '250.00' },
-        { href: 'ProductDetail.dc.html?id=3', slotId: 'prod-3', label: 'Hibiscus powder', name: 'Hibiscus Powder', price: '250.00' },
-        { href: 'ProductDetail.dc.html?id=4', slotId: 'prod-4', label: 'Pancake mix', name: 'Kodali Pancake Mix', price: '250.00' },
-        { href: 'ProductDetail.dc.html?id=5', slotId: 'prod-5', label: 'Milk thistle powder', name: 'Milk Thistle Powder', price: '250.00' },
-        { href: 'ProductDetail.dc.html?id=6', slotId: 'prod-6', label: 'Multani mitti', name: 'Multani Mitti', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=1', slotId: 'prod-1', label: 'Beetroot powder', name: 'Beetroot Powder', price: '250.00', src: 'assets/photos/beetroot powder.jpg' },
+        { href: 'ProductDetail.dc.html?id=2', slotId: 'prod-2', label: 'Flax seed oil', name: 'Flax Seed Oil', price: '250.00', src: 'assets/photos/flax seed oil.jpg' },
+        { href: 'ProductDetail.dc.html?id=3', slotId: 'prod-3', label: 'Hibiscus powder', name: 'Hibiscus Powder', price: '250.00', src: 'assets/photos/Hibiscus Powder.jpg' },
+        { href: 'ProductDetail.dc.html?id=4', slotId: 'prod-4', label: 'Pancake mix', name: 'Kodali Pancake Mix', price: '250.00', src: 'assets/photos/Kodali Pancake Mix.jpg' },
+        { href: 'ProductDetail.dc.html?id=5', slotId: 'prod-5', label: 'Milk thistle powder', name: 'Milk Thistle Powder', price: '250.00', src: 'assets/photos/Milk Thistle Powder.jpg' },
+        { href: 'ProductDetail.dc.html?id=6', slotId: 'prod-6', label: 'Multani mitti', name: 'Multani Mitti', price: '250.00', src: 'assets/photos/multani mitti.jpg' },
       ],
       roomTourVideoRef: (el) => { this.roomTourVideoEl = el; },
       membershipVideoRef: (el) => { this.membershipVideoEl = el; },

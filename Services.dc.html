@@ -43,7 +43,7 @@
 </section>
 
 <section style="background:#fff;padding:calc(2.4*var(--space-8)) clamp(20px,6vw,120px) calc(2.4*var(--space-8));">
-  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:calc(1.4*var(--space-8));padding:14px 0;background:transparent;border-radius:0;border-bottom:1px solid #e4e2dc;">
+  <div data-chy-filterbar="" style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:calc(1.4*var(--space-8));padding:14px 0;background:transparent;border-radius:0;border-bottom:1px solid #e4e2dc;">
     <select onChange="{{ onCategoryChange }}" value="{{ activeCategory }}" style="font-family:var(--font-body);font-size:14px;font-weight:600;color:#072E34;background:#fff;border:1px solid #e4e2dc;border-radius:8px;padding:0 16px;height:44px;box-sizing:border-box;line-height:44px;cursor:pointer;min-width:0;flex:1 1 160px;max-width:220px;">
       <sc-for list="{{ categoryOptions }}" as="cat" hint-placeholder-count="7">
         <option value="{{ cat }}">{{ cat }}</option>
@@ -54,13 +54,18 @@
         <option value="{{ pr.value }}">{{ pr.label }}</option>
       </sc-for>
     </select>
-    <div style="flex:1 1 12px;min-width:12px;"></div>
-    <button type="button" onClick="{{ onSearchClick }}" aria-label="Search" style="display:flex;align-items:center;justify-content:flex-start;gap:8px;width:44px;height:44px;padding:0 13px;box-sizing:border-box;border:none;border-radius:99px;background:#007D67;color:#fff;cursor:pointer;flex:none;overflow:hidden;white-space:nowrap;transition:width 0.35s cubic-bezier(0.16,1,0.3,1),padding 0.35s cubic-bezier(0.16,1,0.3,1);margin-left:auto;" style-hover="width:212px;padding:0 20px;" style-active="width:212px;padding:0 20px;transform:scale(0.98);">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex:none;"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
-      <span style="font-family:var(--font-body);font-size:14px;font-weight:600;white-space:nowrap;opacity:0;transition:opacity 0.35s cubic-bezier(0.16,1,0.3,1);" style-hover="opacity:1;">Search All Services</span>
-    </button>
+    <div data-chy-spacer="" style="flex:1 1 12px;min-width:12px;"></div>
+    <div data-chy-searchpill="" data-open="{{ searchOpenAttr }}" style="{{ searchWrapStyle }}display:flex;align-items:center;height:44px;border-radius:99px;background:#007D67;color:#fff;overflow:hidden;margin-left:auto;flex:none;transition:width .35s cubic-bezier(0.16,1,0.3,1);">
+      <button type="button" onClick="{{ toggleSearch }}" aria-label="Search all services" style="flex:none;width:44px;height:44px;border:none;background:transparent;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      </button>
+      <input ref="{{ searchRef }}" type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search all services" aria-label="Search all services" style="flex:1;min-width:0;height:44px;border:none;outline:none;background:transparent;padding:0 18px 0 0;font-family:var(--font-body);font-size:14px;font-weight:600;color:#fff;box-shadow:none !important;">
+    </div>
   </div>
 
+  <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+    <p style="font-family:var(--font-body);font-size:15px;color:#6b6a63;margin:0 0 var(--space-6);">No services match “{{ query }}”. Try another name or clear the search.</p>
+  </sc-if>
   <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;">
     <sc-for list="{{ visibleItems }}" as="item" hint-placeholder-count="8">
       <a href="{{ item.actionHref }}" class="chy-card" style="display:block;text-decoration:none;color:inherit;">
@@ -106,13 +111,18 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1200}}">
 class Component extends DCLogic {
-  state = { activeCategory: 'All', activePriceRange: 'all', page: 1 };
+  state = { activeCategory: 'All', activePriceRange: 'all', page: 1, query: '', searchOpen: false };
+  searchRef = React.createRef();
+  componentDidMount() {
+    const q = new URLSearchParams(window.location.search).get('q');
+    if (q) this.setState({ query: q, searchOpen: true });
+  }
   PAGE_SIZE = 16;
 
   allItems() {
     if (this._items) return this._items;
     const svc = (id, name, category, duration, price) => ({ id, name, category, duration, priceLabel: `NPR ${price}`, isService: true, slotId: `svc-${id}`, label: name, actionLabel: 'Book Now', actionHref: `ServiceDetail.dc.html?id=${id}` });
-    const prod = (id, name, category, price) => ({ id, name, category, priceLabel: `NPR ${price}`, isService: false, slotId: `prod-${id}`, label: name, actionLabel: 'Add to Cart', actionHref: '#' });
+    const prod = (id, name, category, price) => ({ id, name, category, priceLabel: `NPR ${price}`, isService: false, slotId: `prod-${id}`, label: name, actionLabel: 'Shop Now', actionHref: 'Products.dc.html' });
     this._items = [
       svc(1, 'Signature Panchakarma Retreat', 'Featured', '7 days', '45,000'),
       svc(2, 'Aroma Hot Stone Massage', 'Featured', '75 min', '3,800'),
@@ -157,7 +167,10 @@ class Component extends DCLogic {
     ];
     const activeRange = priceRanges.find((r) => r.value === this.state.activePriceRange) || priceRanges[0];
     const priceOf = (i) => Number(String(i.priceLabel).replace(/[^0-9]/g, ''));
-    const byCategory = active === 'All' ? items : items.filter((i) => i.category === active);
+    const qn = this.state.query.trim().toLowerCase();
+    const byCategory = (active === 'All' ? items : items.filter((i) => i.category === active))
+      .filter((i) => !qn || qn.split(/\s+/).every((t) => (i.name + ' ' + i.category).toLowerCase().includes(t)));
+    const open = this.state.searchOpen || !!this.state.query;
     return {
       categoryOptions: cats,
       priceRangeOptions: priceRanges.map((r) => ({ value: r.value, label: r.label })),
@@ -190,7 +203,18 @@ class Component extends DCLogic {
       nextOpacity: (this._page || 1) === (this._totalPages || 1) ? 0.4 : 1,
       onPrevPage: () => this.setState((s) => ({ page: Math.max(1, s.page - 1) })),
       onNextPage: () => this.setState((s) => ({ page: Math.min(this._totalPages || 1, s.page + 1) })),
-      onSearchClick: () => this.setState({ page: 1 }),
+      query: this.state.query,
+      searchRef: this.searchRef,
+      searchOpenAttr: open ? '1' : '0',
+      searchWrapStyle: `width:${open ? 'min(260px,100%)' : '44px'};`,
+      toggleSearch: () => {
+        if (open && this.state.query) { this.searchRef.current && this.searchRef.current.focus(); return; }
+        const next = !open;
+        this.setState({ searchOpen: next, query: '', page: 1 });
+        if (next) setTimeout(() => this.searchRef.current && this.searchRef.current.focus(), 60);
+      },
+      onQuery: (e) => this.setState({ query: e.target.value, page: 1 }),
+      noResults: !!qn && byCategory.filter((i) => activeRange.test(priceOf(i))).length === 0,
     };
   }
 }

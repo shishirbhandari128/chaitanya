@@ -74,6 +74,7 @@
     @media (prefers-reduced-motion: reduce) {
       .award-confetti { display: none; }
     }
+    @keyframes mbKenBurns { from { transform: scale(1) translate(0,0); } to { transform: scale(1.12) translate(-1.5%,-1%); } }
   </style>
 </helmet>
 
@@ -135,7 +136,7 @@
 <section id="about" style="position: relative; padding: calc(2.4*var(--space-8)) clamp(20px,6vw,250px); box-sizing: border-box; background-color: #ffffff;" ref="{{ refAbout }}" data-om-label="About Us">
   <div style="text-align:center;max-width:720px;margin:0 auto calc(2*var(--space-8));animation:aboutFloat 6s ease-in-out infinite;">
     <span style="display:block;font-family:var(--font-body);font-size:13px;letter-spacing:0.08em;color:#007D67;margin-bottom:var(--space-3);">About Chaitanya</span>
-    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:38px;color:#201e1d;margin:0 0 var(--space-4);">Nurturing Wellness, Naturally</h2>
+    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(26px,3.2vw,38px);color:#201e1d;margin:0 0 var(--space-4);">Nurturing Wellness, Naturally</h2>
     <p style="font-family:var(--font-body);font-size:16px;line-height:1.7;color:#5c5648;margin:0 0 var(--space-6);">We combine naturopathy, therapeutic massage, spa rituals, &amp; holistic <br>care to help you restore balance, relieve stress, &amp; feel your best.</p>
     <div style="display: flex; gap: 6px; justify-content: center">
       <a href="AboutUs.dc.html" style="display: flex; align-items: center; background: #007D67; color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 14px; text-decoration: none; padding: 13px 28px; border-radius: 99px; height: 44px">More About Us</a>
@@ -144,36 +145,46 @@
       </a>
     </div>
   </div>
-  <div style="display:flex;gap:var(--space-6);width:100%;">
-        <figure style="margin:0;flex:1 1 0;min-width:0;display:flex;flex-direction:column;{{ aboutPhotoLeftStyle }}">
+  <div style="display:flex;flex-wrap:wrap;gap:clamp(40px,6vw,24px) var(--space-6);width:100%;">
+        <figure data-chy-still="" style="margin:0;flex:1 1 340px;min-width:0;display:flex;flex-direction:column;{{ aboutPhotoLeftStyle }}">
       <figcaption style="margin-bottom:var(--space-4);text-align:center;">
         <span style="display:block;font-family:var(--font-heading);font-weight:700;font-size:18px;color:#201e1d;margin-bottom:4px;">Therapeutic Spa &amp; Massage</span>
-        <span style="display: block; font-family: var(--font-body); font-size: 13.5px; color: #6b6a63; width: 618px; height: 26px">Relaxation and recovery through expert hands.</span>
+        <span style="display: block; font-family: var(--font-body); font-size: 13.5px; color: #6b6a63; max-width: 100%">Relaxation and recovery through expert hands.</span>
       </figcaption>
-      <image-slot src="assets/photos/md/spa-woman-flower.jpg" id="about-photo-left" shape="rect" placeholder="Treatment room" style="width:100%;aspect-ratio:4/3;"></image-slot>
+      <div style="overflow:hidden;width:100%;aspect-ratio:4/3;position:relative;"><image-slot src="assets/photos/md/spa-woman-flower.jpg" id="about-photo-left" shape="rect" placeholder="Treatment room" style="display:block;width:100%;height:100%;"></image-slot></div>
     </figure>
-    <figure style="margin:0;flex:1 1 0;min-width:0;display:flex;flex-direction:column;{{ aboutPhotoRightStyle }}">
+    <figure data-chy-still="" style="margin:0;flex:1 1 340px;min-width:0;display:flex;flex-direction:column;{{ aboutPhotoRightStyle }}">
       <figcaption style="margin-bottom:var(--space-4);text-align:center;">
         <span style="display:block;font-family:var(--font-heading);font-weight:700;font-size:18px;color:#201e1d;margin-bottom:4px;">Holistic Naturopathy Care</span>
-        <span style="display: block; font-family: var(--font-body); font-size: 13.5px; color: #6b6a63; width: 620px; height: 23px">Natural treatments tailored to your well-being.</span>
+        <span style="display: block; font-family: var(--font-body); font-size: 13.5px; color: #6b6a63; max-width: 100%">Natural treatments tailored to your well-being.</span>
       </figcaption>
-      <image-slot src="assets/photos/md/spa-young-woman.jpg" id="about-photo-right" shape="rect" placeholder="Herbal pharmacy consultation" style="width:100%;aspect-ratio:4/3;"></image-slot>
+      <div style="overflow:hidden;width:100%;aspect-ratio:4/3;position:relative;"><image-slot src="assets/photos/md/spa-young-woman.jpg" id="about-photo-right" shape="rect" placeholder="Herbal pharmacy consultation" style="display:block;width:100%;height:100%;"></image-slot></div>
     </figure>
   </div>
 </section>
 
-<section id="featured-services" style="color: #fff; overflow: hidden; background-color: #262524; min-height: 100vh; display: flex; flex-direction: column; box-sizing: border-box; padding: calc(2.4*var(--space-8)) 0;" (--space-8))="" 0;"="">
-  <div style="max-width:1600px;margin:0 auto;padding:0 48px;box-sizing:border-box;width:100%;display:flex;flex-direction:column;flex:1;min-height:0;">
+<section id="featured-services" style="color: #fff; overflow: hidden; background-color: #262524; min-height: 100vh; display: flex; flex-direction: column; box-sizing: border-box; padding: calc(2.4*var(--space-8)) 0;">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(16px,5vw,48px);box-sizing:border-box;width:100%;display:flex;flex-direction:column;flex:1;min-height:0;">
     <div style="text-align:left;margin-bottom:var(--space-6);">
-      <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: 38px; line-height: 1.1; margin: 0 0 var(--space-2); color: #fff">Signature Treatments</h2>
-      <p style="font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.75); margin: 0; width: 100%; white-space: nowrap;">Thoughtfully crafted treatments to restore balance and reveal your natural glow.</p>
+      <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(26px,3.2vw,38px); line-height: 1.1; margin: 0 0 var(--space-2); color: #fff">Signature Treatments</h2>
+      <p style="font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.75); margin: 0; max-width: 100%; text-wrap: pretty;">Thoughtfully crafted treatments to restore balance and reveal your natural glow.</p>
     </div>
 
-    <div style="display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-8);">
-      <sc-for list="{{ serviceTabs }}" as="tab" hint-placeholder-count="4">
-        <button type="button" onClick="{{ tab.onClick }}" style="{{ tab.style }}">{{ tab.label }}</button>
-      </sc-for>
-      <div style="display:flex;align-items:center;gap:var(--space-3);margin-left:auto;">
+    <div data-chy-tabrow="" style="display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-8);">
+      <div data-chy-tabs="" style="display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;">
+        <sc-for list="{{ serviceTabs }}" as="tab" hint-placeholder-count="4">
+          <button type="button" onClick="{{ tab.onClick }}" style="{{ tab.style }}">{{ tab.label }}</button>
+        </sc-for>
+      </div>
+      <div data-chy-tabselect="" style="display:none;position:relative;flex:1 1 0;min-width:0;">
+        <select value="{{ activeServiceTab }}" onChange="{{ onServiceTabChange }}" aria-label="Treatment category" style="appearance:none;-webkit-appearance:none;width:100%;height:44px;box-sizing:border-box;padding:0 40px 0 18px;border:1px solid #0C3F47;border-radius:99px;background:#072E34;color:#fff;font-family:var(--font-body);font-size:16px;font-weight:600;cursor:pointer;">
+          <sc-for list="{{ serviceTabs }}" as="tab" hint-placeholder-count="4">
+            <option value="{{ tab.label }}">{{ tab.label }}</option>
+          </sc-for>
+        </select>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:16px;top:14px;pointer-events:none;"><path d="m6 9 6 6 6-6"></path></svg>
+      </div>
+      <div data-chy-tabctrl="" style="display:flex;align-items:center;gap:var(--space-3);margin-left:auto;flex:none;">
         <a href="Services.dc.html" style="text-decoration:none;box-sizing:border-box;display:inline-flex;align-items:center;font-family: var(--font-body); font-size: 13.5px; padding: 10px 20px; border: 1px solid #0C3F47; background: transparent; color: #fff; cursor: pointer; white-space: nowrap; border-radius: 99px">View All</a>
         <button type="button" onClick="{{ scrollServicesPrev }}" aria-label="Previous" style="width: 40px; height: 40px; background: transparent; border: 1px solid #0C3F47; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 99px">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
@@ -184,9 +195,9 @@
       </div>
     </div>
 
-    <div id="services-row" ref="{{ servicesRowRef }}" style="display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3.2);gap:16px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:4px;flex:1;min-height:0;scrollbar-width:none;-ms-overflow-style:none;">
+    <div id="services-row" data-chy-hscroll="" ref="{{ servicesRowRef }}" style="display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3.2);gap:16px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:4px;flex:1;min-height:0;scrollbar-width:none;-ms-overflow-style:none;">
       <sc-for list="{{ featuredServices }}" as="svc" hint-placeholder-count="4">
-        <div onMouseEnter="{{ svc.onEnter }}" onMouseLeave="{{ svc.onLeave }}" style="position:relative;height:100%;display:flex;flex-direction:column;">
+        <a href="{{ svc.href }}" aria-label="{{ svc.title }} — view details" onMouseEnter="{{ svc.onEnter }}" onMouseLeave="{{ svc.onLeave }}" onFocus="{{ svc.onEnter }}" onBlur="{{ svc.onLeave }}" style="position:relative;height:100%;display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;">
           <figure style="margin:0;position:relative;flex:1;min-height:0;overflow:hidden;">
             <image-slot id="{{ svc.slotId }}" shape="rect" placeholder="{{ svc.label }}" style="{{ svc.imgStyle }}"></image-slot>
             <span style="position: absolute; top: 16px; left: 16px; background: transparent; color: #fff; font-family: var(--font-body); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 0; text-shadow: 0 1px 6px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.5)">{{ svc.category }}</span>
@@ -197,12 +208,12 @@
                 <h3 style="font-family:var(--font-heading);font-weight:400;font-size:16px;letter-spacing:0.03em;text-transform:uppercase;margin:0;color:#fff;white-space:nowrap;">{{ svc.title }}</h3>
               </div>
               <div style="{{ svc.bookNowStyle }}">
-                <span style="font-family:var(--font-heading);font-weight:600;font-size:16px;letter-spacing:0.03em;text-transform:uppercase;color:#fff;white-space:nowrap;">Book Now →</span>
+                <span style="font-family:var(--font-heading);font-weight:600;font-size:16px;letter-spacing:0.03em;text-transform:uppercase;color:#fff;white-space:nowrap;">View Details →</span>
               </div>
             </div>
             <span style="flex:none;color:#fff;font-family:var(--font-body);font-size:14px;font-weight:600;">{{ svc.price }}</span>
           </div>
-        </div>
+        </a>
       </sc-for>
     </div>
   </div>
@@ -213,7 +224,7 @@
     <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);">
       <div>
         <span style="display:block;font-family:var(--font-body);font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">The Experience</span>
-        <h2 style="font-family:var(--font-heading);font-weight:500;font-size:38px;color:#201e1d;margin:0;">A Ritual Designed Around You</h2>
+        <h2 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(26px,3.2vw,38px);color:#201e1d;margin:0;">A Ritual Designed Around You</h2>
       </div>
       <div style="display:flex;align-items:center;gap:16px;min-width:180px;">
         <span style="font-family:var(--font-body);font-size:13px;color:#8a8577;white-space:nowrap;">{{ ritualStepLabel }}</span>
@@ -227,19 +238,19 @@
   <div ref="{{ ritualSectionRef }}" style="max-width:1600px;margin:0 auto;padding:0 clamp(16px,6vw,120px);">
     <sc-for list="{{ ritualStages }}" as="stage" hint-placeholder-count="4">
       <div ref="{{ stage.revealRef }}" style="width:100%;">
-      <div ref="{{ stage.ref }}" style="{{ stage.rowStyle }}">
+      <div ref="{{ stage.ref }}" data-chy-rrow="" style="{{ stage.rowStyle }}">
         <div style="flex:1 1 0;min-width:0;">
           <span style="{{ stage.numStyle }}">{{ stage.num }} — {{ stage.eyebrow }}</span>
           <h3 style="{{ stage.titleStyle }}">{{ stage.title }}</h3>
           <p style="{{ stage.descStyle }}">{{ stage.desc }}</p>
         </div><sc-if value="{{ stage.imageFirst }}" hint-placeholder-val="{{ true }}">
-          <div style="height:60vh;flex:1 1 0;min-width:0;">
+          <div data-chy-rimg="" style="height:60vh;flex:1 1 0;min-width:0;">
             <image-slot id="{{ stage.slotId }}" shape="rect" placeholder="{{ stage.imgLabel }}" style="{{ stage.imageStyle }}"></image-slot>
           </div>
         </sc-if>
         
         <sc-if value="{{ stage.contentFirst }}" hint-placeholder-val="{{ false }}">
-          <div style="height:60vh;flex:1 1 0;min-width:0;">
+          <div data-chy-rimg="" style="height:60vh;flex:1 1 0;min-width:0;">
             <image-slot id="{{ stage.slotId }}" shape="rect" placeholder="{{ stage.imgLabel }}" style="{{ stage.imageStyle }}"></image-slot>
           </div>
         </sc-if>
@@ -258,7 +269,7 @@
   
   <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,46,52,0.35), rgba(7,46,52,0.55));"></div>
   <div style="position:relative;z-index:1;text-align:center;max-width:980px;padding:calc(3*var(--space-8)) clamp(20px,5vw,72px);display:flex;flex-direction:column;align-items:center;">
-    <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: 38px; line-height: 1.15; margin: 0; color: #fff;">Step Into Our Luxury Spa Sanctuary</h2>
+    <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(26px,3.2vw,38px); line-height: 1.15; margin: 0; color: #fff;">Step Into Our Luxury Spa Sanctuary</h2>
     <p style="font-family: var(--font-body); font-size: 16px; line-height: 1.65; max-width: 52ch; color: color-mix(in srgb, #fff 88%, transparent); margin: var(--space-2) 0 0;">A glimpse inside our serene spa spaces, designed for comfort, relaxation, and rejuvenation.</p>
     <div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: var(--space-8)">
       <a href="Services.dc.html" style="display: flex; align-items: center; text-decoration: none; background: #007D67; color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 15px; padding: 16px 28px; height: 44px; border-radius: 999px">Relax With Us Today</a>
@@ -277,14 +288,14 @@
       <span style="width:70px;height:1px;background:#c9cabf;display:block;"></span>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007D67" stroke-width="1.5"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7c0 .3-.02.6-.05.9M11 20c-4-1-6-4-6-8m6 8c1.5-1 4-3.5 4-8"></path></svg>
     </div>
-    <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: 38px; line-height: 1.2; margin: 0 0 var(--space-8); color: #201e1d">Personalized Wellness<br>&amp; Healing Services</h2>
+    <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(26px,3.2vw,38px); line-height: 1.2; margin: 0 0 var(--space-8); color: #201e1d">Personalized Wellness<br>&amp; Healing Services</h2>
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);align-items:stretch;">
       <sc-for list="{{ products }}" as="prod" hint-placeholder-count="6">
         <div style="position:relative;display:flex;flex-direction:column;height:100%;">
           <a href="{{ prod.href }}" aria-label="{{ prod.name }}" style="position:absolute;inset:0;z-index:1;"></a>
           <figure style="margin:0 0 var(--space-4);overflow:hidden;">
-            <image-slot id="{{ prod.slotId }}" src="{{ prod.src }}" shape="rect" placeholder="{{ prod.label }}" style="width:100%;aspect-ratio:1/1;transition:transform 0.6s cubic-bezier(.2,.7,.2,1);" style-hover="transform:scale(1.08);"></image-slot>
+            <image-slot id="{{ prod.slotId }}" shape="rect" placeholder="{{ prod.label }}" style="width:100%;aspect-ratio:1/1;transition:transform 0.6s cubic-bezier(.2,.7,.2,1);" style-hover="transform:scale(1.08);"></image-slot>
           </figure>
           <h3 style="font-family:var(--font-body);font-weight:700;font-size:13.5px;letter-spacing:0.03em;text-transform:uppercase;margin:0 0 var(--space-2);color:#201e1d;">{{ prod.name }}</h3>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;">
@@ -306,7 +317,7 @@
         </a>
       </div>
     </div>
-  </div></section><section ref="{{ membershipSectionRef }}" id="membership" style="position:relative;height:220vh;" data-om-label="Membership">
+  </div></section><section ref="{{ membershipSectionRef }}" id="membership" data-chy-mstack="" style="position:relative;height:220vh;" data-om-label="Membership">
   <div style="position:sticky;top:0;height:100vh;display:flex;flex-wrap:nowrap;overflow:hidden;">
   <div style="{{ membershipTextPanelStyle }}">
     <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);">
@@ -314,7 +325,7 @@
       <span style="width:70px;height:1px;background:#8a9a6b;display:block;"></span>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007D67" stroke-width="1.5"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7c0 .3-.02.6-.05.9M11 20c-4-1-6-4-6-8m6 8c1.5-1 4-3.5 4-8"></path></svg>
     </div>
-    <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: 38px; line-height: 1.35; margin: 0 0 var(--space-8); color: #201e1d">Experience Premium Benefits of Membership</h2>
+    <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(26px,3.2vw,38px); line-height: 1.35; margin: 0 0 var(--space-8); color: #201e1d">Experience Premium Benefits of Membership</h2>
     <div style="display:flex;flex-direction:column;gap:var(--space-6);">
       <div style="display:flex;gap:var(--space-3);align-items:flex-start;">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="#007D67" stroke="#fff" stroke-width="1.3" style="flex: none; width: 32px; height: 32px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><path d="M9 12h2v-2M11 12v2h2" stroke="#fff"></path></svg>
@@ -367,14 +378,14 @@
 <section id="client-feedback" style="background:#ffffff;padding:calc(2.4*var(--space-8)) 0;overflow:hidden;box-sizing:border-box;" data-om-label="Feedback">
   <div style="padding:0 clamp(20px,6vw,250px);text-align:center;margin-bottom:calc(2*var(--space-8));">
     
-    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:44px;color:#201e1d;margin:0 0 var(--space-4);">What Our Clients are Saying</h2>
+    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(30px,3.7vw,44px);color:#201e1d;margin:0 0 var(--space-4);">What Our Clients are Saying</h2>
     <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:#6b6a63;max-width:52ch;margin:0 auto;">Hear directly from our guests about their experiences and the results we’ve delivered. Explore client feedback.</p>
   </div>
 
-  <div style="width:100%;overflow:hidden;">
-    <div style="display:flex;gap:20px;width:max-content;animation:feedbackSlide 45s linear infinite;">
+  <div data-chy-fbwrap="" style="width:100%;overflow:hidden;">
+    <div data-chy-fbtrack="" style="display:flex;gap:20px;width:max-content;animation:feedbackSlide 45s linear infinite;">
       <sc-for list="{{ feedbackCardsLoop }}" as="t" hint-placeholder-count="12">
-        <div style="flex:0 0 360px;background:#f5f6f4;padding:calc(1.3*var(--space-6));text-align:left;">
+        <div data-chy-fbcard="" style="flex:0 0 min(360px,82vw);box-sizing:border-box;background:#f5f6f4;padding:calc(1.3*var(--space-6));text-align:left;">
           <div style="display:flex;gap:4px;margin-bottom:var(--space-4);">
             <sc-for list="{{ t.starFills }}" as="fill" hint-placeholder-count="5">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="{{ fill }}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
@@ -445,10 +456,10 @@
   </sc-for>
   </div>
   <div style="position:relative;z-index:1;max-width:900px;margin:0 auto;text-align:center;padding:0 clamp(20px,5vw,40px);">
-    <div style="position: relative; display: inline-block; overflow: hidden; background: transparent; border: none; border-radius: 20px; padding: calc(1.6*var(--space-8)) clamp(24px,5vw,64px); box-shadow: none; animation: awardCardIn 1s cubic-bezier(0.16,1,0.3,1) both; width: 402px; height: 312px">
+    <div style="position: relative; display: inline-block; overflow: hidden; background: transparent; border: none; border-radius: 20px; padding: calc(1.6*var(--space-8)) clamp(24px,5vw,64px); box-shadow: none; animation: awardCardIn 1s cubic-bezier(0.16,1,0.3,1) both; width: 402px; max-width: 100%; box-sizing: border-box; min-height: 312px">
       <span style="position:absolute;top:0;left:0;width:60%;height:100%;background:linear-gradient(100deg, transparent, rgba(255,255,255,0.16), transparent);animation:goldShimmerPass 1.8s 0.8s ease-in-out both;pointer-events:none;"></span>
       <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.3" style="margin:0 auto var(--space-4);display:block;filter:drop-shadow(0 2px 6px rgba(212,175,55,0.4));"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"></path><path d="M7 5H4a2 2 0 0 0 0 4c.6 1.6 1.6 2.8 3 3.6"></path><path d="M17 5h3a2 2 0 0 1 0 4c-.6 1.6-1.6 2.8-3 3.6"></path></svg>
-      <image-slot id="award-badge" src="assets/logos/awardslogo.png" fit="contain" shape="rect" placeholder="Tripadvisor Travelers' Choice 2022 badge" style="width: 280px; aspect-ratio: 1/1; margin: 0 auto 4px; height: 180px; background: transparent;"></image-slot>
+      <image-slot id="award-badge" shape="rect" placeholder="Tripadvisor Travelers' Choice 2022 badge" style="width: 280px; max-width: 100%; margin: 0 auto 4px; height: 180px; background: transparent;"></image-slot>
       <p style="font-family:var(--font-body);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#D4AF37;margin:0;">Travelers’ Choice Award · 2022</p>
     </div>
     <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px,4vw,42px); color: #fff; letter-spacing: 0.01em; margin: calc(1.6*var(--space-8)) 0 var(--space-4); animation: awardFadeUp 1s 0.15s cubic-bezier(0.16,1,0.3,1) both;">A Wellness Experience Worth Remembering</h2>
@@ -479,7 +490,7 @@
     </div>
     <div style="display:flex;flex-direction:column;justify-content:center;">
       <span style="display:block;font-family:var(--font-body);font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">Get In Touch</span>
-      <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: 38px; line-height: 1.15; color: #201e1d; margin: 0 0 var(--space-6);">Have Questions or Want to Visit?</h2>
+      <h2 style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(26px,3.2vw,38px); line-height: 1.15; color: #201e1d; margin: 0 0 var(--space-6);">Have Questions or Want to Visit?</h2>
 
       <sc-if value="{{ feedbackFormSubmitted }}" hint-placeholder-val="{{ false }}">
         <p style="font-family:var(--font-body);color:#201e1d;font-size:15px;margin:0;">Thank you, we’ll reach out shortly to confirm.</p>
@@ -550,12 +561,20 @@
 
 <section style="background: #fff; padding: 0;" data-om-label="Pre footer" ref="{{ refPreFooter }}">
   <div style="{{ preFooterCardStyle }}">
-    <div style="position: absolute; inset: 0; pointer-events: none; background: url(&quot;./screenshot-2026-09-21-at-10-33-45-am-muaup1c2-2q8d.png&quot;) center / cover no-repeat"></div>
-    <div style="position:relative;z-index:1;">
-      <h3 style="font-family: var(--font-heading); font-weight: 700; font-size: 32px; line-height: 1.1; letter-spacing: 0.006em; margin: 0 auto var(--space-2); max-width: none; white-space: nowrap; color: #fff;">Begin Your Journey to Relaxation</h3>
-      <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:rgba(255,255,255,0.8);max-width:44ch;margin:0 auto;">Take a moment for yourself with personalized care designed to restore, relax, and rejuvenate.</p>
-      <div style="display: flex; justify-content: center; gap: 6px; margin-top: var(--space-8)">
-        <a href="Services.dc.html" style="display:flex;align-items:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:14px;text-decoration:none;padding:13px 28px;height:44px;border-radius:99px;">Book Your Appointment</a>
+    <div aria-hidden="true" style="position:absolute;inset:-4%;background:url('assets/photos/md/spa-tea-robes.jpg') center 40% / cover no-repeat;animation:mbKenBurns 28s ease-in-out infinite alternate;will-change:transform;"></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,46,52,0.78) 0%, rgba(7,46,52,0.62) 45%, rgba(4,30,34,0.9) 100%);"></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(ellipse 55% 60% at 50% 45%, rgba(0,125,103,0.35) 0%, rgba(0,125,103,0) 70%), radial-gradient(ellipse 40% 40% at 85% 10%, rgba(233,206,122,0.18) 0%, rgba(233,206,122,0) 70%);"></div>
+    <div aria-hidden="true" style="position:absolute;inset:clamp(12px,2vw,24px);border:1px solid rgba(233,206,122,0.35);pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;">
+      <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#E9CE7A;margin-bottom:var(--space-4);">
+        <span style="width:32px;height:1px;background:rgba(233,206,122,0.7);display:block;"></span>
+        Chaitanya Health &amp; Wellness
+        <span style="width:32px;height:1px;background:rgba(233,206,122,0.7);display:block;"></span>
+      </span>
+      <h3 data-chy-fs="" style="font-family: var(--font-heading); font-weight: 700; font-size: min(44px, 5.2vw); line-height: 1.15; letter-spacing: 0.006em; margin: 0 auto var(--space-3); max-width: none; white-space: nowrap; color: #fff;">Begin Your Journey to Relaxation</h3>
+      <p style="font-family: var(--font-body); font-size: clamp(15px,1.3vw,17px); line-height: 1.65; color: rgba(255,255,255,0.86); max-width: 48ch; margin: 0 auto; text-wrap: pretty;">Take a moment for yourself with personalized care designed to restore, relax, and rejuvenate.</p>
+      <div style="display: flex; justify-content: center; gap: 6px; margin-top: clamp(24px,4vw,40px)">
+        <a href="Services.dc.html" style="display:flex;align-items:center;white-space:nowrap;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:14px;text-decoration:none;padding:13px 28px;height:44px;box-sizing:border-box;border-radius:99px;">Book Your Appointment</a>
         <a href="Services.dc.html" aria-label="Book Your Appointment" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;text-decoration:none;width:44px;height:44px;border-radius:99px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
         </a>
@@ -642,7 +661,7 @@ class Component extends DCLogic {
 
   get preFooterCardStyle() {
     const inView = !!this.state.revealed.preFooter;
-    return `position:relative;border-radius:0;overflow:hidden;background:#072E34;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:380px;padding:calc(2*var(--space-8)) clamp(20px,6vw,80px);margin:0 auto;width:${inView ? '100%' : '78%'};transition:width 1.4s cubic-bezier(0.16,1,0.3,1);`;
+    return `position:relative;border-radius:0;overflow:hidden;background:#072E34;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:clamp(380px,48vw,520px);padding:clamp(56px,8vw,96px) clamp(20px,6vw,80px);box-sizing:border-box;margin:0 auto;width:${inView ? '100%' : '78%'};transition:width 1.4s cubic-bezier(0.16,1,0.3,1);`;
   }
 
   confettiData() {
@@ -796,12 +815,12 @@ class Component extends DCLogic {
         this.setState({ roomTourVideoOverride: url });
       },
       products: [
-        { href: 'ProductDetail.dc.html?id=1', slotId: 'prod-1', label: 'Beetroot powder', name: 'Beetroot Powder', price: '250.00', src: 'assets/photos/beetroot powder.jpg' },
-        { href: 'ProductDetail.dc.html?id=2', slotId: 'prod-2', label: 'Flax seed oil', name: 'Flax Seed Oil', price: '250.00', src: 'assets/photos/flax seed oil.jpg' },
-        { href: 'ProductDetail.dc.html?id=3', slotId: 'prod-3', label: 'Hibiscus powder', name: 'Hibiscus Powder', price: '250.00', src: 'assets/photos/Hibiscus Powder.jpg' },
-        { href: 'ProductDetail.dc.html?id=4', slotId: 'prod-4', label: 'Pancake mix', name: 'Kodali Pancake Mix', price: '250.00', src: 'assets/photos/Kodali Pancake Mix.jpg' },
-        { href: 'ProductDetail.dc.html?id=5', slotId: 'prod-5', label: 'Milk thistle powder', name: 'Milk Thistle Powder', price: '250.00', src: 'assets/photos/Milk Thistle Powder.jpg' },
-        { href: 'ProductDetail.dc.html?id=6', slotId: 'prod-6', label: 'Multani mitti', name: 'Multani Mitti', price: '250.00', src: 'assets/photos/multani mitti.jpg' },
+        { href: 'ProductDetail.dc.html?id=1', slotId: 'prod-1', label: 'Beetroot powder', name: 'Beetroot Powder', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=2', slotId: 'prod-2', label: 'Flax seed oil', name: 'Flax Seed Oil', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=3', slotId: 'prod-3', label: 'Hibiscus powder', name: 'Hibiscus Powder', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=4', slotId: 'prod-4', label: 'Pancake mix', name: 'Kodali Pancake Mix', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=5', slotId: 'prod-5', label: 'Milk thistle powder', name: 'Milk Thistle Powder', price: '250.00' },
+        { href: 'ProductDetail.dc.html?id=6', slotId: 'prod-6', label: 'Multani mitti', name: 'Multani Mitti', price: '250.00' },
       ],
       roomTourVideoRef: (el) => { this.roomTourVideoEl = el; },
       membershipVideoRef: (el) => { this.membershipVideoEl = el; },
@@ -899,8 +918,10 @@ class Component extends DCLogic {
       refServices: this.refFor('services'), servicesReveal: this.reveal('services'),
 
       servicesRowRef: (el) => { this.servicesRowEl = el; },
-      scrollServicesPrev: () => { if (this.servicesRowEl) this.servicesRowEl.scrollBy({ left: -360, behavior: 'smooth' }); },
-      scrollServicesNext: () => { if (this.servicesRowEl) this.servicesRowEl.scrollBy({ left: 360, behavior: 'smooth' }); },
+      scrollServicesPrev: () => { const r = this.servicesRowEl; if (r) r.scrollBy({ left: -((r.firstElementChild && r.firstElementChild.offsetWidth + 16) || 360), behavior: 'smooth' }); },
+      scrollServicesNext: () => { const r = this.servicesRowEl; if (r) r.scrollBy({ left: (r.firstElementChild && r.firstElementChild.offsetWidth + 16) || 360, behavior: 'smooth' }); },
+      activeServiceTab: this.state.activeServiceTab,
+      onServiceTabChange: (e) => this.setState({ activeServiceTab: e.target.value }),
       serviceTabs: ['Featured', 'Body Therapies', 'Facial & Skin', 'Hair & Spa'].map((label) => ({
         label,
         onClick: () => this.setState({ activeServiceTab: label }),
@@ -913,10 +934,10 @@ class Component extends DCLogic {
         },
       })),
       featuredServices: [
-        { slotId: 'svc-1', label: 'Relaxing massage', category: 'Massage Therapy', title: 'Relaxing Massage', price: 'NPR 3,500' },
-        { slotId: 'svc-2', label: 'Hydrating facial', category: 'Facial Treatments', title: 'Hydrating Facial', price: 'NPR 2,800' },
-        { slotId: 'svc-3', label: 'Herbal body polish', category: 'Body Scrubs', title: 'Herbal Body Polish', price: 'NPR 2,600' },
-        { slotId: 'svc-4', label: 'Shirodhara therapy', category: 'Ayurvedic Care', title: 'Shirodhara Therapy', price: 'NPR 4,200' },
+        { slotId: 'svc-1', label: 'Relaxing massage', category: 'Massage Therapy', title: 'Relaxing Massage', price: 'NPR 3,500', href: 'ServiceDetail.dc.html?id=11' },
+        { slotId: 'svc-2', label: 'Hydrating facial', category: 'Facial Treatments', title: 'Hydrating Facial', price: 'NPR 2,800', href: 'ServiceDetail.dc.html?id=18' },
+        { slotId: 'svc-3', label: 'Herbal body polish', category: 'Body Scrubs', title: 'Herbal Body Polish', price: 'NPR 2,600', href: 'ServiceDetail.dc.html?id=5' },
+        { slotId: 'svc-4', label: 'Shirodhara therapy', category: 'Ayurvedic Care', title: 'Shirodhara Therapy', price: 'NPR 4,200', href: 'ServiceDetail.dc.html?id=3' },
       ].map((s) => {
         const hovered = this.state.hoveredService === s.slotId;
         return {

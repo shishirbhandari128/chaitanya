@@ -21,94 +21,160 @@
     }
     html { scroll-behavior: smooth; } body { margin: 0; background: #fff; }
     a { color: var(--color-accent); } a:hover { color: var(--color-accent-700); }
+    .chy-card { position: relative; }
+    .chy-card .chy-media img, .chy-card .chy-media image-slot { transition: transform 0.7s cubic-bezier(.2,.7,.2,1); display: block; }
+    .chy-card:hover .chy-media { transform: scale(1.04); }
+    .chy-media { transition: transform 0.7s cubic-bezier(.2,.7,.2,1); overflow: hidden; }
+    .chy-info-default, .chy-info-hover { transition: opacity 0.35s ease, transform 0.35s ease; }
+    .chy-info-hover { opacity: 0; transform: translateY(8px); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .chy-card:hover .chy-info-default, .chy-card:focus-visible .chy-info-default { opacity: 0; transform: translateY(-6px); }
+    .chy-card:hover .chy-info-hover, .chy-card:focus-visible .chy-info-hover { opacity: 1; transform: translateY(0); }
   </style>
 </helmet>
 
 <dc-import name="SiteHeader" current-page="products" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
 
-<section style="background:#F7F4EE;padding:calc(2*var(--space-8)) clamp(20px,6vw,120px) calc(1.6*var(--space-8));">
-  <p style="font-family:var(--font-body);font-size:13px;color:#6b6a63;margin:0 0 var(--space-4);">
+<section style="background:#f7f1de;padding:calc(2.4*var(--space-8)) clamp(20px,6vw,120px) calc(2.4*var(--space-8));">
+  <p style="font-family:var(--font-body);font-size:13px;color:#5c6a4a;margin:0 0 var(--space-3);">
     <a href="index.html" style="text-decoration:none;color:inherit;">Home</a> &nbsp;/&nbsp; <span style="color:#072E34;">Products</span>
   </p>
-  <span style="display:block;font-family:var(--font-body);font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">Our Products</span>
-  <h1 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(30px,4vw,46px);line-height:1.15;color:#201e1d;margin:0 0 var(--space-2);">Natural Wellness Products</h1>
-  <p style="font-family:var(--font-body);font-size:16px;line-height:1.65;color:#6b6a63;margin:0;max-width:56ch;">Herbal powders, cold-pressed oils and natural skincare — the same pure ingredients we use in our therapies, for your everyday routine at home.</p>
+  <h1 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(28px,4.4vw,52px);color:#201e1d;margin:0 0 var(--space-3);">Natural Wellness Products</h1>
+  <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:#2F4A47;max-width:64ch;margin:0;">Herbal powders, cold-pressed oils and natural skincare — the same pure ingredients we use in our therapies, for your everyday routine at home.</p>
 </section>
 
-<section style="background:#fff;padding:calc(1.6*var(--space-8)) clamp(20px,6vw,120px) calc(2.4*var(--space-8));">
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:var(--space-4);border-bottom:1px solid #e4e2dc;margin-bottom:calc(1.4*var(--space-8));">
-    <div role="tablist" style="display:flex;gap:8px;flex-wrap:wrap;">
-      <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
-        <button type="button" role="tab" aria-selected="{{ f.on }}" onClick="{{ f.onClick }}" style="{{ f.style }}height:40px;padding:0 18px;border:none;border-radius:99px;font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;transition:background .2s ease,color .2s ease;">{{ f.label }}</button>
+<section style="background:#fff;padding:calc(2.4*var(--space-8)) clamp(20px,6vw,120px) calc(2.4*var(--space-8));">
+  <div data-chy-filterbar="" style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:calc(1.4*var(--space-8));padding:14px 0;border-bottom:1px solid #e4e2dc;">
+    <select onChange="{{ onCategoryChange }}" value="{{ activeCategory }}" aria-label="Category" style="font-family:var(--font-body);font-size:14px;font-weight:600;color:#072E34;background:#fff;border:1px solid #e4e2dc;border-radius:8px;padding:0 16px;height:44px;box-sizing:border-box;cursor:pointer;min-width:0;flex:1 1 160px;max-width:220px;">
+      <sc-for list="{{ categoryOptions }}" as="cat" hint-placeholder-count="5">
+        <option value="{{ cat }}">{{ cat }}</option>
       </sc-for>
-    </div>
-    <div style="display:flex;align-items:center;gap:14px;margin-left:auto;">
-      <span style="font-family:var(--font-body);font-size:14px;color:#6b6a63;white-space:nowrap;">{{ countLabel }}</span>
-      <div style="{{ searchWrapStyle }}display:flex;align-items:center;height:44px;border-radius:99px;background:#f0f1ee;overflow:hidden;transition:width .35s cubic-bezier(0.16,1,0.3,1),background .25s ease;">
-        <button type="button" onClick="{{ toggleSearch }}" aria-label="Search products" style="flex:none;width:44px;height:44px;border:none;background:transparent;color:#201e1d;cursor:pointer;display:flex;align-items:center;justify-content:center;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
-        </button>
-        <input ref="{{ searchRef }}" type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search products" aria-label="Search products" style="flex:1;min-width:0;height:44px;border:none;background:transparent;padding:0 16px 0 0;font-family:var(--font-body);font-size:14.5px;color:#201e1d;box-shadow:none !important;">
-      </div>
+    </select>
+    <select onChange="{{ onSortChange }}" value="{{ activeSort }}" aria-label="Sort" style="font-family:var(--font-body);font-size:14px;font-weight:600;color:#072E34;background:#fff;border:1px solid #e4e2dc;border-radius:8px;padding:0 16px;padding-right:36px;height:44px;box-sizing:border-box;cursor:pointer;min-width:0;flex:1 1 160px;max-width:220px;">
+      <sc-for list="{{ sortOptions }}" as="so" hint-placeholder-count="4">
+        <option value="{{ so.value }}">{{ so.label }}</option>
+      </sc-for>
+    </select>
+    <span data-chy-count="" style="font-family:var(--font-body);font-size:14px;color:#6b6a63;white-space:nowrap;">{{ countLabel }}</span>
+    <div data-chy-searchpill="" data-open="{{ searchOpenAttr }}" style="{{ searchWrapStyle }}display:flex;align-items:center;height:44px;border-radius:99px;background:#007D67;color:#fff;overflow:hidden;margin-left:auto;flex:none;transition:width .35s cubic-bezier(0.16,1,0.3,1);">
+      <button type="button" onClick="{{ toggleSearch }}" aria-label="Search products" style="flex:none;width:44px;height:44px;border:none;background:transparent;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      </button>
+      <input ref="{{ searchRef }}" type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search all products" aria-label="Search all products" style="flex:1;min-width:0;height:44px;border:none;outline:none;background:transparent;padding:0 18px 0 0;font-family:var(--font-body);font-size:14px;font-weight:600;color:#fff;box-shadow:none !important;">
     </div>
   </div>
+
   <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
-    <p style="font-family:var(--font-body);font-size:15px;color:#6b6a63;margin:0 0 var(--space-6);">No products match &ldquo;{{ query }}&rdquo;. Try another name or clear the search.</p>
+    <p style="font-family:var(--font-body);font-size:15px;color:#6b6a63;margin:0 0 var(--space-6);">No products match your filters. Try another category or clear the search.</p>
   </sc-if>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:var(--space-6);">
-    <sc-for list="{{ items }}" as="p" hint-placeholder-count="6">
-      <a href="{{ p.href }}" style="display:flex;flex-direction:column;text-decoration:none;color:#201e1d;">
-        <figure style="position:relative;margin:0 0 var(--space-4);overflow:hidden;background:#f5f6f4;">
-          <image-slot id="{{ p.slotId }}" src="{{ p.src }}" shape="rect" placeholder="{{ p.name }}" style="display:block;width:100%;aspect-ratio:1/1;"></image-slot>
-          <span style="position:absolute;left:12px;top:12px;background:#007D67;color:#fff;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:5px 10px;">{{ p.badge }}</span>
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;">
+    <sc-for list="{{ visibleItems }}" as="item" hint-placeholder-count="8">
+      <a href="{{ item.href }}" class="chy-card" style="display:block;text-decoration:none;color:inherit;">
+        <figure class="chy-media" style="margin:0;position:relative;">
+          <image-slot id="{{ item.slotId }}" shape="rect" placeholder="{{ item.name }}" style="width:100%;aspect-ratio:4/5;"></image-slot>
+          <div style="position:absolute;top:0;left:0;right:0;height:60%;background:linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 100%);pointer-events:none;"></div>
+          <span style="position:absolute;top:14px;left:14px;right:14px;color:#fff;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,0.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ item.category }}</span>
+          <span style="position:absolute;bottom:12px;right:12px;background:rgba(32,30,29,0.8);color:#fff;font-family:var(--font-body);font-size:11px;font-weight:600;padding:6px 10px;border-radius:999px;">{{ item.badge }}</span>
         </figure>
-        <span style="font-family:var(--font-body);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#007D67;margin-bottom:6px;">{{ p.category }}</span>
-        <span style="font-family:var(--font-body);font-weight:700;font-size:15px;letter-spacing:0.02em;text-transform:uppercase;margin-bottom:8px;">{{ p.name }}</span>
-        <span style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;">
-          <span style="font-family:var(--font-body);font-size:14px;color:#6b6a63;">From NPR <strong style="color:#201e1d;">{{ p.price }}</strong></span>
-          <span style="display:flex;align-items:center;gap:6px;font-family:var(--font-body);font-size:12.5px;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;color:#007D67;">View &rarr;</span>
-        </span>
+        <div style="position:relative;background:#f5f6f4;padding:16px;min-height:76px;box-sizing:border-box;">
+          <div class="chy-info-default" style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;">
+            <h3 style="font-family:var(--font-heading);font-weight:600;font-size:15.5px;margin:0;color:#201e1d;">{{ item.name }}</h3>
+            <span style="flex:none;font-family:var(--font-body);font-size:13px;font-weight:700;color:#007D67;">{{ item.priceLabel }}</span>
+          </div>
+          <div class="chy-info-hover">
+            <span style="display:flex;align-items:center;gap:8px;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:14px;padding:10px 24px;border-radius:999px;">
+              View Product
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.310 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
+            </span>
+          </div>
+        </div>
       </a>
     </sc-for>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:calc(1.6*var(--space-8));flex-wrap:wrap;">
+    <button type="button" onClick="{{ onPrevPage }}" disabled="{{ isFirstPage }}" aria-label="Previous page" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:99px;border:1px solid #e4e2dc;background:#fff;color:#072E34;cursor:pointer;opacity:{{ prevOpacity }};">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
+    </button>
+    <sc-for list="{{ pageNumbers }}" as="p" hint-placeholder-count="1">
+      <button type="button" onClick="{{ p.onClick }}" style="{{ p.style }}width:40px;height:40px;border-radius:99px;font-family:var(--font-body);font-size:14px;font-weight:600;cursor:pointer;">{{ p.label }}</button>
+    </sc-for>
+    <button type="button" onClick="{{ onNextPage }}" disabled="{{ isLastPage }}" aria-label="Next page" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:99px;border:1px solid #e4e2dc;background:#fff;color:#072E34;cursor:pointer;opacity:{{ nextOpacity }};">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>
+    </button>
   </div>
 </section>
 
 <dc-import name="SiteFooter" hint-size="100%,600px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1200}}">
 class Component extends DCLogic {
-  state = { filter: 'All', query: '', searchOpen: false };
+  state = { activeCategory: 'All', sort: 'featured', query: '', searchOpen: false, page: 1 };
+  PAGE_SIZE = 12;
   searchRef = React.createRef();
+  componentDidMount() {
+    const q = new URLSearchParams(window.location.search).get('q');
+    if (q) this.setState({ query: q, searchOpen: true });
+  }
   PRODUCTS = [
-    { id: 1, name: 'Beetroot Powder', category: 'Superfood Powder', group: 'Powders', price: '250.00', badge: 'Bestseller', src: 'assets/photos/beetroot powder.jpg' },
-    { id: 2, name: 'Flax Seed Oil', category: 'Cold-Pressed Oil', group: 'Oils', price: '250.00', badge: 'Cold-pressed', src: 'assets/photos/flax seed oil.jpg' },
-    { id: 3, name: 'Hibiscus Powder', category: 'Herbal Powder', group: 'Powders', price: '250.00', badge: 'New', src: 'assets/photos/Hibiscus Powder.jpg' },
-    { id: 4, name: 'Kodali Pancake Mix', category: 'Healthy Kitchen', group: 'Kitchen', price: '250.00', badge: 'Millet-based', src: 'assets/photos/Kodali Pancake Mix.jpg' },
-    { id: 5, name: 'Milk Thistle Powder', category: 'Herbal Powder', group: 'Powders', price: '250.00', badge: 'Liver care', src: 'assets/photos/Milk Thistle Powder.jpg' },
-    { id: 6, name: 'Multani Mitti', category: 'Natural Skincare', group: 'Skincare', price: '250.00', badge: 'Skincare', src: 'assets/photos/multani mitti.jpg' },
+    { id: 1, name: 'Beetroot Powder', category: 'Superfood Powder', group: 'Powders', price: 250, badge: 'Bestseller' },
+    { id: 2, name: 'Flax Seed Oil', category: 'Cold-Pressed Oil', group: 'Oils', price: 250, badge: 'Cold-pressed' },
+    { id: 3, name: 'Hibiscus Powder', category: 'Herbal Powder', group: 'Powders', price: 250, badge: 'New' },
+    { id: 4, name: 'Kodali Pancake Mix', category: 'Healthy Kitchen', group: 'Kitchen', price: 250, badge: 'Millet-based' },
+    { id: 5, name: 'Milk Thistle Powder', category: 'Herbal Powder', group: 'Powders', price: 250, badge: 'Liver care' },
+    { id: 6, name: 'Multani Mitti', category: 'Natural Skincare', group: 'Skincare', price: 250, badge: 'Skincare' },
   ];
   renderVals() {
-    const groups = ['All', 'Powders', 'Oils', 'Skincare', 'Kitchen'];
-    const f = this.state.filter;
+    const cats = ['All', 'Powders', 'Oils', 'Skincare', 'Kitchen'];
+    const sorts = [
+      { value: 'featured', label: 'Featured' },
+      { value: 'az', label: 'Name: A – Z' },
+      { value: 'low', label: 'Price: Low to High' },
+      { value: 'high', label: 'Price: High to Low' },
+    ];
+    const cat = this.state.activeCategory;
     const q = this.state.query.trim().toLowerCase();
-    const list = this.PRODUCTS.filter((p) => (f === 'All' || p.group === f) && (!q || (p.name + ' ' + p.category).toLowerCase().includes(q)));
+    let list = this.PRODUCTS.filter((p) => (cat === 'All' || p.group === cat) && (!q || q.split(/\s+/).every((t) => (p.name + ' ' + p.category + ' ' + p.group).toLowerCase().includes(t))));
+    const s = this.state.sort;
+    if (s === 'az') list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+    if (s === 'low') list = [...list].sort((a, b) => a.price - b.price);
+    if (s === 'high') list = [...list].sort((a, b) => b.price - a.price);
+    const totalPages = Math.max(1, Math.ceil(list.length / this.PAGE_SIZE));
+    const page = Math.min(this.state.page, totalPages);
     const open = this.state.searchOpen || !!this.state.query;
     return {
+      categoryOptions: cats,
+      activeCategory: cat,
+      sortOptions: sorts,
+      activeSort: s,
+      onCategoryChange: (e) => this.setState({ activeCategory: e.target.value, page: 1 }),
+      onSortChange: (e) => this.setState({ sort: e.target.value, page: 1 }),
       query: this.state.query,
       searchRef: this.searchRef,
-      searchWrapStyle: `width:${open ? 'min(260px,60vw)' : '44px'};`,
+      searchOpenAttr: open ? '1' : '0',
+      searchWrapStyle: `width:${open ? 'min(260px,100%)' : '44px'};`,
       toggleSearch: () => {
         const next = !open;
-        this.setState({ searchOpen: next, query: next ? this.state.query : '' });
+        this.setState({ searchOpen: next, query: next ? this.state.query : '', page: 1 });
         if (next) setTimeout(() => this.searchRef.current && this.searchRef.current.focus(), 60);
       },
-      onQuery: (e) => this.setState({ query: e.target.value }),
-      noResults: list.length === 0,
-      filters: groups.map((g) => ({ label: g, on: g === f, onClick: () => this.setState({ filter: g }),
-        style: g === f ? 'background:#007D67;color:#fff;' : 'background:#f0f1ee;color:#201e1d;' })),
-      items: list.map((p) => ({ ...p, slotId: `prod-${p.id}`, href: `ProductDetail.dc.html?id=${p.id}`, src: p.src })),
+      onQuery: (e) => this.setState({ query: e.target.value, page: 1 }),
       countLabel: `${list.length} product${list.length === 1 ? '' : 's'}`,
+      noResults: list.length === 0,
+      visibleItems: list.slice((page - 1) * this.PAGE_SIZE, page * this.PAGE_SIZE).map((p) => ({
+        ...p, slotId: `prod-${p.id}`, href: `ProductDetail.dc.html?id=${p.id}`, priceLabel: `NPR ${p.price.toLocaleString('en-IN')}`,
+      })),
+      pageNumbers: Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => ({
+        label: String(n),
+        onClick: () => this.setState({ page: n }),
+        style: n === page ? 'background:#007D67;color:#fff;border:none;' : 'background:#fff;color:#072E34;border:1px solid #e4e2dc;',
+      })),
+      isFirstPage: page === 1,
+      isLastPage: page === totalPages,
+      prevOpacity: page === 1 ? 0.4 : 1,
+      nextOpacity: page === totalPages ? 0.4 : 1,
+      onPrevPage: () => this.setState({ page: Math.max(1, page - 1) }),
+      onNextPage: () => this.setState({ page: Math.min(totalPages, page + 1) }),
     };
   }
 }

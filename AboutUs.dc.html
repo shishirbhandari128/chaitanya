@@ -15,6 +15,8 @@
   <script src="./demo-photos.js"></script>
   <script src="./motion.js"></script>
   <style>
+    @keyframes clientLogosSlide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    image-slot[id^="about-client-logo"]::part(frame) { background: transparent !important; animation: none !important; }
     @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Lato:wght@400;500;600;700&display=swap');
     :root {
       --color-bg: #f7f1de; --color-text: #072E34; --color-accent: #007D67; --color-accent-700: #045A4A;
@@ -22,6 +24,7 @@
     }
     html { scroll-behavior: smooth; } body { margin: 0; background: #fff; }
     a { color: var(--color-accent); } a:hover { color: var(--color-accent-700); }
+    @keyframes mbKenBurns { from { transform: scale(1) translate(0,0); } to { transform: scale(1.12) translate(-1.5%,-1%); } }
   </style>
 </helmet>
 
@@ -79,16 +82,16 @@
 <section style="padding: calc(2.4*var(--space-8)) 0; background-color: #FFFFFF">
   <div style="max-width:1600px;margin:0 auto;padding:0 clamp(16px,6vw,120px);margin-bottom:var(--space-6);">
     <span style="display:block;font-family:var(--font-body);font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:#007D67;margin-bottom:var(--space-3);">Our Values</span>
-    <h2 style="font-family:var(--font-heading);font-weight:500;font-size:38px;color:#201e1d;margin:0;">What We Stand For</h2>
+    <h2 style="font-family:var(--font-heading);font-weight:500;font-size:clamp(26px,3.2vw,38px);color:#201e1d;margin:0;">What We Stand For</h2>
   </div>
   <div style="max-width:1600px;margin:0 auto;padding:0 clamp(16px,6vw,120px);">
     <sc-for list="{{ values }}" as="v" hint-placeholder-count="4">
-      <div ref="{{ v.revealRef }}" style="{{ v.rowStyle }}">
+      <div ref="{{ v.revealRef }}" data-chy-rrow="" style="{{ v.rowStyle }}">
         <div style="flex:1 1 0;min-width:0;">
           <h3 style="font-family:var(--font-heading);margin:0 0 16px;font-size:clamp(24px,2.8vw,32px);font-weight:500;color:#201e1d;">{{ v.title }}</h3>
           <p style="font-family:var(--font-body);font-size:15.5px;line-height:1.7;color:#5c5648;max-width:46ch;margin:0;">{{ v.desc }}</p>
         </div>
-        <div style="height:60vh;flex:1 1 0;min-width:0;">
+        <div data-chy-rimg="" style="height:60vh;flex:1 1 0;min-width:0;width:100%;">
           <image-slot id="{{ v.slotId }}" shape="rect" placeholder="{{ v.imgLabel }}" style="width:100%;height:100%;object-fit:cover;"></image-slot>
         </div>
       </div>
@@ -96,15 +99,45 @@
   </div>
 </section>
 
+<section style="background:#fff;padding:calc(1.6*var(--space-8)) 0;overflow:hidden;" data-om-label="Client Logos">
+  <p style="text-align:center;font-family:var(--font-body);font-size:15px;color:#6b6a63;margin:0 0 calc(1.2*var(--space-8));">Trusted by Leading Platforms &amp; Events</p>
+  <div style="width:100%;overflow:hidden;">
+    <div style="display:flex;gap:64px;width:max-content;align-items:center;animation:clientLogosSlide 32s linear infinite;">
+        <image-slot id="about-client-logo-0" src="assets/logos/lotus.svg" fit="contain" shape="rect" placeholder="Lotus Retreats" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-1" src="assets/logos/evergreen.svg" fit="contain" shape="rect" placeholder="Evergreen" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-2" src="assets/logos/aurum.svg" fit="contain" shape="rect" placeholder="Aurum" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-3" src="assets/logos/himalaya.svg" fit="contain" shape="rect" placeholder="Himalaya Travel" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-4" src="assets/logos/saffron.svg" fit="contain" shape="rect" placeholder="Saffron & Co" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-5" src="assets/logos/stillwater.svg" fit="contain" shape="rect" placeholder="Stillwater" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-6" src="assets/logos/kinfolk.svg" fit="contain" shape="rect" placeholder="Kinfolk Hotels" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-b-0" src="assets/logos/lotus.svg" fit="contain" shape="rect" placeholder="Lotus Retreats" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-b-1" src="assets/logos/evergreen.svg" fit="contain" shape="rect" placeholder="Evergreen" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-b-2" src="assets/logos/aurum.svg" fit="contain" shape="rect" placeholder="Aurum" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-b-3" src="assets/logos/himalaya.svg" fit="contain" shape="rect" placeholder="Himalaya Travel" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-b-4" src="assets/logos/saffron.svg" fit="contain" shape="rect" placeholder="Saffron & Co" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-b-5" src="assets/logos/stillwater.svg" fit="contain" shape="rect" placeholder="Stillwater" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+        <image-slot id="about-client-logo-b-6" src="assets/logos/kinfolk.svg" fit="contain" shape="rect" placeholder="Kinfolk Hotels" style="width:170px;height:40px;flex:none;filter:grayscale(1) opacity(0.6);transition:filter .3s ease;" style-hover="filter:grayscale(0) opacity(1);"></image-slot>
+    </div>
+  </div>
+</section>
+
 <section style="background: #fff; padding: calc(2.4*var(--space-8)) 0 0;" data-om-label="Pre footer section" ref="{{ refCta }}">
   <div style="{{ ctaCardStyle }}">
-    <div style="position: absolute; inset: 0; pointer-events: none; background: url(&quot;./screenshot-2026-09-21-at-10-33-45-am-muarqugw-qnb4.png&quot;) center / cover no-repeat"></div>
-    <div style="position:relative;z-index:1;">
-      <h3 style="font-family: var(--font-heading); font-weight: 700; font-size: 32px; line-height: 1.1; letter-spacing: 0.006em; margin: 0 auto var(--space-2); max-width: none; white-space: nowrap; color: #fff;">Begin Your Journey to Relaxation</h3>
-      <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:rgba(255,255,255,0.8);max-width:44ch;margin:0 auto;">Take a moment for yourself with personalized care designed to restore, relax, and rejuvenate.</p>
-      <div style="display: flex; justify-content: center; gap: 6px; margin-top: var(--space-8)">
-        <a href="Booking.dc.html" style="display:flex;align-items:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:14px;text-decoration:none;padding:13px 28px;height:44px;border-radius:99px;">Book Your Appointment</a>
-        <a href="Booking.dc.html" aria-label="Book Your Appointment" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;text-decoration:none;width:44px;height:44px;border-radius:99px;">
+    <div aria-hidden="true" style="position:absolute;inset:-4%;background:url('assets/photos/md/spa-tea-robes.jpg') center 40% / cover no-repeat;animation:mbKenBurns 28s ease-in-out infinite alternate;will-change:transform;"></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,46,52,0.78) 0%, rgba(7,46,52,0.62) 45%, rgba(4,30,34,0.9) 100%);"></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(ellipse 55% 60% at 50% 45%, rgba(0,125,103,0.35) 0%, rgba(0,125,103,0) 70%), radial-gradient(ellipse 40% 40% at 85% 10%, rgba(233,206,122,0.18) 0%, rgba(233,206,122,0) 70%);"></div>
+    <div aria-hidden="true" style="position:absolute;inset:clamp(12px,2vw,24px);border:1px solid rgba(233,206,122,0.35);pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;">
+      <span style="display:inline-flex;align-items:center;gap:12px;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#E9CE7A;margin-bottom:var(--space-4);">
+        <span style="width:32px;height:1px;background:rgba(233,206,122,0.7);display:block;"></span>
+        Chaitanya Health &amp; Wellness
+        <span style="width:32px;height:1px;background:rgba(233,206,122,0.7);display:block;"></span>
+      </span>
+      <h3 data-chy-fs="" style="font-family: var(--font-heading); font-weight: 700; font-size: min(44px, 5.2vw); line-height: 1.15; letter-spacing: 0.006em; margin: 0 auto var(--space-3); max-width: none; white-space: nowrap; color: #fff;">Begin Your Journey to Relaxation</h3>
+      <p style="font-family: var(--font-body); font-size: clamp(15px,1.3vw,17px); line-height: 1.65; color: rgba(255,255,255,0.86); max-width: 48ch; margin: 0 auto; text-wrap: pretty;">Take a moment for yourself with personalized care designed to restore, relax, and rejuvenate.</p>
+      <div style="display: flex; justify-content: center; gap: 6px; margin-top: clamp(24px,4vw,40px)">
+        <a href="Services.dc.html" style="display:flex;align-items:center;white-space:nowrap;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:14px;text-decoration:none;padding:13px 28px;height:44px;box-sizing:border-box;border-radius:99px;">Book Your Appointment</a>
+        <a href="Services.dc.html" aria-label="Book Your Appointment" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;text-decoration:none;width:44px;height:44px;border-radius:99px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
         </a>
       </div>
@@ -179,7 +212,7 @@ class Component extends DCLogic {
   renderVals() {
     return {
       refCta: (el) => { this.refs.refCta = el; },
-      ctaCardStyle: `position:relative;border-radius:0;overflow:hidden;background:#072E34;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:480px;padding:calc(2*var(--space-8)) clamp(20px,6vw,80px);margin:0 auto;width:${this.state.ctaInView ? '100%' : '78%'};transition:width 1.4s cubic-bezier(0.16,1,0.3,1);`,
+      ctaCardStyle: `position:relative;border-radius:0;overflow:hidden;background:#072E34;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:clamp(380px,48vw,520px);padding:clamp(56px,8vw,96px) clamp(20px,6vw,80px);box-sizing:border-box;margin:0 auto;width:${this.state.ctaInView ? '100%' : '78%'};transition:width 1.4s cubic-bezier(0.16,1,0.3,1);`,
       statsGridRef: this.statsRef,
       stats: [
         { value: `${this.state.statCounts[0]}+`, label: 'Years of Practice', bg: 'background:#E3F5F0;', desc: 'Continuous operation in Bakhundole, refining protocols across generations of patients.', valueColor: 'color:#072E34;', labelColor: 'color:#2F4A47;', dividerColor: 'background:color-mix(in srgb, #072E34 25%, transparent);', descColor: 'color:#2F4A47;' },

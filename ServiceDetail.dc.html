@@ -36,9 +36,9 @@
     <span style="color:#072E34;">{{ item.name }}</span>
   </p>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,72px);align-items:start;">
-    <div style="position:sticky;top:96px;display:flex;flex-direction:column;gap:12px;height:calc(100vh - 180px);min-height:420px;max-height:720px;">
-      <div style="position:relative;width:100%;flex:1 1 auto;min-height:0;overflow:hidden;background:#f5f6f4;">
+  <div data-pd-main="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,72px);align-items:start;">
+    <div data-pd-gallery="" style="position:sticky;top:96px;display:flex;flex-direction:column;gap:12px;height:calc(100vh - 180px);min-height:420px;max-height:720px;">
+      <div data-pd-stage="" style="position:relative;width:100%;flex:1 1 auto;min-height:0;overflow:hidden;background:#f5f6f4;">
         <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="5">
           <div style="{{ ph.stageStyle }}position:absolute;inset:0;transition:opacity 0.6s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1);">
             <image-slot id="{{ ph.slotId }}" shape="rect" placeholder="{{ ph.label }}" style="display:block;width:100%;height:100%;"></image-slot>
@@ -58,7 +58,7 @@
           </button>
         </div>
       </div>
-      <div style="flex:none;display:flex;gap:10px;height:clamp(56px,9vh,84px);">
+      <div data-pd-thumbs="" style="flex:none;display:flex;gap:10px;height:clamp(56px,9vh,84px);">
         <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="5">
           <button type="button" onClick="{{ ph.onSelect }}" aria-label="{{ ph.label }}" aria-pressed="{{ ph.active }}" style="{{ ph.thumbStyle }}position:relative;flex:1 1 0;min-width:0;height:100%;padding:0;border:none;background:#f5f6f4;cursor:pointer;overflow:hidden;transition:opacity 0.25s ease, outline-color 0.25s ease;outline-offset:2px;">
             <image-slot id="{{ ph.slotId }}" shape="rect" placeholder="{{ ph.num }}" style="display:block;width:100%;height:100%;pointer-events:none;"></image-slot>
@@ -82,8 +82,8 @@
         </div>
       </div>
       <p style="font-family:var(--font-body);font-size:15.5px;line-height:1.75;color:#4a473f;margin:0 0 calc(1.6*var(--space-8));max-width:48ch;">{{ item.description }}</p>
-      <div style="display:flex;gap:6px;">
-        <button type="button" onClick="{{ openModal }}" style="display:flex;align-items:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:15px;border:none;cursor:pointer;padding:16px 30px;border-radius:99px;height:48px;box-sizing:border-box;">Book Now</button>
+      <div data-sd-cta="" style="display:flex;gap:6px;">
+        <button type="button" onClick="{{ openModal }}" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;font-family:var(--font-body);font-weight:600;font-size:15px;border:none;cursor:pointer;padding:16px 30px;border-radius:99px;height:48px;box-sizing:border-box;">Book Now</button>
         <button type="button" onClick="{{ openModal }}" aria-label="Book Now" style="display:flex;align-items:center;justify-content:center;background:#007D67;color:#fff;border:none;cursor:pointer;width:48px;height:48px;border-radius:99px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.376 18.014a.933.933 0 01-.593-.227.933.933 0 01-.031-1.31l3.906-4.167H4.933C4.426 12.31 4 11.884 4 11.376c0-.507.426-.933.933-.933h11.725l-3.906-4.167a.933.933 0 01.031-1.31c.383-.343.98-.323 1.323.031l4.902 5.24a1.005 1.005 0 010 1.377l-4.902 5.24a.933.933 0 01-.73.32z"></path></svg>
         </button>
@@ -94,7 +94,7 @@
 
 <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ closeModal }}" style="position:fixed;inset:0;background:rgba(7,46,52,0.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;">
-    <div onClick="{{ stopClick }}" style="background:#fff;border-radius:20px;max-width:480px;width:100%;padding:calc(1.6*var(--space-8));box-sizing:border-box;position:relative;">
+    <div onClick="{{ stopClick }}" style="background:#fff;border-radius:20px;max-width:480px;width:100%;padding:clamp(24px,6vw,51px);max-height:calc(100dvh - 40px);overflow-y:auto;box-sizing:border-box;position:relative;">
       <button type="button" onClick="{{ closeModal }}" aria-label="Close" style="position:absolute;top:16px;right:16px;background:transparent;border:none;cursor:pointer;color:#8a8577;padding:4px;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
       </button>
@@ -102,7 +102,7 @@
       <h3 style="font-family:var(--font-heading);font-weight:700;font-size:24px;color:#201e1d;margin:0 0 var(--space-3);">{{ item.name }}</h3>
       <p style="font-family:var(--font-body);font-size:14.5px;line-height:1.65;color:#5c5648;margin:0 0 calc(1.4*var(--space-8));">{{ item.description }}</p>
       <p style="font-family:var(--font-body);font-weight:700;font-size:14px;color:#201e1d;margin:0 0 var(--space-4);">How would you like to book?</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div data-chy-nocollapse="" data-sd-paths="" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <a href="{{ item.therapistHref }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:18px 16px;border:1px solid #e4e2dc;border-radius:14px;text-decoration:none;color:#201e1d;transition:border-color 0.2s ease,background 0.2s ease;" style-hover="border-color:#007D67;background:#f5f6f4;">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#007D67" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-3.9 3.6-7 8-7s8 3.1 8 7"></path></svg>
           <span>

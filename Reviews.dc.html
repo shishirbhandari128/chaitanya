@@ -18,6 +18,9 @@
     #review-award::part(frame) { background: transparent; }
     #review-award::part(image) { filter: drop-shadow(0 14px 22px rgba(7,46,52,0.18)); }
     @keyframes awardFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes awardSpin { to { transform: rotate(360deg); } }
+    @keyframes awardPulse { 0%,100% { transform: scale(0.92); opacity: 0.7; } 50% { transform: scale(1.06); opacity: 1; } }
+    @keyframes awardTwinkle { 0%,100% { opacity: 0; transform: scale(0.4); } 50% { opacity: 1; transform: scale(1.2); } }
     @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Lato:wght@400;500;600;700&display=swap');
     :root {
       --color-bg: #f7f1de; --color-text: #072E34; --color-accent: #007D67; --color-accent-700: #045A4A;
@@ -27,6 +30,8 @@
     a { color: var(--color-accent); } a:hover { color: var(--color-accent-700); }
     @keyframes reviewsSlide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     @keyframes reviewsSlideReverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+    [data-rv-row]:hover [data-rv-track] { animation-play-state: paused !important; }
+    @media (max-width: 640px) { [data-rv-track] { animation-duration: 60s !important; } }
     @keyframes ringFill { from { stroke-dashoffset: 276; } }
     @keyframes heroExpandDown { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
   </style>
@@ -41,7 +46,7 @@
   <span style="display:block;font-family:var(--font-body);font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.4);margin-bottom:var(--space-4);">Your Experience, Our Inspiration</span>
   <h1 style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(30px,4vw,48px); color: #FFFFFF; text-shadow:0 2px 10px rgba(0,0,0,0.4); margin: 0 0 var(--space-3)">What Our Guests Are Saying</h1>
   <div style="display:flex;align-items:center;justify-content:flex-start;gap:16px;flex-wrap:wrap;">
-    <span style="font-family:var(--font-heading);font-weight:700;font-size:40px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.4);">4.8</span>
+    <span style="font-family:var(--font-heading);font-weight:700;font-size:clamp(27px,3.3vw,40px);color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.4);">4.8</span>
     <div style="text-align:left;">
       <div style="display:flex;gap:3px;margin-bottom:6px;">
         <sc-for list="{{ headlineStars }}" as="fill" hint-placeholder-count="5">
@@ -54,81 +59,129 @@
   </div>
 </section>
 
-<section style="background:#fff;padding:calc(3.4*var(--space-8)) clamp(20px,6vw,120px);">
-  <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:calc(1.8*var(--space-8));">
-    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
-      <div style="position:relative;width:220px;height:220px;display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-4);">
-        <div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle, #E3F5F0 0%, rgba(227,245,240,0.55) 45%, rgba(227,245,240,0) 72%);"></div>
-        <div style="position:absolute;inset:18px;border-radius:50%;border:1px dashed rgba(0,125,103,0.28);"></div>
-        <image-slot id="review-award" src="assets/logos/awardslogo.png" fit="contain" shape="rect" placeholder="Tripadvisor Travelers' Choice badge" style="position:relative;width:170px;height:170px;background:transparent;animation:awardFloat 5s ease-in-out infinite;"></image-slot>
+<section ref="{{ awardRef }}" style="background:#fff;padding:calc(2.4*var(--space-8)) clamp(16px,6vw,120px);">
+  <div style="max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));border-radius:24px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(7,46,52,0.35);">
+    <div style="position:relative;overflow:hidden;background:#072E34;color:#fff;padding:clamp(36px,5vw,64px) clamp(24px,4vw,56px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:420px;">
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 38%, rgba(0,125,103,0.55) 0%, rgba(7,46,52,0) 60%);pointer-events:none;"></div>
+      <div style="{{ awardRevealStyle }}position:relative;width:240px;height:240px;display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-6);transition:opacity .9s ease,transform 1s cubic-bezier(0.22,1,0.36,1);">
+        <div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle, rgba(227,245,240,0.22) 0%, rgba(227,245,240,0) 70%);animation:awardPulse 3.2s ease-in-out infinite;"></div>
+        <div style="position:absolute;inset:14px;border-radius:50%;border:1.5px dashed rgba(233,206,122,0.55);animation:awardSpin 36s linear infinite;"></div>
+        <div style="position:absolute;inset:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.14);"></div>
+        <span style="position:absolute;left:18px;top:46px;width:6px;height:6px;border-radius:50%;background:#E9CE7A;animation:awardTwinkle 2.6s ease-in-out infinite;"></span>
+        <span style="position:absolute;right:22px;top:30px;width:4px;height:4px;border-radius:50%;background:#F3E3AE;animation:awardTwinkle 2.2s .6s ease-in-out infinite;"></span>
+        <span style="position:absolute;right:10px;bottom:70px;width:5px;height:5px;border-radius:50%;background:#E9CE7A;animation:awardTwinkle 3s 1.1s ease-in-out infinite;"></span>
+        <span style="position:absolute;left:34px;bottom:34px;width:4px;height:4px;border-radius:50%;background:#F3E3AE;animation:awardTwinkle 2.4s 1.6s ease-in-out infinite;"></span>
+        <div style="position:absolute;inset:44px;border-radius:50%;background:#F7F4EE;box-shadow:0 12px 30px rgba(0,0,0,0.28), inset 0 0 0 6px rgba(255,255,255,0.6);"></div>
+        <image-slot id="review-award" fit="contain" shape="rect" placeholder="Tripadvisor Travelers' Choice badge" style="position:relative;width:118px;height:118px;background:transparent;animation:awardFloat 5s ease-in-out infinite;"></image-slot>
       </div>
-      <span style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#007D67;margin-bottom:6px;">Award Winner</span>
-      <p style="font-family:var(--font-heading);font-weight:700;font-size:22px;color:#201e1d;margin:0 0 4px;">Tripadvisor Travelers&rsquo; Choice 2022</p>
-      <p style="font-family:var(--font-body);font-size:14px;color:#6b6a63;margin:0;">Ranked among the top 10% of wellness experiences worldwide</p>
+      <span style="{{ awardTextStyle }}display:inline-flex;align-items:center;gap:8px;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#E9CE7A;margin-bottom:10px;padding:6px 14px;border:1px solid rgba(233,206,122,0.45);border-radius:99px;transition:opacity .8s .2s ease,transform .8s .2s cubic-bezier(0.22,1,0.36,1);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
+        Award Winner
+      </span>
+      <p style="{{ awardTextStyle }}font-family:var(--font-heading);font-weight:700;font-size:clamp(22px,2.4vw,28px);line-height:1.25;color:#fff;margin:0 0 8px;transition:opacity .8s .3s ease,transform .8s .3s cubic-bezier(0.22,1,0.36,1);">Tripadvisor Travelers&rsquo; Choice 2022</p>
+      <p style="{{ awardTextStyle }}font-family:var(--font-body);font-size:15px;line-height:1.6;color:rgba(255,255,255,0.78);margin:0;max-width:34ch;transition:opacity .8s .4s ease,transform .8s .4s cubic-bezier(0.22,1,0.36,1);">Ranked among the top 10% of wellness experiences worldwide</p>
     </div>
-    <div style="display:flex;gap:clamp(16px,4vw,40px);flex-wrap:wrap;justify-content:center;">
-      <sc-for list="{{ ratingRings }}" as="rb" hint-placeholder-count="5">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
-          <div style="position:relative;width:104px;height:104px;">
-            <svg width="104" height="104" viewBox="0 0 104 104" style="transform:rotate(-90deg);">
-              <circle cx="52" cy="52" r="44" fill="none" stroke="#eceae0" stroke-width="9"></circle>
-              <circle cx="52" cy="52" r="44" fill="none" stroke="#007D67" stroke-width="9" stroke-linecap="round" style="{{ rb.ringStyle }}"></circle>
-            </svg>
-            <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:700;font-size:17px;color:#201e1d;">{{ rb.pct }}%</span>
+
+    <div style="background:#F7F4EE;padding:clamp(32px,5vw,64px) clamp(24px,4vw,56px);display:flex;flex-direction:column;justify-content:center;gap:var(--space-6);">
+      <div>
+        <span style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#007D67;margin-bottom:12px;">Guest Rating</span>
+        <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;">
+          <span style="font-family:var(--font-heading);font-weight:700;font-size:clamp(56px,7vw,76px);line-height:0.9;color:#201e1d;font-variant-numeric:tabular-nums;">{{ scoreLabel }}<span style="font-size:0.36em;color:#8a8577;font-weight:600;margin-left:4px;">/5</span></span>
+          <div style="display:flex;flex-direction:column;gap:6px;padding-bottom:6px;">
+            <span style="position:relative;display:inline-flex;gap:3px;">
+              <span style="display:inline-flex;gap:3px;color:#dcd9ce;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
+              </span>
+              <span style="{{ starFillStyle }}position:absolute;left:0;top:0;bottom:0;overflow:hidden;display:inline-flex;gap:3px;color:#007D67;white-space:nowrap;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex:none;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex:none;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex:none;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex:none;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex:none;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
+              </span>
+            </span>
+            <span style="font-family:var(--font-body);font-size:13.5px;color:#6b6a63;">Based on {{ reviewCountLabel }} verified reviews</span>
           </div>
-          <span style="font-family:var(--font-body);font-size:12.5px;color:#6b6a63;">{{ rb.label }}</span>
         </div>
-      </sc-for>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <sc-for list="{{ ratingBars }}" as="rb" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:12px;">
+            <span style="display:flex;align-items:center;gap:4px;font-family:var(--font-body);font-size:14px;font-weight:700;color:#201e1d;">{{ rb.stars }}<svg width="13" height="13" viewBox="0 0 24 24" fill="#007D67"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg></span>
+            <span style="position:relative;height:10px;border-radius:99px;background:#e6e3d8;overflow:hidden;display:block;">
+              <span style="{{ rb.fillStyle }}position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:linear-gradient(90deg,#0a9a80,#007D67);display:block;"></span>
+            </span>
+            <span style="font-family:var(--font-body);font-size:13.5px;font-weight:600;color:#4a473f;text-align:right;font-variant-numeric:tabular-nums;">{{ rb.pctLabel }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;padding-top:var(--space-4);border-top:1px solid #e4e0d5;">
+        <sc-for list="{{ platforms }}" as="pf" hint-placeholder-count="3">
+          <span style="{{ pf.style }}display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:99px;background:#fff;border:1px solid #e4e0d5;font-family:var(--font-body);font-size:13.5px;color:#4a473f;transition:opacity .6s ease,transform .6s cubic-bezier(0.22,1,0.36,1);">
+            <span aria-hidden="true" style="{{ pf.logoStyle }}display:block;width:20px;height:20px;flex:none;background-size:contain;background-repeat:no-repeat;background-position:center;"></span><strong style="font-family:var(--font-heading);font-size:15px;color:#201e1d;">{{ pf.score }}</strong>{{ pf.name }}
+          </span>
+        </sc-for>
+      </div>
     </div>
   </div>
 </section>
 
-<section style="background:#f5f6f4;padding:calc(2.4*var(--space-8)) 0;overflow:hidden;min-height:100vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;">
-  <h2 style="font-family:var(--font-heading);font-weight:700;font-size:28px;color:#201e1d;text-align:center;margin:0 0 calc(1.6*var(--space-8));">Recent Reviews</h2>
-  <div style="width:100%;overflow:hidden;margin-bottom:20px;" style-hover="--rowplay:paused;">
-    <div style="display:flex;gap:20px;width:max-content;animation:reviewsSlide 70s linear infinite;animation-play-state:var(--rowplay,running);" style-hover="animation-play-state:paused;">
-      <sc-for list="{{ rowOneLoop }}" as="t" hint-placeholder-count="6">
-        <div style="flex:0 0 340px;background:#fff;padding:var(--space-6);text-align:left;border-radius:12px;min-height:340px;display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.3s ease,box-shadow 0.3s ease;" style-hover="transform:scale(1.04);box-shadow:0 20px 40px -12px rgba(7,46,52,0.25);">
-          <div>
-          <div style="display:flex;gap:4px;margin-bottom:var(--space-4);">
-            <sc-for list="{{ t.starFills }}" as="fill" hint-placeholder-count="5">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ fill }}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
-            </sc-for>
-          </div>
-          <p style="font-family:var(--font-body);font-size:15px;line-height:1.7;color:#3a3833;margin:0;">{{ t.quote }}</p>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:var(--space-4);">
-            <image-slot id="{{ t.slotId }}" shape="circle" placeholder="Guest photo" style="width:42px;height:42px;flex:none;"></image-slot>
-            <div>
-              <p style="font-family:var(--font-heading);font-weight:700;font-size:14px;color:#201e1d;margin:0;">{{ t.name }}</p>
-              <p style="font-family:var(--font-body);font-size:12px;color:#8a8a80;margin:2px 0 0;">{{ t.source }}</p>
-            </div>
-          </div>
-        </div>
-      </sc-for>
+<section style="background:#f5f6f4;padding:calc(2.4*var(--space-8)) 0;overflow:hidden;box-sizing:border-box;">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:0 clamp(20px,6vw,120px);margin:0 0 calc(1.2*var(--space-8));">
+    <div>
+      <span style="display:block;font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#007D67;margin-bottom:10px;">Guest Stories</span>
+      <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(26px,3vw,34px);color:#201e1d;margin:0;">Recent Reviews</h2>
     </div>
+    <p style="font-family:var(--font-body);font-size:14px;color:#6b6a63;margin:0;">Hover a row to pause</p>
   </div>
-  <div style="width:100%;overflow:hidden;">
-    <div style="display:flex;gap:20px;width:max-content;animation:reviewsSlideReverse 75s linear infinite;" style-hover="animation-play-state:paused;">
-      <sc-for list="{{ rowTwoLoop }}" as="t" hint-placeholder-count="6">
-        <div style="flex:0 0 340px;background:#fff;padding:var(--space-6);text-align:left;border-radius:12px;min-height:340px;display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.3s ease,box-shadow 0.3s ease;" style-hover="transform:scale(1.04);box-shadow:0 20px 40px -12px rgba(7,46,52,0.25);">
-          <div>
-          <div style="display:flex;gap:4px;margin-bottom:var(--space-4);">
-            <sc-for list="{{ t.starFills }}" as="fill" hint-placeholder-count="5">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ fill }}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
-            </sc-for>
-          </div>
-          <p style="font-family:var(--font-body);font-size:15px;line-height:1.7;color:#3a3833;margin:0;">{{ t.quote }}</p>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:var(--space-4);">
-            <image-slot id="{{ t.slotId }}" shape="circle" placeholder="Guest photo" style="width:42px;height:42px;flex:none;"></image-slot>
-            <div>
-              <p style="font-family:var(--font-heading);font-weight:700;font-size:14px;color:#201e1d;margin:0;">{{ t.name }}</p>
-              <p style="font-family:var(--font-body);font-size:12px;color:#8a8a80;margin:2px 0 0;">{{ t.source }}</p>
+  <div style="display:flex;flex-direction:column;gap:18px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);">
+    <div data-rv-row="" style="width:100%;overflow:hidden;padding:8px 0 14px;">
+      <div data-rv-track="" style="display:flex;gap:18px;width:max-content;animation:reviewsSlide 90s linear infinite;will-change:transform;">
+      <sc-for list="{{ rowOneLoop }}" as="t" hint-placeholder-count="6">
+        <article style="flex:0 0 clamp(280px,26vw,340px);box-sizing:border-box;background:#fff;padding:22px 22px 20px;text-align:left;border-radius:16px;border:1px solid #ebe9e2;display:flex;flex-direction:column;gap:16px;transition:transform .45s cubic-bezier(0.22,1,0.36,1),box-shadow .45s cubic-bezier(0.22,1,0.36,1),border-color .3s ease;" style-hover="transform:translateY(-6px);box-shadow:0 22px 40px -18px rgba(7,46,52,0.3);border-color:#cfe6df;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <div style="display:flex;gap:3px;">
+              <sc-for list="{{ t.starFills }}" as="fill" hint-placeholder-count="5">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ fill }}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
+              </sc-for>
             </div>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#E3F5F0" aria-hidden="true"><path d="M9.5 6C6.5 6 4 8.5 4 11.6V18h6.4v-6.4H7.2c0-1.8 1.2-3.2 2.3-3.2V6zm10 0c-3 0-5.5 2.5-5.5 5.6V18h6.4v-6.4h-3.2c0-1.8 1.2-3.2 2.3-3.2V6z"></path></svg>
           </div>
-        </div>
+          <p style="font-family:var(--font-body);font-size:15px;line-height:1.65;color:#3a3833;margin:0;flex:1;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">{{ t.quote }}</p>
+          <div style="display:flex;align-items:center;gap:12px;padding-top:14px;border-top:1px solid #f0eee8;">
+            <image-slot id="{{ t.slotId }}" shape="circle" placeholder="Guest photo" style="width:40px;height:40px;flex:none;"></image-slot>
+            <div style="min-width:0;flex:1;">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:14.5px;color:#201e1d;margin:0;">{{ t.name }}</p>
+              <p style="font-family:var(--font-body);font-size:12px;color:#8a8a80;margin:2px 0 0;">{{ t.when }}</p>
+            </div>
+            <span style="flex:none;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.04em;color:#007D67;background:#E3F5F0;padding:5px 10px;border-radius:99px;">{{ t.source }}</span>
+          </div>
+        </article>
       </sc-for>
+      </div>
+    </div>
+    <div data-rv-row="" style="width:100%;overflow:hidden;padding:8px 0 14px;">
+      <div data-rv-track="" style="display:flex;gap:18px;width:max-content;animation:reviewsSlideReverse 100s linear infinite;will-change:transform;">
+      <sc-for list="{{ rowTwoLoop }}" as="t" hint-placeholder-count="6">
+        <article style="flex:0 0 clamp(280px,26vw,340px);box-sizing:border-box;background:#fff;padding:22px 22px 20px;text-align:left;border-radius:16px;border:1px solid #ebe9e2;display:flex;flex-direction:column;gap:16px;transition:transform .45s cubic-bezier(0.22,1,0.36,1),box-shadow .45s cubic-bezier(0.22,1,0.36,1),border-color .3s ease;" style-hover="transform:translateY(-6px);box-shadow:0 22px 40px -18px rgba(7,46,52,0.3);border-color:#cfe6df;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <div style="display:flex;gap:3px;">
+              <sc-for list="{{ t.starFills }}" as="fill" hint-placeholder-count="5">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ fill }}" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>
+              </sc-for>
+            </div>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#E3F5F0" aria-hidden="true"><path d="M9.5 6C6.5 6 4 8.5 4 11.6V18h6.4v-6.4H7.2c0-1.8 1.2-3.2 2.3-3.2V6zm10 0c-3 0-5.5 2.5-5.5 5.6V18h6.4v-6.4h-3.2c0-1.8 1.2-3.2 2.3-3.2V6z"></path></svg>
+          </div>
+          <p style="font-family:var(--font-body);font-size:15px;line-height:1.65;color:#3a3833;margin:0;flex:1;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">{{ t.quote }}</p>
+          <div style="display:flex;align-items:center;gap:12px;padding-top:14px;border-top:1px solid #f0eee8;">
+            <image-slot id="{{ t.slotId }}" shape="circle" placeholder="Guest photo" style="width:40px;height:40px;flex:none;"></image-slot>
+            <div style="min-width:0;flex:1;">
+              <p style="font-family:var(--font-heading);font-weight:700;font-size:14.5px;color:#201e1d;margin:0;">{{ t.name }}</p>
+              <p style="font-family:var(--font-body);font-size:12px;color:#8a8a80;margin:2px 0 0;">{{ t.when }}</p>
+            </div>
+            <span style="flex:none;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.04em;color:#007D67;background:#E3F5F0;padding:5px 10px;border-radius:99px;">{{ t.source }}</span>
+          </div>
+        </article>
+      </sc-for>
+      </div>
     </div>
   </div>
 </section>
@@ -195,7 +248,26 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1500}}">
 class Component extends DCLogic {
-  state = { rating: 5, submitted: false };
+  state = { rating: 5, submitted: false, awardIn: false, awardT: 0 };
+  awardRef = (el) => {
+    if (!el || this._awardObs) return;
+    if (!('IntersectionObserver' in window)) { this.startAward(); return; }
+    this._awardObs = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { this._awardObs.disconnect(); this.startAward(); } }, { threshold: 0.3 });
+    this._awardObs.observe(el);
+  };
+  startAward() {
+    if (this.state.awardIn) return;
+    this.setState({ awardIn: true });
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { this.setState({ awardT: 1 }); return; }
+    const t0 = performance.now(), dur = 1600;
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / dur), eased = 1 - Math.pow(1 - p, 3);
+      this.setState({ awardT: eased });
+      if (p < 1) this._raf = requestAnimationFrame(tick);
+    };
+    this._raf = requestAnimationFrame(tick);
+  }
   heroContentRef = React.createRef();
 
   handleSubmit = (e) => { e.preventDefault(); this.setState({ submitted: true }); };
@@ -210,6 +282,8 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this._onScroll);
+    cancelAnimationFrame(this._raf);
+    if (this._awardObs) this._awardObs.disconnect();
   }
 
   renderVals() {
@@ -221,21 +295,33 @@ class Component extends DCLogic {
       { slotId: 'rv-4', name: 'P. Basnet', source: 'Facebook', quote: 'Shirodhara on a Friday evening is now non-negotiable. Calmest I feel all week.', stars: 5 },
       { slotId: 'rv-5', name: 'A. Thapa', source: 'Google Review', quote: 'Every visit feels personal \u2014 they remember my constitution, my history, my preferences.', stars: 4 },
       { slotId: 'rv-6', name: 'J. Alison', source: 'Tripadvisor', quote: 'Was initially hesitant about the treatment, but the team quickly put my mind at ease. Results exceeded expectations.', stars: 4 },
-    ].map((r) => ({ ...r, starFills: Array.from({ length: 5 }, (_, i) => (i < r.stars ? '#201e1d' : '#d7d6cf')) }));
+      { slotId: 'rv-7', name: 'M. Shrestha', source: 'Google Review', quote: 'The hot stone massage melted a week of desk tension. Spotless rooms and the herbal tea after was a lovely touch.', stars: 5 },
+      { slotId: 'rv-8', name: 'K. Tamang', source: 'Facebook', quote: 'Booked the couples package for our anniversary. Unhurried, warm and genuinely restorative for both of us.', stars: 5 },
+      { slotId: 'rv-9', name: 'L. Chen', source: 'Tripadvisor', quote: 'A calm oasis in Kathmandu. The therapist explained every step of the Abhyanga and adjusted pressure perfectly.', stars: 5 },
+      { slotId: 'rv-10', name: 'N. Rai', source: 'Google Review', quote: 'Their diet consultation was practical, not preachy. Small changes, and my digestion has never been better.', stars: 4 },
+      { slotId: 'rv-11', name: 'D. Gurung', source: 'Google Review', quote: 'Membership has been worth every rupee. Priority booking means I never miss my monthly Shirodhara.', stars: 5 },
+      { slotId: 'rv-12', name: 'E. Müller', source: 'Tripadvisor', quote: 'Came for one facial, stayed for three sessions. Friendly staff and a beautifully peaceful space.', stars: 5 },
+    ].map((r, i) => ({ ...r, when: ['2 days ago', '1 week ago', '3 days ago', '2 weeks ago', '5 days ago', '1 month ago', '4 days ago', '1 week ago', '6 days ago', '3 weeks ago', '2 weeks ago', '1 month ago'][i], starFills: Array.from({ length: 5 }, (_, i) => (i < r.stars ? '#201e1d' : '#d7d6cf')) }));
 
     return {
       heroContentRef: this.heroContentRef,
       headlineStars: ['#007D67', '#007D67', '#007D67', '#007D67', '#c9d3b8'],
-      ratingRings: [
-        { label: '5 star', pct: 78 },
-        { label: '4 star', pct: 14 },
-        { label: '3 star', pct: 5 },
-        { label: '2 star', pct: 2 },
-        { label: '1 star', pct: 1 },
-      ].map((r, i) => ({ ...r, ringStyle: `stroke-dasharray:276;stroke-dashoffset:${276 - (r.pct / 100) * 276};animation:ringFill 1.4s ${i * 0.15}s ease-out backwards;` })),
-      reviewCardsLoop: [...reviews, ...reviews],
-      rowOneLoop: [...reviews.slice(0, 3), ...reviews.slice(0, 3)],
-      rowTwoLoop: [...reviews.slice(3, 6), ...reviews.slice(3, 6)],
+      awardRef: this.awardRef,
+      awardRevealStyle: this.state.awardIn ? 'opacity:1;transform:scale(1);' : 'opacity:0;transform:scale(0.86);',
+      awardTextStyle: this.state.awardIn ? 'opacity:1;transform:none;' : 'opacity:0;transform:translateY(14px);',
+      scoreLabel: (4.8 * this.state.awardT).toFixed(1),
+      reviewCountLabel: Math.round(787 * this.state.awardT).toLocaleString('en-IN'),
+      starFillStyle: `width:${96 * this.state.awardT}%;`,
+      ratingBars: [[5, 78], [4, 14], [3, 5], [2, 2], [1, 1]].map(([stars, pct], i) => {
+        const t = Math.max(0, Math.min(1, this.state.awardT * 1.25 - i * 0.06));
+        return { stars, pctLabel: Math.round(pct * t) + '%', fillStyle: `width:${pct * t}%;` };
+      }),
+      platforms: [['4.9', 'Google'], ['4.8', 'Tripadvisor'], ['4.7', 'Facebook']].map(([score, name], i) => ({
+        score, name, logoStyle: `background-image:url('assets/logos/${name.toLowerCase()}.svg');`,
+        style: this.state.awardIn ? `opacity:1;transform:none;transition-delay:${0.5 + i * 0.12}s;` : 'opacity:0;transform:translateY(10px);',
+      })),
+      rowOneLoop: [...reviews.filter((_, i) => i % 2 === 0), ...reviews.filter((_, i) => i % 2 === 0)],
+      rowTwoLoop: [...reviews.filter((_, i) => i % 2 === 1), ...reviews.filter((_, i) => i % 2 === 1)],
       formSubmitted: this.state.submitted,
       formNotSubmitted: !this.state.submitted,
       handleSubmit: this.handleSubmit,

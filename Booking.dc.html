@@ -32,60 +32,69 @@
     .chy-slot:disabled, .chy-therapist:disabled { cursor: not-allowed !important; }
     #bk-name:focus, #bk-phone:focus, #bk-email:focus, #bk-notes:focus, #acct-login-email:focus, #acct-login-pass:focus, #acct-su-pass:focus, #acct-su-pass2:focus { outline: none; border-color: #007D67 !important; background: #fff !important; }
     .chy-day:not(:disabled):hover { background: #f5f6f4 !important; }
-    image-slot[id^="wallet-logo"]::part(frame) { background: transparent; }
+      @keyframes bkBarShine{0%{background-position:-60% 0}100%{background-position:160% 0}}
   </style>
 </helmet>
 
 <dc-import name="SiteHeader" current-page="services" hint-size="100%,76px" style="position:sticky;top:0;z-index:40;"></dc-import>
 
-<section style="background:#f5f6f4;padding:18px clamp(20px,6vw,60px);border-bottom:1px solid #e6e4da;">
-  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
-        <div style="{{ s.pillStyle }}display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;">
-          <span style="{{ s.numStyle }}width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:700;font-size:12px;flex:none;">{{ s.num }}</span>
-          <span style="font-family:var(--font-body);font-weight:700;font-size:14px;white-space:nowrap;">{{ s.label }}</span>
-        </div>
-      </sc-for>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;flex:none;">
-      <div style="display:flex;gap:3px;">
-        <sc-for list="{{ progressBars }}" as="b" hint-placeholder-count="5">
-          <span style="{{ b.style }}width:6px;height:20px;border-radius:2px;display:block;"></span>
-        </sc-for>
+<section data-bk-stepper="" style="position:relative;background:#f5f6f4;padding:20px clamp(16px,6vw,60px) 22px;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:16px;">
+    <div data-bk-steptitle="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:nowrap;">
+      <div style="display:flex;align-items:baseline;gap:4px 10px;min-width:0;flex-wrap:wrap;">
+        <span style="font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#007D67;">Step {{ stepNumLabel }} / {{ totalNumLabel }}</span>
+        <span style="font-family:var(--font-heading);font-weight:700;font-size:18px;color:#201e1d;">{{ currentStepLabel }}</span>
       </div>
-      <span style="font-family:var(--font-heading);font-weight:700;font-size:16px;color:#201e1d;">{{ stepNumLabel }}</span>
-      <span style="font-family:var(--font-body);font-size:13px;color:#8a8577;">{{ totalLabel }}</span>
     </div>
+    <ol aria-label="Booking progress" style="list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:0;">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+        <li data-bk-step="" aria-current="{{ s.current }}" style="{{ s.liStyle }}display:flex;align-items:center;gap:10px;min-width:0;">
+          <span style="{{ s.dotStyle }}width:32px;height:32px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:var(--font-body);font-weight:700;font-size:13px;transition:background .3s ease,color .3s ease,box-shadow .3s ease;">
+            <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+            <sc-if value="{{ s.notDone }}" hint-placeholder-val="{{ true }}">{{ s.num }}</sc-if>
+          </span>
+          <span data-bk-steplabel="" style="{{ s.labelStyle }}font-family:var(--font-body);font-size:14px;white-space:nowrap;">{{ s.label }}</span>
+          <sc-if value="{{ s.hasLine }}" hint-placeholder-val="{{ true }}">
+            <span aria-hidden="true" data-bk-line="" style="flex:1 1 auto;min-width:12px;height:2px;margin:0 6px 0 2px;border-radius:2px;background:#e1dfd6;position:relative;overflow:hidden;display:block;"><span style="{{ s.lineFill }}position:absolute;inset:0;background:#007D67;transform-origin:left center;transition:transform .5s cubic-bezier(0.22,1,0.36,1);display:block;"></span></span>
+          </sc-if>
+        </li>
+      </sc-for>
+    </ol>
   </div>
+  <span role="progressbar" aria-label="{{ progressPct }}" style="position:absolute;left:0;right:0;bottom:-3px;height:6px;background:#e3e1d8;display:block;z-index:2;">
+    <span style="{{ progressFillStyle }}position:absolute;left:0;top:0;bottom:0;border-radius:0 99px 99px 0;background:linear-gradient(90deg,#0a9a80 0%,#007D67 100%);box-shadow:0 0 10px rgba(0,125,103,0.35);transition:width .6s cubic-bezier(0.22,1,0.36,1);display:block;overflow:hidden;">
+      <span style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.45) 50%,transparent 100%);background-size:50% 100%;background-repeat:no-repeat;animation:bkBarShine 2.4s ease-in-out infinite;display:block;"></span>
+    </span>
+    <span style="{{ progressKnobStyle }}position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#fff;border:3px solid #007D67;box-sizing:border-box;box-shadow:0 2px 6px rgba(7,46,52,0.25);transition:left .6s cubic-bezier(0.22,1,0.36,1);display:block;"></span>
+  </span>
 </section>
 
-<section style="background:#fff;padding:calc(1.6*var(--space-8)) clamp(20px,6vw,60px) 0;overflow-x:clip;">
+<section data-bk-main="" style="background:#fff;padding:calc(1.6*var(--space-8)) clamp(20px,6vw,60px) 0;overflow-x:clip;">
   <div style="max-width:1200px;margin:0 auto;">
 
     <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin:0 0 calc(1.2*var(--space-8));">
+      <div data-bk-head="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin:0 0 calc(1.2*var(--space-8));">
         <div style="min-width:0;flex:1 1 320px;">
           <h2 style="font-family:var(--font-heading);font-weight:700;font-size:26px;margin:0 0 6px;color:#201e1d;">Choose Your Appointment Schedule</h2>
           <p style="font-family:var(--font-body);font-size:14.5px;color:#8a8577;margin:0;">{{ scheduleSubtitle }}</p>
         </div>
         <sc-if value="{{ showTherapistChip }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end;">
-            <span style="display:flex;align-items:center;gap:10px;background:#E3F5F0;padding:8px 14px 8px 8px;border-radius:999px;">
+          <div data-bk-chip="" style="display:flex;align-items:center;gap:12px;flex-wrap:nowrap;justify-content:flex-end;min-width:0;max-width:100%;">
+            <span style="display:flex;align-items:center;gap:10px;background:#E3F5F0;padding:8px 14px 8px 8px;border-radius:999px;min-width:0;flex:0 1 auto;">
               <span style="width:30px;height:30px;border-radius:50%;background:#007D67;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:700;font-size:12px;">{{ chipInitials }}</span>
-              <span style="display:flex;flex-direction:column;">
-                <span style="font-family:var(--font-body);font-size:14px;font-weight:700;color:#072E34;">{{ chipName }}</span>
-                <span style="font-family:var(--font-body);font-size:12px;color:#4a6a64;">{{ chipDays }}</span>
+              <span style="display:flex;flex-direction:column;min-width:0;">
+                <span style="font-family:var(--font-body);font-size:14px;font-weight:700;color:#072E34;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ chipName }}</span>
+                <span style="font-family:var(--font-body);font-size:12px;color:#4a6a64;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ chipDays }}</span>
               </span>
             </span>
-            <button type="button" onClick="{{ openTherapistModal }}" style="background:transparent;border:none;padding:0;font-family:var(--font-body);font-size:13.5px;font-weight:700;color:#007D67;cursor:pointer;text-decoration:underline;">Change therapist</button>
+            <button type="button" onClick="{{ openTherapistModal }}" style="flex:none;background:transparent;border:none;padding:0;font-family:var(--font-body);font-size:13.5px;font-weight:700;color:#007D67;cursor:pointer;text-decoration:underline;white-space:nowrap;">Change therapist</button>
           </div>
         </sc-if>
       </div>
       <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start;">
-        <div style="background:#f7f7f6;padding:20px;display:flex;flex-direction:column;gap:20px;min-width:0;">
-          <div style="background:#fff;padding:24px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
+        <div data-bk-shell="" style="background:#f7f7f6;padding:20px;display:flex;flex-direction:column;gap:20px;min-width:0;">
+          <div data-bk-panel="" style="background:#fff;padding:24px;">
+            <div data-bk-calhead="" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
               <h3 style="font-family:var(--font-heading);font-weight:700;font-size:18px;letter-spacing:0.02em;text-transform:uppercase;margin:0;color:#201e1d;">Calendar</h3>
               <div style="display:flex;">
                 <select onChange="{{ onYearChange }}" value="{{ viewYear }}" aria-label="Year" style="font-family:var(--font-body);font-size:15px;color:#201e1d;background:#fff;border:1px solid #e0e0e0;border-radius:0;height:44px;padding:0 36px 0 18px;cursor:pointer;">
@@ -100,7 +109,7 @@
                 </select>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:12px;">
+            <div data-bk-wd="" style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:12px;">
               <sc-for list="{{ weekdayLabels }}" as="wd" hint-placeholder-count="7">
                 <span style="{{ wd.style }}font-family:var(--font-body);font-size:14px;padding:0 12px;">{{ wd.label }}</span>
               </sc-for>
@@ -113,10 +122,10 @@
               </sc-for>
             </div>
           </div>
-          <div style="background:#fff;padding:24px;">
+          <div data-bk-panel="" style="background:#fff;padding:24px;">
             <h3 style="font-family:var(--font-heading);font-weight:700;font-size:18px;letter-spacing:0.02em;text-transform:uppercase;margin:0 0 6px;color:#201e1d;">Available Time</h3>
             <p style="font-family:var(--font-body);font-size:13px;color:#8a8577;margin:0 0 16px;">{{ timeHint }}</p>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:16px;">
+            <div data-bk-times="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:16px;">
               <sc-for list="{{ timeOptions }}" as="t" hint-placeholder-count="6">
                 <button type="button" onClick="{{ t.onClick }}" disabled="{{ t.disabled }}" class="chy-slot" style="{{ t.style }}height:50px;border-radius:0;cursor:pointer;font-family:var(--font-body);font-size:15px;">{{ t.label }}</button>
               </sc-for>
@@ -131,7 +140,7 @@
       <h2 style="font-family:var(--font-heading);font-weight:700;font-size:26px;margin:0 0 6px;color:#201e1d;">Choose Your Therapist</h2>
       <p style="font-family:var(--font-body);font-size:14.5px;color:#8a8577;margin:0 0 calc(1.4*var(--space-8));">Select who you&rsquo;d like to perform your treatment.</p>
       <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start;">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">
+        <div data-bk-thera="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">
           <sc-for list="{{ therapistOptions }}" as="th" hint-placeholder-count="4">
             <button type="button" onClick="{{ th.onClick }}" disabled="{{ th.disabled }}" class="chy-therapist" style="{{ th.style }}display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 14px;border-radius:14px;cursor:pointer;text-align:center;">
               <div style="width:56px;height:56px;border-radius:50%;background:#E3F5F0;color:#007D67;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:700;font-size:18px;">{{ th.initials }}</div>
@@ -158,11 +167,11 @@
             </button>
           </sc-for>
           <p style="font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8a8577;margin:var(--space-4) 0 2px;">Pay by Digital Wallet</p>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;">
+          <div data-bk-wallets="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;">
             <sc-for list="{{ walletOptions }}" as="w" hint-placeholder-count="3">
               <div role="button" tabIndex="0" onClick="{{ w.onClick }}" onKeyDown="{{ w.onKey }}" aria-pressed="{{ w.selected }}" style="{{ w.style }}position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px 14px;border-radius:10px;cursor:pointer;text-align:center;box-sizing:border-box;">
                 <span style="{{ w.logoStyle }}position:relative;width:52px;height:52px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:800;font-size:22px;color:#fff;">
-                  <sc-if value="{{ w.hasSlot }}" hint-placeholder-val="{{ true }}"><image-slot id="{{ w.slotId }}" src="{{ w.logoSrc }}" shape="rounded" radius="12" fit="contain" placeholder="" title="Drop a logo" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;background:transparent;"></image-slot></sc-if>
+                  <sc-if value="{{ w.hasSlot }}" hint-placeholder-val="{{ true }}"><image-slot id="{{ w.slotId }}" shape="rounded" radius="12" fit="contain" placeholder="" title="Drop a logo" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;background:transparent;"></image-slot></sc-if>
                   <sc-if value="{{ w.isBank }}" hint-placeholder-val="{{ false }}">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M5 21V10"></path><path d="M19 21V10"></path><path d="M9 21V10"></path><path d="M15 21V10"></path><path d="M12 3 2 9h20z"></path></svg>
                   </sc-if>
@@ -274,11 +283,11 @@
     </sc-if>
 
     <sc-if value="{{ isConfirmed }}" hint-placeholder-val="{{ false }}">
-      <div style="position:relative;overflow:hidden;text-align:center;background:linear-gradient(180deg,#f7f8f7,#eef2f1);margin:calc(-1.6*var(--space-8)) calc(50% - 50vw) 0;padding:clamp(32px,6vh,72px) 20px;min-height:calc(100svh - 160px - 1.6*var(--space-8));box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <div data-bk-success="" style="position:relative;overflow:hidden;text-align:center;background:linear-gradient(180deg,#f7f8f7,#eef2f1);margin:calc(-1.6*var(--space-8)) calc(50% - 50vw) 0;padding:clamp(32px,6vh,72px) 20px;min-height:calc(100svh - 160px - 1.6*var(--space-8));box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;">
         {{ confettiLayer }}
         <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:var(--space-6);width:100%;animation:chySuccessIn 0.7s cubic-bezier(0.22,1,0.36,1) both;">
           <div style="position:relative;width:100%;max-width:420px;filter:drop-shadow(0 24px 40px rgba(7,46,52,0.14));text-align:left;">
-            <div style="background:#fff;border-radius:22px 22px 0 0;padding:36px 32px 26px;text-align:center;">
+            <div data-bk-tkt="" style="background:#fff;border-radius:22px 22px 0 0;padding:36px 32px 26px;text-align:center;">
               <div style="width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:#E3F5F0;display:flex;align-items:center;justify-content:center;animation:chyCheckPop 0.5s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;">
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#007D67" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 11.3 2 22l10.7-3.79"></path><path d="M4 3h.01"></path><path d="M22 8h.01"></path><path d="M15 2h.01"></path><path d="M22 20h.01"></path><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"></path><path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17"></path><path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7"></path><path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"></path></svg>
               </div>
@@ -288,7 +297,7 @@
             <div style="position:relative;height:28px;background:radial-gradient(circle at 0 50%, transparent 14px, #fff 14.5px) left / 51% 100% no-repeat, radial-gradient(circle at 100% 50%, transparent 14px, #fff 14.5px) right / 51% 100% no-repeat;">
               <div style="position:absolute;left:28px;right:28px;top:50%;border-top:2px dashed #d9dcd6;"></div>
             </div>
-            <div style="background:#fff;padding:22px 32px 28px;display:flex;flex-direction:column;gap:20px;">
+            <div data-bk-tkt="" style="background:#fff;padding:22px 32px 28px;display:flex;flex-direction:column;gap:20px;">
               <div style="display:flex;justify-content:space-between;gap:16px;">
                 <div style="min-width:0;">
                   <span style="display:block;font-family:var(--font-body);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#8a8577;margin-bottom:4px;">Booking ID</span>
@@ -324,7 +333,7 @@
               </div>
             </div>
             <div style="height:2px;background:repeating-linear-gradient(90deg,#eceae4 0 18px,transparent 18px 26px);"></div>
-            <div style="background:#fff;padding:24px 32px 34px;display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <div data-bk-tkt="" style="background:#fff;padding:24px 32px 34px;display:flex;flex-direction:column;align-items:center;gap:6px;">
               <div aria-label="Booking barcode" style="display:flex;align-items:stretch;width:min(300px,72%);height:68px;gap:0;">
                 <sc-for list="{{ receiptBars }}" as="bar" hint-placeholder-count="40">
                   <span style="{{ bar }}display:block;height:100%;min-width:0;"></span>
@@ -334,7 +343,7 @@
             </div>
             <div style="height:18px;background:radial-gradient(circle at 50% 100%, transparent 17px, #fff 17.5px) top left / 68px 18px repeat-x;"></div>
           </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+          <div data-bk-done="" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
             <button type="button" onClick="{{ downloadBooking }}" style="display:flex;align-items:center;gap:10px;height:48px;padding:0 22px;background:#007D67;border:none;color:#fff;font-family:var(--font-body);font-weight:700;font-size:15px;cursor:pointer;border-radius:99px;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"></path><path d="m7 10 5 5 5-5"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path></svg>
               {{ downloadLabel }}
@@ -346,23 +355,23 @@
     </sc-if>
 
     <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
-      <div style="position:sticky;bottom:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;width:100vw;box-sizing:border-box;margin:calc(1.6*var(--space-8)) 0 0 calc(50% - 50vw);padding:16px clamp(20px,6vw,60px);background:#fff;border-top:1px solid #eceae0;box-shadow:0 -8px 24px -12px rgba(7,46,52,0.18);">
+      <div data-bk-nav="" style="position:sticky;bottom:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;width:100vw;box-sizing:border-box;margin:calc(1.6*var(--space-8)) 0 0 calc(50% - 50vw);padding:16px clamp(20px,6vw,60px);background:#fff;border-top:1px solid #eceae0;box-shadow:0 -8px 24px -12px rgba(7,46,52,0.18);">
         <button type="button" onClick="{{ goBack }}" style="{{ backButtonStyle }}display:flex;align-items:center;gap:8px;background:transparent;border:none;font-family:var(--font-body);font-weight:600;font-size:14px;cursor:pointer;padding:0;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
           Go Back
         </button>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
+        <div data-bk-actions="" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
           <sc-if value="{{ showAlert }}" hint-placeholder-val="{{ false }}">
             <div role="alert" style="display:flex;align-items:center;gap:8px;background:#fdecea;border:1px solid #f5c2bb;color:#b3261e;font-family:var(--font-body);font-size:13.5px;font-weight:600;padding:10px 14px;border-radius:10px;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
               {{ alertText }}
             </div>
           </sc-if>
-          <button type="button" onClick="{{ resetStep }}" style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #d8d9d1;color:#072E34;font-family:var(--font-body);font-weight:600;font-size:14px;padding:12px 22px;border-radius:10px;cursor:pointer;">
+          <button type="button" data-bk-reset="" onClick="{{ resetStep }}" style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #d8d9d1;color:#072E34;font-family:var(--font-body);font-weight:600;font-size:14px;padding:12px 22px;border-radius:10px;cursor:pointer;">
             Reset
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
           </button>
-          <button type="button" onClick="{{ goNext }}" style="{{ nextButtonStyle }}display:flex;align-items:center;gap:8px;font-family:var(--font-body);font-weight:600;font-size:14px;padding:12px 24px;border:none;border-radius:10px;cursor:pointer;">
+          <button type="button" data-bk-next="" onClick="{{ goNext }}" style="{{ nextButtonStyle }}display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-body);font-weight:600;font-size:14px;padding:12px 24px;border:none;border-radius:10px;cursor:pointer;">
             {{ nextLabel }}
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
           </button>
@@ -779,8 +788,8 @@ class Component extends DCLogic {
 
     const payments = ['Cash at Clinic', 'Card on Arrival'];
     const WALLETS = [
-      { label: 'eSewa', sub: 'Mobile wallet', mark: 'e', color: '#60BB46', logoSrc: 'assets/logos/esewa.webp' },
-      { label: 'Khalti by IME', sub: 'Mobile wallet', mark: 'K', color: '#5C2D91', slotKey: 'khalti', logoSrc: 'assets/logos/khalti.webp' },
+      { label: 'eSewa', sub: 'Mobile wallet', mark: 'e', color: '#60BB46' },
+      { label: 'Khalti by IME', sub: 'Mobile wallet', mark: 'K', color: '#5C2D91', slotKey: 'khalti' },
       { label: 'Mobile Banking', sub: 'Any Nepali bank', bank: true, color: '#072E34' },
     ];
     const walletOptions = WALLETS.map((w) => {
@@ -789,7 +798,6 @@ class Component extends DCLogic {
         label: w.label, sub: w.sub, mark: w.mark || '', isBank: !!w.bank, isMark: !w.bank, selected: sel,
         slotId: 'wallet-logo-' + (w.slotKey || w.label.toLowerCase().replace(/[^a-z]+/g, '-')),
         hasSlot: !w.bank,
-        logoSrc: w.logoSrc || '',
         onClick: () => this.setState({ selectedPayment: w.label }),
         onKey: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.setState({ selectedPayment: w.label }); } },
         logoStyle: css({ background: w.color }),
@@ -812,11 +820,18 @@ class Component extends DCLogic {
     const steps = stepLabels.map((label, i) => {
       const num = i + 1;
       const activeNow = confirmed ? num === total : num === step;
-      const done = confirmed ? num < total : num < step;
+      const done = confirmed ? num < total || num === total : num < step;
+      const last = num === total;
       return {
-        num, label,
-        pillStyle: css({ background: activeNow ? '#007D67' : '#fff', color: activeNow ? '#fff' : '#072E34', border: activeNow ? 'none' : '1px solid #e6e4da' }),
-        numStyle: css({ background: activeNow ? 'rgba(255,255,255,0.25)' : done ? '#007D67' : '#eceae0', color: activeNow ? '#fff' : done ? '#fff' : '#8a8577' }),
+        num, label, done: done && !activeNow || (confirmed && last), notDone: !(done && !activeNow || (confirmed && last)),
+        current: activeNow ? 'step' : undefined,
+        hasLine: !last,
+        liStyle: last ? 'flex:none;' : 'flex:1 1 0;',
+        dotStyle: activeNow
+          ? 'background:#007D67;color:#fff;box-shadow:0 0 0 4px rgba(0,125,103,0.18);'
+          : done ? 'background:#007D67;color:#fff;' : 'background:#fff;color:#8a8577;border:1.5px solid #d8d6cc;',
+        labelStyle: activeNow ? 'color:#072E34;font-weight:700;' : done ? 'color:#072E34;font-weight:600;' : 'color:#8a8577;font-weight:500;',
+        lineFill: `transform:scaleX(${done ? 1 : 0});`,
       };
     });
     const progressBars = stepLabels.map((_, i) => ({ style: css({ background: confirmed || i < step ? '#007D67' : '#eceae0' }) }));
@@ -886,6 +901,11 @@ class Component extends DCLogic {
       chipName: lockTh ? lockTh.name : '', chipInitials: lockTh ? lockTh.initials : '', chipDays: lockTh ? daysLabel(lockTh) : '',
       scheduleSubtitle: lockTh ? 'Only dates and times your therapist is free are selectable.' : 'Pick the date and time that works best for your wellness journey.',
       stepNumLabel: String(confirmed ? total : step).padStart(2, '0'),
+      totalNumLabel: String(total).padStart(2, '0'),
+      currentStepLabel: confirmed ? 'Booking Confirmed' : ({ datetime: 'Choose Date & Time', therapist: 'Choose Your Therapist', details: 'Your Details', payment: 'Payment' })[key] || stepLabels[step - 1],
+      progressPct: Math.round(((confirmed ? total : step - 1) / (total - 1)) * 100) + '% complete',
+      progressFillStyle: `width:${Math.max(4, Math.round(((confirmed ? total : step - 1) / (total - 1)) * 100))}%;`,
+      progressKnobStyle: `left:${Math.max(4, Math.round(((confirmed ? total : step - 1) / (total - 1)) * 100))}%;${confirmed ? 'opacity:0;' : ''}`,
       totalLabel: 'Out Of ' + String(total).padStart(2, '0'),
       showNav: !confirmed,
       isConfirmed: confirmed,

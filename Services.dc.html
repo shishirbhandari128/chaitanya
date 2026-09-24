@@ -70,7 +70,7 @@
     <sc-for list="{{ visibleItems }}" as="item" hint-placeholder-count="8">
       <a href="{{ item.actionHref }}" class="chy-card" style="display:block;text-decoration:none;color:inherit;">
         <figure class="chy-media" style="margin:0;position:relative;">
-          <image-slot id="{{ item.slotId }}" shape="rect" placeholder="{{ item.label }}" style="width:100%;aspect-ratio:4/5;"></image-slot>
+          <image-slot id="{{ item.slotId }}" src="{{ item.src }}" shape="rect" placeholder="{{ item.label }}" style="width:100%;aspect-ratio:4/5;"></image-slot>
           <div style="position:absolute;top:0;left:0;right:0;height:60%;background:linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 100%);pointer-events:none;"></div>
           <span style="position:absolute;top:14px;left:14px;right:14px;color:#fff;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,0.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ item.category }}</span>
           <sc-if value="{{ item.isService }}" hint-placeholder-val="{{ true }}">
@@ -122,7 +122,7 @@ class Component extends DCLogic {
   allItems() {
     if (this._items) return this._items;
     const svc = (id, name, category, duration, price) => ({ id, name, category, duration, priceLabel: `NPR ${price}`, isService: true, slotId: `svc-${id}`, label: name, actionLabel: 'Book Now', actionHref: `ServiceDetail.dc.html?id=${id}` });
-    const prod = (id, name, category, price) => ({ id, name, category, priceLabel: `NPR ${price}`, isService: false, slotId: `prod-${id}`, label: name, actionLabel: 'Shop Now', actionHref: 'Products.dc.html' });
+    const prod = (id, name, category, price, src) => ({ id, name, category, priceLabel: `NPR ${price}`, isService: false, slotId: `prod-${id}`, label: name, src, actionLabel: 'Shop Now', actionHref: `ProductDetail.dc.html?id=${id}` });
     this._items = [
       svc(1, 'Signature Panchakarma Retreat', 'Featured', '7 days', '45,000'),
       svc(2, 'Aroma Hot Stone Massage', 'Featured', '75 min', '3,800'),
@@ -146,11 +146,12 @@ class Component extends DCLogic {
       svc(20, 'Beauty Threading', 'Beauty and Salon', '15 min', '250'),
       svc(21, 'Hair Spa Treatment', 'Beauty and Salon', '45 min', '2,200'),
       svc(22, 'Classic Manicure & Pedicure', 'Beauty and Salon', '60 min', '2,000'),
-      prod(1, 'Herbal Massage Oil', 'Wellness Products', '850'),
-      prod(2, 'Energy Hot Stone Set', 'Wellness Products', '11,500'),
-      prod(3, 'Ayurvedic Face Pack', 'Wellness Products', '650'),
-      prod(4, 'Cordyceps Militaris Supplement', 'Wellness Products', '3,000'),
-      prod(5, 'Detox Herbal Tea', 'Wellness Products', '450'),
+      prod(1, 'Beetroot Powder', 'Wellness Products', '250', 'assets/photos/beetroot powder.jpg'),
+      prod(2, 'Flax Seed Oil', 'Wellness Products', '250', 'assets/photos/flax seed oil.jpg'),
+      prod(3, 'Hibiscus Powder', 'Wellness Products', '250', 'assets/photos/Hibiscus Powder.jpg'),
+      prod(4, 'Kodali Pancake Mix', 'Wellness Products', '250', 'assets/photos/Kodali Pancake Mix.jpg'),
+      prod(5, 'Milk Thistle Powder', 'Wellness Products', '250', 'assets/photos/Milk Thistle Powder.jpg'),
+      prod(6, 'Multani Mitti', 'Wellness Products', '250', 'assets/photos/multani mitti.jpg'),
     ];
     return this._items;
   }

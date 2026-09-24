@@ -17,9 +17,39 @@
   var PEOPLE = /^(fb-av-|rv-|therapist-photo-|avatar-)/;
   var THERAPIST = { as: 'women/44', sg: 'women/68', rt: 'men/32', pk: 'women/21' };
 
+  var PRODUCT_PHOTOS_BY_ID = {
+    '1': 'assets/photos/beetroot powder.jpg',
+    '2': 'assets/photos/flax seed oil.jpg',
+    '3': 'assets/photos/Hibiscus Powder.jpg',
+    '4': 'assets/photos/Kodali Pancake Mix.jpg',
+    '5': 'assets/photos/Milk Thistle Powder.jpg',
+    '6': 'assets/photos/multani mitti.jpg'
+  };
+
+  var PRODUCT_PHOTOS_BY_NAME = [
+    { match: /beetroot/i, src: 'assets/photos/beetroot powder.jpg' },
+    { match: /flax/i, src: 'assets/photos/flax seed oil.jpg' },
+    { match: /hibiscus/i, src: 'assets/photos/Hibiscus Powder.jpg' },
+    { match: /pancake|kodali/i, src: 'assets/photos/Kodali Pancake Mix.jpg' },
+    { match: /milk thistle|thistle/i, src: 'assets/photos/Milk Thistle Powder.jpg' },
+    { match: /multani/i, src: 'assets/photos/multani mitti.jpg' }
+  ];
+
   function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
 
-  function demoFor(id) {
+  function demoFor(id, el) {
+    var prodMatch = id.match(/^prod-(\d+)/);
+    if (prodMatch && PRODUCT_PHOTOS_BY_ID[prodMatch[1]]) {
+      return PRODUCT_PHOTOS_BY_ID[prodMatch[1]];
+    }
+
+    var text = (id + ' ' + (el && el.getAttribute('placeholder') || '')).toLowerCase();
+    for (var i = 0; i < PRODUCT_PHOTOS_BY_NAME.length; i++) {
+      if (PRODUCT_PHOTOS_BY_NAME[i].match.test(text)) {
+        return PRODUCT_PHOTOS_BY_NAME[i].src;
+      }
+    }
+
     if (PEOPLE.test(id)) {
       var t = id.match(/^therapist-photo-(\w+)/);
       var TH = { as: 47, sg: 45, rt: 12, pk: 32 };
@@ -34,7 +64,7 @@
     if (!el || el.tagName !== 'IMAGE-SLOT' || el.hasAttribute('src')) return;
     var id = el.id || '';
     if (!id || id.indexOf('{{') !== -1 || SKIP.test(id)) return;
-    el.setAttribute('src', demoFor(id));
+    el.setAttribute('src', demoFor(id, el));
   }
 
   function scan(root) {

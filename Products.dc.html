@@ -71,7 +71,7 @@
     <sc-for list="{{ visibleItems }}" as="item" hint-placeholder-count="8">
       <a href="{{ item.href }}" class="chy-card" style="display:block;text-decoration:none;color:inherit;">
         <figure class="chy-media" style="margin:0;position:relative;">
-          <image-slot id="{{ item.slotId }}" shape="rect" placeholder="{{ item.name }}" style="width:100%;aspect-ratio:4/5;"></image-slot>
+          <image-slot id="{{ item.slotId }}" src="{{ item.src }}" shape="rect" placeholder="{{ item.name }}" style="width:100%;aspect-ratio:4/5;"></image-slot>
           <div style="position:absolute;top:0;left:0;right:0;height:60%;background:linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 100%);pointer-events:none;"></div>
           <span style="position:absolute;top:14px;left:14px;right:14px;color:#fff;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,0.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ item.category }}</span>
           <span style="position:absolute;bottom:12px;right:12px;background:rgba(32,30,29,0.8);color:#fff;font-family:var(--font-body);font-size:11px;font-weight:600;padding:6px 10px;border-radius:999px;">{{ item.badge }}</span>
@@ -117,12 +117,12 @@ class Component extends DCLogic {
     if (q) this.setState({ query: q, searchOpen: true });
   }
   PRODUCTS = [
-    { id: 1, name: 'Beetroot Powder', category: 'Superfood Powder', group: 'Powders', price: 250, badge: 'Bestseller' },
-    { id: 2, name: 'Flax Seed Oil', category: 'Cold-Pressed Oil', group: 'Oils', price: 250, badge: 'Cold-pressed' },
-    { id: 3, name: 'Hibiscus Powder', category: 'Herbal Powder', group: 'Powders', price: 250, badge: 'New' },
-    { id: 4, name: 'Kodali Pancake Mix', category: 'Healthy Kitchen', group: 'Kitchen', price: 250, badge: 'Millet-based' },
-    { id: 5, name: 'Milk Thistle Powder', category: 'Herbal Powder', group: 'Powders', price: 250, badge: 'Liver care' },
-    { id: 6, name: 'Multani Mitti', category: 'Natural Skincare', group: 'Skincare', price: 250, badge: 'Skincare' },
+    { id: 1, name: 'Beetroot Powder', category: 'Superfood Powder', group: 'Powders', price: 250, badge: 'Bestseller', src: 'assets/photos/beetroot powder.jpg' },
+    { id: 2, name: 'Flax Seed Oil', category: 'Cold-Pressed Oil', group: 'Oils', price: 250, badge: 'Cold-pressed', src: 'assets/photos/flax seed oil.jpg' },
+    { id: 3, name: 'Hibiscus Powder', category: 'Herbal Powder', group: 'Powders', price: 250, badge: 'New', src: 'assets/photos/Hibiscus Powder.jpg' },
+    { id: 4, name: 'Kodali Pancake Mix', category: 'Healthy Kitchen', group: 'Kitchen', price: 250, badge: 'Millet-based', src: 'assets/photos/Kodali Pancake Mix.jpg' },
+    { id: 5, name: 'Milk Thistle Powder', category: 'Herbal Powder', group: 'Powders', price: 250, badge: 'Liver care', src: 'assets/photos/Milk Thistle Powder.jpg' },
+    { id: 6, name: 'Multani Mitti', category: 'Natural Skincare', group: 'Skincare', price: 250, badge: 'Skincare', src: 'assets/photos/multani mitti.jpg' },
   ];
   renderVals() {
     const cats = ['All', 'Powders', 'Oils', 'Skincare', 'Kitchen'];
